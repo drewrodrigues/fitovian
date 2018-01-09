@@ -1,0 +1,27 @@
+%h1 Listing lessons
+
+%table
+  %thead
+    %tr
+      %th Title
+      %th Body
+      %th Position
+      %th User
+      %th
+      %th
+      %th
+
+  %tbody
+    - @lessons.each do |lesson|
+      %tr
+        %td= lesson.title
+        %td= lesson.body
+        %td= lesson.position
+        %td= lesson.user
+        %td= link_to 'Show', lesson
+        %td= link_to 'Edit', edit_lesson_path(lesson)
+        %td= link_to 'Destroy', lesson, method: :delete, data: { confirm: 'Are you sure?' }
+
+%br
+
+= link_to 'New Lesson', new_lesson_path
