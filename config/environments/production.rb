@@ -86,15 +86,17 @@ Rails.application.configure do
   config.active_record.dump_schema_after_migration = false
 
   # action mailer
-  config.action_mailer.default_url_options = {:host => 'segonax.lunarpages.com'}
+  config.action_mailer.default_url_options = { :host => 'localhost:3000' }
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.perform_deliveries = true
   config.action_mailer.raise_delivery_errors = true
   config.action_mailer.smtp_settings = {
     :address => "segonax.lunarpages.com",
-    :port    => 465,
-    :domain  => 'segonax.lunarpages.com',
-    :user_name => '',
-    :password => ''
+    :port    => '465',
+    :domain  => 'lunarpages.com',
+    :user_name => 'north72',
+    :password => 'letmein6972',
+    :ssl => true,
+    :authentication => :plain
   }
 end
