@@ -1,3 +1,30 @@
-// Place all the styles related to the pages controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
+/************************
+INFO PAGES **************
+************************/
+.banner {
+  padding: 50px;
+}
+
+.banner-h1 {
+  margin-top: 0;
+}
+
+.start-button {
+  a {
+    text-decoration: none;
+    color: white;
+  }
+}
+
+.banner button {
+  margin-right: 15px;
+
+  a {
+    text-decoration: none;
+    color: white;
+  }
+}
+
+.banner-p {
+  font-weight: 400;
+}
