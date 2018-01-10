@@ -10,7 +10,7 @@ Rails.application.routes.draw do
 
   # pages
   root 'pages#landing'
-  get 'pages/landing'
+  get 'panel', to: 'pages#panel'
 
   # lessons
   resources :lessons
