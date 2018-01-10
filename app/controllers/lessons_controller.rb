@@ -1,5 +1,6 @@
 class LessonsController < ApplicationController
   before_action :set_lesson, only: [:show, :edit, :update, :destroy]
+  before_action :authenticate_admin!
 
   # GET /lessons
   # GET /lessons.json
@@ -70,5 +71,12 @@ class LessonsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def lesson_params
       params.require(:lesson).permit(:title, :body, :position, :user_id)
+    end
+
+    def authenticate_admin!
+      if current_user && current_user.admin?
+      else
+        redirect_to root_path
+      end
     end
 end

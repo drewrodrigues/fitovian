@@ -1,0 +1,7 @@
+%p Panel
+
+.card
+  .card-body
+    .badge.badge-primary #{User.all.count} Users
+
+= link_to 'Lessons', lessons_path, class: 'btn btn-sm btn-primary'
