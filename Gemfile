@@ -12,7 +12,7 @@ gem 'jbuilder', '~> 2.5'
 gem 'pg'
 gem 'devise'
 gem 'haml-rails'
-gem 'bootstrap', '~> 4.0.0.beta3'
+gem 'bootstrap-sass', '~> 3.3.7'
 gem 'jquery-rails'
 
 group :development, :test do
