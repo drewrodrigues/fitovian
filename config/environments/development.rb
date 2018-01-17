@@ -61,8 +61,8 @@ Rails.application.configure do
     :address => "segonax.lunarpages.com",
     :port    => '465',
     :domain  => 'lunarpages.com',
-    :user_name => 'north72',
-    :password => 'letmein6972',
+    :user_name => ENV['wcwlcusername'],
+    :password => ENV['wcwlcpassword'],
     :ssl => true,
     :authentication => :plain
   }
