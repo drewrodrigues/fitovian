@@ -11,13 +11,6 @@ class ChargesController < ApplicationController
       source: params[:stripeToken]
     )
 
-    # charge = Stripe::Charge.create(
-    #   customer: customer.id,
-    #   amount: @amount,
-    #   description: 'Rails Stripe customer',
-    #   currency: 'usd'
-    # )
-
     subscription = Stripe::Subscription.create({
       customer: customer.id,
       items: [{plan: 'basic'}],
