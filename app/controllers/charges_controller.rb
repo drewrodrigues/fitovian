@@ -11,15 +11,19 @@ class ChargesController < ApplicationController
       source: params[:stripeToken]
     )
 
-    charge = Stripe::Charge.create(
-      customer: customer.id,
-      amount: @amount,
-      description: 'Rails Stripe customer',
-      currency: 'usd'
-    )
+    # charge = Stripe::Charge.create(
+    #   customer: customer.id,
+    #   amount: @amount,
+    #   description: 'Rails Stripe customer',
+    #   currency: 'usd'
+    # )
 
-    if charge.paid?
-    end
+    subscription = Stripe::Subscription.create({
+      customer: customer.id,
+      items: [{plan: 'basic'}],
+    })
+
+    byebug
 
   rescue Stripe::CardError => e
     flash[:error] = e.message
