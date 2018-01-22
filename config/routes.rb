@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  # stripe
+  resources :charges
+  
   # users
   devise_for :users, controllers: {
     sessions: 'users/sessions'
