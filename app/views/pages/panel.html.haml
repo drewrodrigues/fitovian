@@ -1,7 +1,14 @@
-%p Panel
-
-.card
-  .card-body
-    .badge.badge-primary #{User.all.count} Users
-
-= link_to 'Lessons', lessons_path, class: 'btn btn-sm btn-primary'
+.bb-background
+  .container
+    %h2 Panel
+    = link_to 'New Lesson', new_lesson_path, class: 'btn btn-primary'
+    %small #{User.all.count} Users
+    .panel-lessons
+      - @lessons.each do |lesson|
+        %p.panel-lessons-lesson
+          %span.panel-week-number
+            Week #{lesson.position}
+          = link_to lesson.title, lesson
+          %span.panel-lessons-lesson-links
+            = link_to "Edit", edit_lesson_path(lesson), data: { no_turbolink: true }
+            = link_to "Delete", lesson, method: :delete

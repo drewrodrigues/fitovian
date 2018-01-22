@@ -10,5 +10,6 @@
   = render 'shared/navbar'
   %p.notice= notice
   %p.alert= alert
-  = yield
-  = render 'shared/footer' unless current_user
+  .bb-background
+    .container
+      = yield

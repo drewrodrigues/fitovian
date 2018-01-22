@@ -5,18 +5,12 @@
       %ul
         - @lesson.errors.full_messages.each do |message|
           %li= message
-
-  .field
-    = f.label :title
-    = f.text_field :title
-  .field
-    = f.label :body
-    = f.text_area :body
+  .form-group
+    = f.text_field :title, class: 'form-control'
+  = tinymce
+  = f.text_area :body, :class => "tinymce"
   .field
     = f.label :position
     = f.number_field :position
-  .field
-    = f.label :user
-    = f.text_field :user
   .actions
-    = f.submit 'Save'
+    = f.submit 'Save', class: 'btn btn-success'
