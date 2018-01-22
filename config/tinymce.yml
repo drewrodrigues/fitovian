@@ -1,0 +1,14 @@
+toolbar:
+  - styleselect | bold italic | undo redo | format | table
+  - colorpicker backcolor forecolor | emoticons
+  - image media | link | hr | spellchecker
+plugins:
+  - image
+  - link
+  - textcolor
+  - colorpicker
+  - emoticons
+  - hr
+  - media
+  - spellchecker
+  - wordcount

@@ -6,6 +6,7 @@ class PagesController < ApplicationController
   end
 
   def panel
+    @lessons = Lesson.all.sort_by {|l| l.position }
   end
 
   def about

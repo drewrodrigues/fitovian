@@ -1,18 +1,8 @@
-%p#notice= notice
-
-%p
-  %b Title:
-  = @lesson.title
-%p
-  %b Body:
-  = @lesson.body
-%p
-  %b Position:
-  = @lesson.position
-%p
-  %b User:
-  = @lesson.user
-
-= link_to 'Edit', edit_lesson_path(@lesson)
-\|
-= link_to 'Back', lessons_path
+%ul.breadcrumb
+  %li= link_to 'Lessons', lessons_path, class: 'breadcrumb-item'
+  %li.breadcrumb-item.active= @lesson.title
+.card.lesson-card
+  .card-block
+    .jumbotron
+      %h2= @lesson.title
+    .card-text= @lesson.body.html_safe

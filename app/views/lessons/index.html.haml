@@ -1,27 +1,15 @@
-%h1 Listing lessons
+%h2 Lessons
+- if current_user.admin?
+  = link_to 'New Lesson', new_lesson_path, class: 'btn btn-primary'
+  %small #{User.all.count} Users
 
-%table
-  %thead
-    %tr
-      %th Title
-      %th Body
-      %th Position
-      %th User
-      %th
-      %th
-      %th
-
-  %tbody
-    - @lessons.each do |lesson|
-      %tr
-        %td= lesson.title
-        %td= lesson.body
-        %td= lesson.position
-        %td= lesson.user
-        %td= link_to 'Show', lesson
-        %td= link_to 'Edit', edit_lesson_path(lesson)
-        %td= link_to 'Destroy', lesson, method: :delete, data: { confirm: 'Are you sure?' }
-
-%br
-
-= link_to 'New Lesson', new_lesson_path
+.panel-lessons
+  - @lessons.each do |lesson|
+    %p.panel-lessons-lesson
+      %span.panel-week-number
+        Week #{lesson.position}
+      = link_to lesson.title, lesson
+      - if current_user.admin?
+        %span.panel-lessons-lesson-links
+          = link_to "Edit", edit_lesson_path(lesson), data: { no_turbolink: true }
+          = link_to "Delete", lesson, method: :delete, data: { confirm: 'Are you sure?' }

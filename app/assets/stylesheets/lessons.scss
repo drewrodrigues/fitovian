@@ -1,3 +1,22 @@
-// Place all the styles related to the lessons controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
+.jumbotron * {
+  color: initial;
+}
+
+.jumbotron {
+  background-color: #14699e;
+  margin-bottom: 0;
+}
+
+.jumbotron h2 {
+  margin-bottom: 0;
+  color: white;
+}
+
+.card {
+  background-color: white;
+}
+
+.card-text {
+  background-color: white;
+  padding: 20px;
+}

@@ -12,6 +12,8 @@
 //
 //= require jquery3
 //= require bootstrap-sprockets
+//= require tinymce-jquery
 //= require rails-ujs
-//= require turbolinks
 //= require_tree .
+
+// TODO: // = require turbolinks (make this work with TINY MCE)

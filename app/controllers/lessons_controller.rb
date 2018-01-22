@@ -1,11 +1,12 @@
 class LessonsController < ApplicationController
   before_action :set_lesson, only: [:show, :edit, :update, :destroy]
-  before_action :authenticate_admin!
+  before_action :authenticate_admin!, except: [:index, :show]
+  layout 'logged_in'
 
   # GET /lessons
   # GET /lessons.json
   def index
-    @lessons = Lesson.all
+    @lessons = Lesson.all.sort_by {|l| l.position}
   end
 
   # GET /lessons/1
@@ -57,7 +58,7 @@ class LessonsController < ApplicationController
   def destroy
     @lesson.destroy
     respond_to do |format|
-      format.html { redirect_to lessons_url, notice: 'Lesson was successfully destroyed.' }
+      format.html { redirect_to panel_path, notice: 'Lesson was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
