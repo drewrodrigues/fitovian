@@ -1,13 +1,13 @@
 class ChargesController < ApplicationController
+  before_action :check_active_subscription, only: [:new, :create]
+  layout 'logged_in'
+
   def new
   end
 
   def create
-    # amount in cents
-    @amount = 500
-
     customer = Stripe::Customer.create(
-      email: params[:stripeEmail],
+      email: current_user.email,
       source: params[:stripeToken]
     )
 
@@ -16,10 +16,21 @@ class ChargesController < ApplicationController
       items: [{plan: 'basic'}],
     })
 
-    byebug
+    if subscription.status == 'active'
+      current_user.set_subscription_one_month
+      redirect_to root_path
+    end
 
   rescue Stripe::CardError => e
     flash[:error] = e.message
     redirect_to new_charge_path
   end
+
+  def receive
+  end
+
+  private
+    def check_active_subscription
+      redirect_to root_path if current_user.subscription_active?
+    end
 end
