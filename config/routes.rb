@@ -1,7 +1,8 @@
 Rails.application.routes.draw do
   # stripe
   resources :charges
-  
+  post 'users/subscriptions', to: 'charges#receive', as: :receive_webhooks
+
   # users
   devise_for :users, controllers: {
     sessions: 'users/sessions'

@@ -1,6 +1,7 @@
 class LessonsController < ApplicationController
   before_action :set_lesson, only: [:show, :edit, :update, :destroy]
   before_action :authenticate_admin!, except: [:index, :show]
+  before_action :check_subscription, only: [:index, :show]
   layout 'logged_in'
 
   # GET /lessons
@@ -75,9 +76,11 @@ class LessonsController < ApplicationController
     end
 
     def authenticate_admin!
-      if current_user && current_user.admin?
-      else
-        redirect_to root_path
-      end
+      redirect_to root_path unless current_user && current_user.admin?
+    end
+
+    def check_subscription
+      return if current_user.admin?
+      redirect_to new_charge_path unless current_user.subscription_active?
     end
 end
