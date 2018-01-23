@@ -8,7 +8,6 @@
   = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
 %body
   = render 'shared/navbar'
-  %p.notice= notice
-  %p.alert= alert
+  = render 'shared/notifications'
   = yield
   = render 'shared/footer' unless current_user
