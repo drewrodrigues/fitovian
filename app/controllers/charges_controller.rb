@@ -30,7 +30,15 @@ class ChargesController < ApplicationController
   end
 
   def receive
-    logger.debug "Params: #{params}"
+    data = params['data']['object']
+    stripe_id = data['id']
+    user = User.find_by(id: stripe_id)
+    type = params['type']
+
+    if type == 'charge.succeeded'
+      byebug
+      user.set_subscription_one_month
+    end
   end
 
   private
