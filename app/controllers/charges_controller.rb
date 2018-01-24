@@ -1,5 +1,6 @@
 class ChargesController < ApplicationController
   before_action :check_active_subscription, only: [:new, :create]
+  protect_from_forgery except: :receive
   layout 'logged_in'
 
   def new
@@ -17,6 +18,8 @@ class ChargesController < ApplicationController
     })
 
     if subscription.status == 'active'
+      # TODO: cleanup
+      current_user.stripe_id = subscription.id unless current_user.stripe_id
       current_user.set_subscription_one_month
       redirect_to root_path
     end
@@ -27,6 +30,7 @@ class ChargesController < ApplicationController
   end
 
   def receive
+    byebug
   end
 
   private
