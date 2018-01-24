@@ -30,7 +30,7 @@ class ChargesController < ApplicationController
   end
 
   def receive
-    byebug
+    logger.debug "Params: #{params}"
   end
 
   private
