@@ -36,7 +36,6 @@ class ChargesController < ApplicationController
     type = params['type']
 
     if type == 'charge.succeeded'
-      byebug
       user.set_subscription_one_month
     end
   end
