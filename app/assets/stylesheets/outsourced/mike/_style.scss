@@ -2,15 +2,17 @@
 
 /* override */
 
-p{
+* {
 	font-family: 'Open Sans', sans-serif;
+}
+
+p{
 	font-size:1.1em;
 	line-height:28px;
 	margin-bottom:30px;
 }
 
 h1{
-	font-family: 'Open Sans', sans-serif;
 	font-size:1.8em;
 	font-weight:800;
 	margin:0 0 20px 0;
@@ -18,7 +20,6 @@ h1{
 }
 
 h2{
-	font-family: 'Open Sans', sans-serif;
 	font-size:2em;
 	font-weight:700;
 	color:#14699e;
@@ -26,7 +27,6 @@ h2{
 }
 
 h3{
-	font-family: 'Open Sans', sans-serif;
 	font-size:1.6em;
 	font-weight:700;
 	color:#14699e;
@@ -34,7 +34,6 @@ h3{
 }
 
 h4{
-	font-family: 'Open Sans', sans-serif;
 	font-size:1.6em;
 	font-weight:700;
 	color:#9e1414;
@@ -42,7 +41,6 @@ h4{
 }
 
 h5{
-	font-family: 'Open Sans', sans-serif;
 	font-size:1.6em;
 	font-weight:700;
 	color:#000;
@@ -81,7 +79,6 @@ h5{
 }
 
 .navbar-default .navbar-nav>li>a {
-	font-family: 'Open Sans', sans-serif;
 	font-size:1em;
     color: #ffd600;
     background-color: transparent;
@@ -97,7 +94,7 @@ h5{
 }
 
 	.banner-h1{
-		font-family: 'Open Sans', sans-serif;
+
 		font-size:2.6em;
 		font-weight:700;
 		margin-top:30px;
@@ -105,7 +102,7 @@ h5{
 	}
 
 	.banner-h2{
-		font-family: 'Open Sans', sans-serif;
+
 		font-size:1.7em;
 		font-weight:600;
 		margin-bottom:20px;
@@ -113,7 +110,7 @@ h5{
 	}
 
 	.banner-p{
-		font-family: 'Open Sans', sans-serif;
+
 		font-size:1.2em;
 		font-weight:600;
 		margin-bottom:20px;
@@ -121,7 +118,7 @@ h5{
 	}
 
 	.banner-h3{
-		font-family: 'Open Sans', sans-serif;
+
 		font-size:1.6em;
 		font-weight:700;
 		margin-bottom:30px;
@@ -129,7 +126,7 @@ h5{
 	}
 
 	.banner button{
-		font-family: 'Open Sans', sans-serif;
+
 		background:#ff0000;
 		border:0px;
 		color:#fff;
@@ -159,7 +156,7 @@ h5{
 	}
 
 	.features li{
-		font-family: 'Open Sans', sans-serif;
+
 		font-size:1.2em;
 		color:#ffe200;
 		line-height:28px;
@@ -189,7 +186,7 @@ h5{
 	}
 
 	.features2 li{
-		font-family: 'Open Sans', sans-serif;
+
 		font-size:1.5em;
 		color:#000;
 	}
@@ -214,13 +211,13 @@ h5{
 }
 
 	.form input{
-		font-family: 'Open Sans', sans-serif;
+
 		margin-bottom:20px;
 		border: 2px #949494 solid;
 	}
 
 	.form textarea{
-		font-family: 'Open Sans', sans-serif;
+
 		margin-bottom:20px;
 		height:88px;
 		border: 2px #949494 solid;
@@ -228,7 +225,7 @@ h5{
 
 	.form button{
 		background:#ff8a00;
-		font-family: 'Open Sans', sans-serif;
+
 		font-size:1.3em;
 		font-weight:700;
 		border:0;
@@ -238,7 +235,7 @@ h5{
 	}
 
 	.form-h1{
-		font-family: 'Open Sans', sans-serif;
+
 		font-size:1.4em;
 		font-weight:400;
 		color:yellow;
@@ -362,7 +359,6 @@ footer{
 }
 
 .plan-box-h1{
-	font-family: 'Open Sans', sans-serif;
 	font-size:2em;
 	font-weight:700;
 	color:#14699e;
@@ -370,7 +366,6 @@ footer{
 }
 
 .plan-box-header{
-	font-family: 'Open Sans', sans-serif;
 	font-size:2em;
 	text-align:center;
 	color:#333;
@@ -384,7 +379,7 @@ footer{
 }
 
 	.plan-box li{
-		font-family: 'Open Sans', sans-serif;
+
 		font-size:1.1em;
 		font-weight:700;
 		list-style:none;
@@ -413,7 +408,7 @@ footer{
 }
 
 	.contact li{
-		font-family: 'Open Sans', sans-serif;
+
 		font-size:1.6em;
 		line-height:32px;
 		list-style:none;
@@ -424,7 +419,6 @@ footer{
 	}
 
 .buy-book button{
-	font-family: 'Open Sans', sans-serif;
 	font-size:1.6em;
 	background:#ff0000;
 	padding:10px;
@@ -478,7 +472,6 @@ footer{
 	}
 
 label{
-	font-family: 'Open Sans', sans-serif;
 	font-size:1.2em;
 	font-weight:700;
 }
@@ -503,7 +496,7 @@ label{
 }
 
 	.box button{
-		font-family: 'Open Sans', sans-serif;
+
 		background:#fa8911;
 		border:0px;
 		color:#fff;
