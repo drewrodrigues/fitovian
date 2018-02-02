@@ -6,49 +6,35 @@ class ChargesController < ApplicationController
   end
 
   def create
-    customer = Stripe::Customer.create(
-      email: current_user.email,
-      source: params[:stripeToken]
-    )
-
-    subscription = Stripe::Subscription.create({
-      customer: customer.id,
-      items: [{plan: 'basic'}],
-    })
-
-    if subscription.status == 'active'
-      current_user.stripe_id ||= subscription.id
-      current_user.set_subscription_one_month
+    begin
+      current_user.set_stripe_customer_id(params[:stripeToken])
       current_user.subscribe
-      redirect_to root_path
+      redirect_to root_path, notice: 'Successfully subscribed.'
+    rescue => e
+      redirect_to new_charge_path, alert: e.message
     end
-
-  rescue Stripe::CardError => e
-    flash[:error] = e.message
-    redirect_to new_charge_path
   end
 
   def destroy
-    subscription = Stripe::Subscription.retrieve(current_user.stripe_id)
-    subscription.delete(at_period_end: true)
-    current_user.cancel_subscription
-
-    redirect_to edit_user_registration_path
+    begin
+      current_user.cancel_subscription
+      redirect_to edit_user_registration_path, notice: 'Successfully canceled subscription.'
+    rescue => e
+      redirect_to edit_user_registration_path, alert: e.message
+    end
   end
 
   def re_activate
-    subscription = Stripe::Subscription.retrieve(current_user.stripe_id)
-    subscription.items = [{
-        id: subscription.items.data[0].id,
-        plan: 'basic',
-    }]
-    subscription.save
-    current_user.subscribe
-
-    redirect_to edit_user_registration_path
+    begin
+      current_user.re_activate
+      redirect_to edit_user_registration_path, notice: 'Successfully re-activated subscription.'
+    rescue => e
+      redirect_to edit_user_registration_path, alert: e.message
+    end
   end
 
   def receive
+    # TODO: test & stub out
     data = params['data']['object']
     stripe_id = data['id']
     user = User.find_by(id: stripe_id)

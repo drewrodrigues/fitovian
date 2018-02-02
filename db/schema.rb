@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180202052915) do
+ActiveRecord::Schema.define(version: 20180202081420) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -19,17 +19,6 @@ ActiveRecord::Schema.define(version: 20180202052915) do
     t.string "title"
     t.text "body"
     t.integer "position"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "plans", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "registrations", force: :cascade do |t|
-    t.string "card_token"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -47,8 +36,9 @@ ActiveRecord::Schema.define(version: 20180202052915) do
     t.inet "last_sign_in_ip"
     t.boolean "admin", default: false
     t.date "current_period_end"
-    t.string "stripe_id"
-    t.boolean "active_subscription"
+    t.boolean "active_subscription", default: false
+    t.string "stripe_customer_id"
+    t.string "stripe_subscription_id"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end

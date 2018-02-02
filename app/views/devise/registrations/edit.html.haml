@@ -1,4 +1,4 @@
-- if current_user.active_subscription?
+- if current_user.subscription_active?
   .alert.alert-success
     %p
       Your membership is active and paid through
@@ -44,7 +44,7 @@
   .actions
     = f.submit "Update", class: 'btn btn-success'
 
-- if current_user.active_subscription?
+- if current_user.subscription_active?
   %p
     #{button_to "Cancel my subscription", charges_path, class: 'btn btn-danger', data: { confirm: "Are you sure?" }, method: :delete}
   = link_to "Back", :back
