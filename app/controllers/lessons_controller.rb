@@ -75,11 +75,11 @@ class LessonsController < ApplicationController
     end
 
     def authenticate_admin!
-      redirect_to root_path unless current_user && current_user.admin?
+      redirect_to root_path unless current_user&.admin?
     end
 
     def check_subscription
       return if current_user.admin?
-      redirect_to new_charge_path unless current_user.subscription_active?
+      redirect_to new_charges_path unless current_user.membership_active?
     end
 end

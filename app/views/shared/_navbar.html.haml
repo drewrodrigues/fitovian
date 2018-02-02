@@ -15,6 +15,7 @@
             %li= link_to 'Panel', panel_path, class: "#{'nav-active' if params[:action] == 'panel'}"
           - if user_signed_in?
             %li= link_to 'Lessons', lessons_path, class: "#{'nav-active' if params[:controller] == 'lessons'}"
+            %li= link_to 'Settings', edit_user_registration_path, class: "#{'nav-active' if params[:controller] == 'users/registrations'}"
             %li= link_to 'Sign out', destroy_user_session_path, method: :delete
           - else
             %li= link_to "Home", root_path, class: "#{'nav-active' if params[:action] == 'landing'}"

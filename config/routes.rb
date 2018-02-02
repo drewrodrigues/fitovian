@@ -1,7 +1,8 @@
 Rails.application.routes.draw do
   # stripe
-  resources :charges
+  resource :charges
   post 'charges/receive', to: 'charges#receive', as: :receive_webhook
+  post 'charges/re_activate', to: 'charges#re_activate'
 
   # users
   devise_for :users, controllers: {
