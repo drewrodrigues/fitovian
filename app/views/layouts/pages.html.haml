@@ -7,8 +7,7 @@
   = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload'
   = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
 %body
+  = render 'shared/notifications'
   = render 'shared/navbar'
-  .bb-background
-    .container
-      = render 'shared/notifications'
-      = yield
+  = yield
+  = render 'shared/footer' unless current_user
