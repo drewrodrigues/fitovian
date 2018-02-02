@@ -17,15 +17,35 @@ class ChargesController < ApplicationController
     })
 
     if subscription.status == 'active'
-      # TODO: cleanup
-      current_user.stripe_id = subscription.id unless current_user.stripe_id
+      current_user.stripe_id ||= subscription.id
       current_user.set_subscription_one_month
+      current_user.subscribe
       redirect_to root_path
     end
 
   rescue Stripe::CardError => e
     flash[:error] = e.message
     redirect_to new_charge_path
+  end
+
+  def destroy
+    subscription = Stripe::Subscription.retrieve(current_user.stripe_id)
+    subscription.delete(at_period_end: true)
+    current_user.cancel_subscription
+
+    redirect_to edit_user_registration_path
+  end
+
+  def re_activate
+    subscription = Stripe::Subscription.retrieve(current_user.stripe_id)
+    subscription.items = [{
+        id: subscription.items.data[0].id,
+        plan: 'basic',
+    }]
+    subscription.save
+    current_user.subscribe
+
+    redirect_to edit_user_registration_path
   end
 
   def receive
@@ -41,6 +61,6 @@ class ChargesController < ApplicationController
 
   private
     def check_active_subscription
-      redirect_to root_path if current_user.subscription_active?
+      redirect_to root_path if current_user.membership_active?
     end
 end
