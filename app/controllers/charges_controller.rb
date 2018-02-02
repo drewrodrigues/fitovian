@@ -1,7 +1,6 @@
 class ChargesController < ApplicationController
   before_action :check_active_subscription, only: [:new, :create]
   protect_from_forgery except: :receive
-  layout 'logged_in'
 
   def new
   end

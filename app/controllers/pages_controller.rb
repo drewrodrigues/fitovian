@@ -1,4 +1,6 @@
 class PagesController < ApplicationController
+  layout 'pages'
+  
   def landing
   end
 

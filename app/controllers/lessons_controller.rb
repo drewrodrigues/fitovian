@@ -2,7 +2,6 @@ class LessonsController < ApplicationController
   before_action :set_lesson, only: [:show, :edit, :update, :destroy]
   before_action :authenticate_admin!, except: [:index, :show]
   before_action :check_subscription, only: [:index, :show]
-  layout 'logged_in'
 
   # GET /lessons
   # GET /lessons.json
