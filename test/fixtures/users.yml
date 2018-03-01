@@ -1,0 +1,15 @@
+user:
+  active: false
+  admin: false
+  encrypted_password: <%= Devise::Encryptor.digest(User, 'password') %>
+  email: user@test.com
+  name: Andrew
+  stripe_customer_id: delete
+
+admin:
+  admin: true
+  current_period_end: nil
+  encrypted_password: <%= Devise::Encryptor.digest(User, 'password') %>
+  email: admin@test.com
+  name: Ernie
+  stripe_customer_id: nil

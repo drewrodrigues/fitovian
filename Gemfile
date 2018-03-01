@@ -7,8 +7,6 @@ gem 'uglifier', '>= 1.3.0'
 gem 'coffee-rails', '~> 4.2'
 gem 'turbolinks', '~> 5'
 gem 'jbuilder', '~> 2.5'
-
-# my gems
 gem 'pg'
 gem 'devise'
 gem 'haml-rails'
@@ -19,6 +17,8 @@ gem 'stripe'
 
 group :test do
   gem 'minitest', '5.10.0'
+  gem 'stripe-ruby-mock', '~> 2.5.2', :require => 'stripe_mock'
+  gem 'timecop'
 end
 
 group :development, :test do
