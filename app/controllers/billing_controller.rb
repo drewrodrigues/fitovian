@@ -1,4 +1,4 @@
-class ChargesController < ApplicationController
+class BillingController < ApplicationController
   before_action :check_active_subscription, only: [:new, :create]
   protect_from_forgery except: :receive
 
@@ -7,7 +7,7 @@ class ChargesController < ApplicationController
 
   def create
     begin
-      current_user.set_stripe_customer_id(params[:stripeToken])
+      current_user.add_payment_method(params[:stripeToken])
       current_user.subscribe
       redirect_to root_path, notice: 'Successfully subscribed.'
     rescue => e
@@ -31,6 +31,9 @@ class ChargesController < ApplicationController
     rescue => e
       redirect_to edit_user_registration_path, alert: e.message
     end
+  end
+
+  def update
   end
 
   def receive
