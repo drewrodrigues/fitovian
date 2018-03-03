@@ -19,6 +19,7 @@ group :test do
   gem 'minitest', '5.10.0'
   gem 'stripe-ruby-mock', '~> 2.5.2', :require => 'stripe_mock'
   gem 'timecop'
+  gem 'rails-controller-testing'
 end
 
 group :development, :test do
