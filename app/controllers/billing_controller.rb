@@ -1,55 +1,66 @@
 class BillingController < ApplicationController
-  before_action :check_active_subscription, only: [:new, :create]
+  before_action :authenticate_user!
+  # before_action :check_active_subscription, only: [:new, :create]
   protect_from_forgery except: :receive
+
+  def dashboard
+  end
 
   def new
   end
 
-  def create
+  def subscribe
     begin
-      current_user.add_payment_method(params[:stripeToken])
+      current_user.add_payment_method(params[:stripe_token])
       current_user.subscribe
-      redirect_to root_path, notice: 'Successfully subscribed.'
+      redirect_to root_path, flash: {success: 'Successfully subscribed'}
     rescue => e
-      redirect_to new_charge_path, alert: e.message
+      flash.now[:alert] = e.message
+      render "new"
     end
   end
 
-  def destroy
+  def cancel
     begin
-      current_user.cancel_subscription
-      redirect_to edit_user_registration_path, notice: 'Successfully canceled subscription.'
+      current_user.cancel
+      flash.now[:success] = 'Successfully canceled subscription'
+      render "new"
     rescue => e
-      redirect_to edit_user_registration_path, alert: e.message
+      flash.now[:alert] = e.message
+      render "new", alert: e.message
     end
   end
 
   def re_activate
     begin
       current_user.re_activate
-      redirect_to edit_user_registration_path, notice: 'Successfully re-activated subscription.'
+      flash.now[:success] = 'Successfully re-activated subscription'
+      render 'new'
     rescue => e
-      redirect_to edit_user_registration_path, alert: e.message
+      flash.now[:alert] = e.message
+      render 'new'
     end
   end
 
   def update
+    begin
+      current_user.add_payment_method(params[:stripe_token])
+      redirect_to dashboard_path, flash: {success: 'Successfully updated payment method'}
+    rescue => e
+      flash.now[:alert] = e.message
+      render 'update'
+    end
   end
 
   def receive
-    # TODO: test & stub out
+    # TODO: test through integration
     data = params['data']['object']
     stripe_id = data['id']
     user = User.find_by(id: stripe_id)
     type = params['type']
 
     if type == 'charge.succeeded'
-      user.set_subscription_one_month
+      user.set_end_date(data)
     end
   end
-
-  private
-    def check_active_subscription
-      redirect_to root_path if current_user.membership_active?
-    end
 end
