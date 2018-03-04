@@ -27,7 +27,7 @@ class User < ApplicationRecord
 
   def membership_active?
     return false unless current_period_end
-    self.current_period_end >= Date.current
+    self.current_period_end >= Time.zone.today
   end
 
   def is_admin?
@@ -48,9 +48,7 @@ class User < ApplicationRecord
   end
 
   def subscribe
-    # TODO: make error more descriptive
-    throw StandardError if subscribed?
-    re_activate if stripe_subscription && !active
+    raise 'Already subscribed' if subscribed?
 
     @stripe_subscription = Stripe::Subscription.create({
       customer: self.stripe_customer_id,
@@ -80,10 +78,7 @@ class User < ApplicationRecord
   end
 
   def re_activate
-    # if membership_active? returns false, then the subscription should be
-    # have been deleted already
-    # TODO: make error more descriptive
-    throw StandardError unless membership_active?
+    raise 'Subscription already active' if subscribed?
 
     stripe_subscription.items = [{
         id: stripe_subscription.items.data[0].id,
@@ -107,7 +102,7 @@ class User < ApplicationRecord
   end
 
   def subscribed?
-    stripe_subscription && stripe_subscription_active?
+    active && membership_active?
   end
 
   private
@@ -124,7 +119,8 @@ class User < ApplicationRecord
     end
 
     def stripe_customer
-      return unless self.stripe_customer_id
+      raise "Cannot get stripe_customer when customer id not set" unless self.stripe_customer_id
+
       begin
         @stripe_customer ||= Stripe::Customer.retrieve(self.stripe_customer_id)
       rescue
@@ -133,7 +129,8 @@ class User < ApplicationRecord
     end
 
     def stripe_subscription
-      return unless self.stripe_subscription_id
+      raise "Subscription doesn't exist" unless self.stripe_subscription_id
+
       begin
         @stripe_subscription ||= Stripe::Subscription.retrieve(self.stripe_subscription_id)
       rescue
@@ -150,7 +147,7 @@ class User < ApplicationRecord
     end
 
     def set_active
-      throw StandardError unless membership_active?
+      raise "Cannot set membership as active" unless membership_active?
 
       self.active = true
       self.save

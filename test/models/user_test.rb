@@ -102,11 +102,8 @@ class UserTest < ActiveSupport::TestCase
   end
 
   test "membership_active? should return true if current_period_end is today" do
-    Timecop.travel(Date.today)
-
     user = users(:user)
     user.current_period_end = Date.today
-
     assert user.membership_active?
   end
 
