@@ -7,8 +7,6 @@ gem 'uglifier', '>= 1.3.0'
 gem 'coffee-rails', '~> 4.2'
 gem 'turbolinks', '~> 5'
 gem 'jbuilder', '~> 2.5'
-
-# my gems
 gem 'pg'
 gem 'devise'
 gem 'haml-rails'
@@ -16,6 +14,13 @@ gem 'bootstrap-sass', '~> 3.3.7'
 gem 'jquery-rails'
 gem 'tinymce-rails'
 gem 'stripe'
+
+group :test do
+  gem 'minitest', '5.10.0'
+  gem 'stripe-ruby-mock', '~> 2.5.2', :require => 'stripe_mock'
+  gem 'timecop'
+  gem 'rails-controller-testing'
+end
 
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
