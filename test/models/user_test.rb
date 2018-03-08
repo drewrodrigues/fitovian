@@ -122,39 +122,28 @@ class UserTest < ActiveSupport::TestCase
   end
 
   test "#set_end_date sets current_period_end to event period_end with webhook event" do
-    today = Date.new(2018, 1, 1)
-    membership_end = Date.new(2018, 1, 31)
-    Timecop.travel(today)
-
+    Timecop.travel(Date.new(2018, 1, 1))
     user = users(:user)
     event = StripeMock.mock_webhook_event('invoice.payment_succeeded', {
       id: user.stripe_customer_id,
       period_end: 1_517_443_200
     })
-
     user.set_end_date event
-    assert_equal membership_end, user.current_period_end
+    assert_in_delta 1.month.from_now, user.current_period_end, 200
   end
 
   test "#set_end_date sets current_period_end to event current_period_end with subscription" do
-    today = Date.new(2018, 1, 1)
-    membership_end = Date.new(2018, 1, 31)
-    Timecop.travel(today)
-
     user = users(:user)
     subscribe(user)
-
-    assert_equal membership_end, user.current_period_end
+    assert_in_delta 1.month.from_now, user.current_period_end, 200
   end
 
   test "#subscribe should set membership to active" do
     today = Date.new(2018, 1, 1)
-    membership_end = Date.new(2018, 1, 31)
+    membership_end = Date.new(2018, 2, 1)
     Timecop.travel(today)
-
     user = users(:user)
     subscribe(user)
-
     assert user.membership_active?
   end
 
