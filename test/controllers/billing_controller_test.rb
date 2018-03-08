@@ -6,34 +6,38 @@ class BillingControllerTest < ActionDispatch::IntegrationTest
   include Devise::Test::IntegrationHelpers
   include BillingControllerTestHelper
 
-  test "as guest, dashboard should re-direct to login page" do
+  test 'as guest, dashboard should re-direct to login page' do
     get billing_dashboard_path
     assert_redirected_to new_user_session_path
   end
 
-  test "as user, should get dashboard" do
+  test 'as user, should get dashboard' do
     sign_in(users(:user))
 
     get billing_dashboard_path
     assert_response :success
   end
 
-  test "as guest, re-direct to login page" do
+  test 'as guest, re-direct to login page' do
     get new_payment_method_path
     assert_redirected_to new_user_session_path
   end
 
-  test "as user, should get update" do
-    user = User.create(email: 'test@eaxmple.com', name: 'foobar', password: 'foobar')
+  test 'as user, should get update' do
+    user = User.create(
+      email: 'test@eaxmple.com', name: 'foobar', password: 'foobar'
+    )
     sign_in(user)
 
     get new_payment_method_path
     assert_response :success
   end
 
-  test "should redirect to root_path upon successful subscribe" do
+  test 'should redirect to root_path upon successful subscribe' do
     run_stripe_mock do
-      user = User.create(email: 'test@eaxmple.com', name: 'foobar', password: 'foobar')
+      user = User.create(
+        email: 'test@eaxmple.com', name: 'foobar', password: 'foobar'
+      )
       sign_in(user)
 
       post subscribe_path(StripeMock.create_test_helper.generate_card_token)
@@ -43,11 +47,14 @@ class BillingControllerTest < ActionDispatch::IntegrationTest
     end
   end
 
-  test "should re-render billing page upon failed subscription from card decline" do
+  test 'should re-render billing page upon failed subscription from card
+  decline' do
     run_stripe_mock do
       StripeMock.prepare_card_error(:card_declined, :create_subscription)
 
-      user = User.create(email: 'test@eaxmple.com', name: 'foobar', password: 'foobar')
+      user = User.create(
+        email: 'test@eaxmple.com', name: 'foobar', password: 'foobar'
+      )
       sign_in(user)
 
       post subscribe_path(StripeMock.create_test_helper.generate_card_token)
@@ -57,9 +64,12 @@ class BillingControllerTest < ActionDispatch::IntegrationTest
     end
   end
 
-  test "should re-render billing page upon failed subscription from duplicate subscription" do
+  test 'should re-render billing page upon failed subscription from duplicate
+  subscription' do
     run_stripe_mock do
-      user = User.create(email: 'test@eaxmple.com', name: 'foobar', password: 'foobar')
+      user = User.create(
+        email: 'test@eaxmple.com', name: 'foobar', password: 'foobar'
+      )
       sign_in(user)
 
       post subscribe_path(StripeMock.create_test_helper.generate_card_token)
@@ -71,9 +81,11 @@ class BillingControllerTest < ActionDispatch::IntegrationTest
     end
   end
 
-  test "should re-render billing page upon successful cancel" do
+  test 'should re-render billing page upon successful cancel' do
     run_stripe_mock do
-      user = User.create(email: 'teste@example.com', name: 'foobar', password: 'foobar')
+      user = User.create(
+        email: 'teste@example.com', name: 'foobar', password: 'foobar'
+      )
       sign_in(user)
 
       post subscribe_path(StripeMock.create_test_helper.generate_card_token)
@@ -88,9 +100,12 @@ class BillingControllerTest < ActionDispatch::IntegrationTest
     end
   end
 
-  test "should re-render billing page upon failed cancel (from not subscribed user)" do
+  test 'should re-render billing page upon failed cancel (from not subscribed
+  user)' do
     run_stripe_mock do
-      user = User.create(email: 'teste@example.com', name: 'foobar', password: 'foobar')
+      user = User.create(
+        email: 'teste@example.com', name: 'foobar', password: 'foobar'
+      )
       sign_in(user)
 
       get billing_dashboard_path
@@ -101,9 +116,11 @@ class BillingControllerTest < ActionDispatch::IntegrationTest
     end
   end
 
-  test "should render billing page upon successful re_activate" do
+  test 'should render billing page upon successful re_activate' do
     run_stripe_mock do
-      user = User.create(email: 'teste@example.com', name: 'foobar', password: 'foobar')
+      user = User.create(
+        email: 'teste@example.com', name: 'foobar', password: 'foobar'
+      )
       sign_in(user)
 
       get billing_dashboard_path
@@ -119,9 +136,12 @@ class BillingControllerTest < ActionDispatch::IntegrationTest
     end
   end
 
-  test "should render billing page upon re_active attempt when already active" do
+  test 'should render billing page upon re_active attempt when already
+  active' do
     run_stripe_mock do
-      user = User.create(email: 'teste@example.com', name: 'foobar', password: 'foobar')
+      user = User.create(
+        email: 'teste@example.com', name: 'foobar', password: 'foobar'
+      )
       sign_in(user)
 
       get billing_dashboard_path
@@ -134,9 +154,11 @@ class BillingControllerTest < ActionDispatch::IntegrationTest
     end
   end
 
-  test "should render billing page upon successful add payment method" do
+  test 'should render billing page upon successful add payment method' do
     run_stripe_mock do
-      user = User.create(email: 'teste@example.com', name: 'foobar', password: 'foobar')
+      user = User.create(
+        email: 'teste@example.com', name: 'foobar', password: 'foobar'
+      )
       sign_in(user)
 
       get billing_dashboard_path
@@ -145,16 +167,20 @@ class BillingControllerTest < ActionDispatch::IntegrationTest
 
       get new_payment_method_path
       assert_response :success
-      put update_payment_method_path(StripeMock.create_test_helper.generate_card_token)
+      put update_payment_method_path(
+        StripeMock.create_test_helper.generate_card_token
+      )
 
       assert_redirected_to billing_dashboard_path
       assert_equal 'Successfully updated payment method', flash[:success]
     end
   end
 
-  test "should render update page upon failed add payment method" do
+  test 'should render update page upon failed add payment method' do
     run_stripe_mock do
-      user = User.create(email: 'teste@example.com', name: 'foobar', password: 'foobar')
+      user = User.create(
+        email: 'teste@example.com', name: 'foobar', password: 'foobar'
+      )
       sign_in(user)
 
       get billing_dashboard_path
@@ -164,7 +190,9 @@ class BillingControllerTest < ActionDispatch::IntegrationTest
       StripeMock.prepare_card_error(:incorrect_number, :create_source)
       get new_payment_method_path
       assert_response :success
-      put update_payment_method_path(StripeMock.create_test_helper.generate_card_token)
+      put update_payment_method_path(
+        StripeMock.create_test_helper.generate_card_token
+      )
 
       assert_template 'update'
       assert_equal 'The card number is incorrect', flash[:alert]

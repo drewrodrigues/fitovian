@@ -3,20 +3,18 @@ class BillingController < ApplicationController
   # before_action :check_active_subscription, only: [:new, :create]
   protect_from_forgery except: :receive
 
-  def dashboard
-  end
+  def dashboard; end
 
-  def new
-  end
+  def new; end
 
   def subscribe
     begin
       current_user.add_payment_method(params[:stripe_token])
       current_user.subscribe
-      redirect_to root_path, flash: {success: 'Successfully subscribed'}
-    rescue => e
+      redirect_to root_path, flash: { success: 'Successfully subscribed' }
+    rescue Stripe::StripeError, RuntimeError => e
       flash.now[:alert] = e.message
-      render "new"
+      render 'new'
     end
   end
 
@@ -24,10 +22,10 @@ class BillingController < ApplicationController
     begin
       current_user.cancel
       flash.now[:success] = 'Successfully canceled subscription'
-      render "new"
-    rescue => e
+      render 'new'
+    rescue Stripe::StripeError, RuntimeError => e
       flash.now[:alert] = e.message
-      render "new", alert: e.message
+      render 'new', alert: e.message
     end
   end
 
@@ -36,7 +34,7 @@ class BillingController < ApplicationController
       current_user.re_activate
       flash.now[:success] = 'Successfully re-activated subscription'
       render 'new'
-    rescue => e
+    rescue Stripe::StripeError, RuntimeError => e
       flash.now[:alert] = e.message
       render 'new'
     end
@@ -45,8 +43,10 @@ class BillingController < ApplicationController
   def update
     begin
       current_user.add_payment_method(params[:stripe_token])
-      redirect_to dashboard_path, flash: {success: 'Successfully updated payment method'}
-    rescue => e
+      redirect_to dashboard_path, flash: {
+        success: 'Successfully updated payment method'
+      }
+    rescue Stripe::StripeError, RuntimeError => e
       flash.now[:alert] = e.message
       render 'update'
     end
@@ -59,8 +59,6 @@ class BillingController < ApplicationController
     user = User.find_by(id: stripe_id)
     type = params['type']
 
-    if type == 'charge.succeeded'
-      user.set_end_date(data)
-    end
+    user.end_date(data) if type == 'charge.succeeded'
   end
 end
