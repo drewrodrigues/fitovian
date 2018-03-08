@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180228232011) do
+ActiveRecord::Schema.define(version: 20180308013830) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -46,7 +46,7 @@ ActiveRecord::Schema.define(version: 20180228232011) do
     t.inet "current_sign_in_ip"
     t.inet "last_sign_in_ip"
     t.boolean "admin", default: false
-    t.date "current_period_end"
+    t.datetime "current_period_end"
     t.string "stripe_customer_id"
     t.string "stripe_subscription_id"
     t.boolean "active", default: false, null: false
