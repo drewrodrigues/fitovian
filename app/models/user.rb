@@ -9,7 +9,7 @@
 
 class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
-    :recoverable, :rememberable, :trackable, :validatable
+         :recoverable, :rememberable, :trackable, :validatable
 
   validates_presence_of :name
   validates_presence_of :email
@@ -24,44 +24,38 @@ class User < ApplicationRecord
 
   def initialize(args = nil)
     super(args)
-    set_stripe_customer_id unless is_admin?
+    set_stripe_customer_id unless admin?
   end
 
   def membership_active?
-    # TODO: since changed to datetime, allow for
-    # access through whole day, even if time has passed
-    # TODO: make tests for different time zones, ensure they have access in their time
     return false unless current_period_end
     self.current_period_end.to_date >= Time.zone.today
   end
 
-  def is_admin?
+  def admin?
     self.admin
   end
 
-  def set_end_date(event)
-    if event.respond_to?(:current_period_end)
-      # Upon stripe subscription object
-      # byebug
-      sub_end = Time.zone.at(event.current_period_end)
-    else
-      # Webhook object returned by Stripe on invoice.payment_succeeded
-      sub_end = Time.zone.at(event.data.object.period_end)
-    end
-
-    self.current_period_end = sub_end
+  def end_date(event)
+    self.current_period_end = if event.respond_to?(:current_period_end)
+                                # Upon stripe subscription object
+                                Time.zone.at(event.current_period_end)
+                              else
+                                # Webhook object on invoice.payment_succeeded
+                                Time.zone.at(event.data.object.period_end)
+                              end
     self.save
   end
 
   def subscribe
     raise 'Already subscribed' if subscribed?
 
-    @stripe_subscription = Stripe::Subscription.create({
+    @stripe_subscription = Stripe::Subscription.create(
       customer: self.stripe_customer_id,
-      items: [{plan: stripe_plan.id}]
-    })
+      items: [{ plan: stripe_plan.id }]
+    )
 
-    set_end_date(@stripe_subscription)
+    end_date(@stripe_subscription)
     set_active
 
     self.stripe_subscription_id = @stripe_subscription.id
@@ -76,7 +70,7 @@ class User < ApplicationRecord
   end
 
   def add_payment_method(token)
-    new_payment_method = stripe_customer.sources.create({source: token})
+    new_payment_method = stripe_customer.sources.create(source: token)
     stripe_customer.default_source = new_payment_method.id
 
     # REVIEW: doesn't this need a writer method
@@ -87,8 +81,8 @@ class User < ApplicationRecord
     raise 'Subscription already active' if subscribed?
 
     stripe_subscription.items = [{
-        id: stripe_subscription.items.data[0].id,
-        plan: stripe_plan.id,
+      id: stripe_subscription.items.data[0].id,
+      plan: stripe_plan.id
     }]
     stripe_subscription.save
 
@@ -99,7 +93,9 @@ class User < ApplicationRecord
 
   def default_payment_method
     return unless stripe_customer
-    @default_payment_method ||= stripe_customer.sources.retrieve(stripe_customer.default_source)
+    @default_payment_method ||= stripe_customer.sources.retrieve(
+      stripe_customer.default_source
+    )
   end
 
   def payment_methods
@@ -112,54 +108,54 @@ class User < ApplicationRecord
   end
 
   private
-    def set_stripe_customer_id
-      begin
-        self.stripe_customer_id = Stripe::Customer.create.id
-      rescue
-        self.stripe_customer_id = nil
-      end
+
+  def set_stripe_customer_id
+    begin
+      self.stripe_customer_id = Stripe::Customer.create.id
+    rescue Stripe::StripeError
+      self.stripe_customer_id = nil
     end
+  end
 
-    def set_default_current_period_end
-      self.current_period_end = Date.today - 1
+  def stripe_customer
+    raise 'Cannot get stripe_customer when customer id not set' \
+      unless self.stripe_customer_id
+
+    begin
+      @stripe_customer ||= Stripe::Customer.retrieve(self.stripe_customer_id)
+    rescue Stripe::StripeError
+      @stripe_customer = nil
     end
+  end
 
-    def stripe_customer
-      raise "Cannot get stripe_customer when customer id not set" unless self.stripe_customer_id
+  def stripe_subscription
+    raise 'Subscription doesn\'t exist' unless self.stripe_subscription_id
 
-      begin
-        @stripe_customer ||= Stripe::Customer.retrieve(self.stripe_customer_id)
-      rescue
-        @stripe_customer = nil
-      end
+    begin
+      @stripe_subscription ||= Stripe::Subscription.retrieve(
+        self.stripe_subscription_id
+      )
+    rescue Stripe::StripeError
+      @stripe_subscription ||= nil
     end
+  end
 
-    def stripe_subscription
-      raise "Subscription doesn't exist" unless self.stripe_subscription_id
+  def stripe_subscription_active?
+    stripe_subscription.status == 'active'
+  end
 
-      begin
-        @stripe_subscription ||= Stripe::Subscription.retrieve(self.stripe_subscription_id)
-      rescue
-        @stripe_subscription ||= nil
-      end
-    end
+  def stripe_plan
+    @stripe_plan ||= Stripe::Plan.retrieve('basic')
+  end
 
-    def stripe_subscription_active?
-      stripe_subscription.status == 'active'
-    end
+  def set_active
+    raise 'Cannot set membership as active' unless membership_active?
 
-    def stripe_plan
-      @stripe_plan ||= Stripe::Plan.retrieve('basic')
-    end
+    self.active = true
+    self.save
+  end
 
-    def set_active
-      raise "Cannot set membership as active" unless membership_active?
-
-      self.active = true
-      self.save
-    end
-
-    def set_default_current_period_end
-      self.current_period_end = Time.zone.today - 1
-    end
+  def set_default_current_period_end
+    self.current_period_end = Time.zone.today - 1
+  end
 end

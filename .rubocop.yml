@@ -1,0 +1,10 @@
+Style/RedundantSelf:
+  Enabled: false
+Style/RedundantBegin:
+  Enabled: false
+Metrics/ClassLength:
+  Enabled: false
+Style/Documentation:
+  Enabled: false
+Style/FrozenStringLiteralComment:
+  Enabled: false
