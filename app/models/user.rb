@@ -20,14 +20,19 @@ class User < ApplicationRecord
   scope :active_members, -> { where('active = true').order('name asc') }
   scope :inactive_members, -> { where('active = false').order('name asc') }
 
+  before_create :set_default_current_period_end
+
   def initialize(args = nil)
     super(args)
     set_stripe_customer_id unless is_admin?
   end
 
   def membership_active?
+    # TODO: since changed to datetime, allow for
+    # access through whole day, even if time has passed
+    # TODO: make tests for different time zones, ensure they have access in their time
     return false unless current_period_end
-    self.current_period_end >= Time.zone.today
+    self.current_period_end.to_date >= Time.zone.today
   end
 
   def is_admin?
@@ -37,13 +42,14 @@ class User < ApplicationRecord
   def set_end_date(event)
     if event.respond_to?(:current_period_end)
       # Upon stripe subscription object
-      sub_end = Time.at(event.current_period_end).to_datetime
+      # byebug
+      sub_end = Time.zone.at(event.current_period_end)
     else
       # Webhook object returned by Stripe on invoice.payment_succeeded
-      sub_end = Time.at(event.data.object.period_end).to_datetime
+      sub_end = Time.zone.at(event.data.object.period_end)
     end
 
-    self.current_period_end = Date.new(sub_end.year, sub_end.month, sub_end.day)
+    self.current_period_end = sub_end
     self.save
   end
 
@@ -151,5 +157,9 @@ class User < ApplicationRecord
 
       self.active = true
       self.save
+    end
+
+    def set_default_current_period_end
+      self.current_period_end = Time.zone.today - 1
     end
 end
