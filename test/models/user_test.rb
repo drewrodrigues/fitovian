@@ -84,26 +84,23 @@ class UserTest < ActiveSupport::TestCase
   # - Questions ################################################################
 
   test "membership_active? should return true if current_period_end is in future" do
-    Timecop.travel(Date.today)
-
+    Timecop.travel(Date.current)
     user = users(:user)
-    user.current_period_end = Date.today + 1
-
+    user.current_period_end = Date.current + 1
     assert user.membership_active?
   end
 
   test "membership_active? should return false if current_period_end is in past" do
-    Timecop.travel(Date.today)
-
+    Timecop.travel(Date.current)
     user = users(:user)
-    user.current_period_end = Date.today - 1
-
+    user.current_period_end = Date.current - 1
     assert_not user.membership_active?
   end
 
   test "membership_active? should return true if current_period_end is today" do
+    Timecop.travel(Date.current)
     user = users(:user)
-    user.current_period_end = Date.today
+    user.current_period_end = Date.current
     assert user.membership_active?
   end
 
@@ -132,7 +129,7 @@ class UserTest < ActiveSupport::TestCase
     user = users(:user)
     event = StripeMock.mock_webhook_event('invoice.payment_succeeded', {
       id: user.stripe_customer_id,
-      period_end: 1517443200
+      period_end: 1_517_443_200
     })
 
     user.set_end_date event
@@ -141,13 +138,13 @@ class UserTest < ActiveSupport::TestCase
 
   test "#set_end_date sets current_period_end to event current_period_end with subscription" do
     today = Date.new(2018, 1, 1)
-    membership_end = Date.new(2018, 2, 1)
+    membership_end = Date.new(2018, 1, 31)
     Timecop.travel(today)
 
     user = users(:user)
     subscribe(user)
 
-    assert_equal user.current_period_end, membership_end
+    assert_equal membership_end, user.current_period_end
   end
 
   test "#subscribe should set membership to active" do
