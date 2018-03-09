@@ -80,6 +80,6 @@ class LessonsController < ApplicationController
 
     def check_subscription
       return if current_user.admin?
-      redirect_to new_charges_path unless current_user.membership_active?
+      redirect_to billing_dashboard_path unless current_user.membership_active?
     end
 end

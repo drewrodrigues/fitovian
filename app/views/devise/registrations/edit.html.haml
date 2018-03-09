@@ -9,7 +9,7 @@
       Your membership is inactive and will end on #{current_user.current_period_end}.
       %u
         %b
-          = link_to 'Click here', charges_re_activate_path, method: :post
+          = link_to 'Click here', billing_re_activate_path, method: :post
       to re-activate your membership.
 
 %h2 Settings
@@ -46,5 +46,5 @@
 
 - if current_user.subscription_active?
   %p
-    #{button_to "Cancel my subscription", charges_path, class: 'btn btn-danger', data: { confirm: "Are you sure?" }, method: :delete}
+    #{button_to "Cancel my subscription", billing_path, class: 'btn btn-danger', data: { confirm: "Are you sure?" }, method: :delete}
   = link_to "Back", :back
