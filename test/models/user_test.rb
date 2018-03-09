@@ -45,17 +45,6 @@ class UserTest < ActiveSupport::TestCase
     assert_not user.save
   end
 
-  test 'should validate uniqueness of stripe_user_id' do
-    user = users(:user)
-    user2 = user.dup
-    user2.email = 'somethingelse@gmail.com'
-    user2.password = 'something'
-    assert user2.invalid?
-    assert user2.errors.full_messages.include?(
-      'Stripe customer has already been taken'
-    )
-  end
-
   test 'upon new user, stripe_customer_id is assigned' do
     user = User.new(
       name: 'someone', email: 'something@masdoi.com', password: 'password'
