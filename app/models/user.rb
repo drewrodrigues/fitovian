@@ -12,9 +12,6 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :trackable, :validatable
 
   validates_presence_of :name
-  validates_presence_of :email
-  validates_presence_of :stripe_customer_id, unless: :admin
-  validates_uniqueness_of :stripe_customer_id
 
   scope :admins, -> { where('admin = true').order('name asc') }
   scope :active_members, -> { where('active = true').order('name asc') }
