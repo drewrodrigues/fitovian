@@ -18,11 +18,7 @@ class User < ApplicationRecord
   scope :inactive_members, -> { where('active = false').order('name asc') }
 
   before_create :set_default_current_period_end
-
-  def initialize(args = nil)
-    super(args)
-    set_stripe_customer_id unless admin?
-  end
+  before_create :set_stripe_customer_id, unless: :admin?
 
   def membership_active?
     return false unless current_period_end
@@ -108,9 +104,9 @@ class User < ApplicationRecord
 
   def set_stripe_customer_id
     begin
-      self.stripe_customer_id = Stripe::Customer.create.id
+      self.stripe_customer_id ||= Stripe::Customer.create.id
     rescue Stripe::StripeError
-      self.stripe_customer_id = nil
+      # TODO: raise descriptive error?
     end
   end
 
@@ -120,8 +116,8 @@ class User < ApplicationRecord
 
     begin
       @stripe_customer ||= Stripe::Customer.retrieve(self.stripe_customer_id)
-    rescue Stripe::StripeError
-      @stripe_customer = nil
+    rescue Stripe::StripeError => e
+      @stripe_customer ||= nil
     end
   end
 
@@ -132,7 +128,7 @@ class User < ApplicationRecord
       @stripe_subscription ||= Stripe::Subscription.retrieve(
         self.stripe_subscription_id
       )
-    rescue Stripe::StripeError
+    rescue Stripe::StripeError => e
       @stripe_subscription ||= nil
     end
   end
