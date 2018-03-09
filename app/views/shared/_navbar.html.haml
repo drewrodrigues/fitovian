@@ -23,5 +23,5 @@
             %li= link_to "Our Program", our_program_path, class: "#{'nav-active' if params[:action] == 'our_program'}"
             %li= link_to "Get Started", get_started_path, class: "#{'nav-active' if params[:action] == 'get_started'}"
             %li= link_to "Contact Us", contact_us_path, class: "#{'nav-active' if params[:action] == 'contact_us'}"
-            %li= link_to 'Log in', new_user_session_path, class: "#{'nav-active' if params[:action] == 'new' && params[:controller] == 'users/sessions'}"
-            %li= link_to 'Sign up', new_user_registration_path, class: "#{'nav-active' if params[:action] == 'new' && params[:controller] == 'devise/registrations'}"
+            %li= link_to "Sign in", new_user_session_path, class: "#{'nav-active' if params[:action] == 'new' && params[:controller] == 'users/sessions'}"
+            %li= link_to "Sign up", new_user_registration_path, class: "#{'nav-active' if params[:action] == 'new' && params[:controller] == 'devise/registrations'}"
