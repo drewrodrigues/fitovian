@@ -58,12 +58,12 @@ Rails.application.configure do
   config.action_mailer.perform_deliveries = true
   config.action_mailer.raise_delivery_errors = true
   config.action_mailer.smtp_settings = {
-    :address => "segonax.lunarpages.com",
-    :port    => '465',
-    :domain  => 'lunarpages.com',
-    :user_name => ENV['wcwlcusername'],
-    :password => ENV['wcwlcpassword'],
-    :ssl => true,
-    :authentication => :plain
+    address: 'smtp.gmail.com',
+    port: 587,
+    domain: 'wcwlc.com',
+    user_name: ENV['wcwlc_email_username'],
+    password: ENV['wcwlc_email_password'],
+    authentication: :plain,
+    enable_starttls_auto: true
   }
 end
