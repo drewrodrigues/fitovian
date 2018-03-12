@@ -67,4 +67,19 @@ class UserFlowsTest < ActionDispatch::IntegrationTest
 
     assert_equal root_path, current_path
   end
+
+  test 'as user, I can reset my password' do
+    user = User.new(
+      name: 'Andrew', email: 'andrew@example.com',
+      password: 'password', admin: true
+    )
+    assert user.save
+
+    visit new_user_password_path
+
+    fill_in('Email', with: user.email)
+    click_button('Send me reset password instructions')
+
+    assert_equal new_user_session_path, current_path
+  end
 end
