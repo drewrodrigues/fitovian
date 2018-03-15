@@ -6,6 +6,7 @@
 # name                      string        not null
 # stripe_customer_id        string        not null, unique
 # stripe_subscription_id    string
+# plan                      Plan
 
 class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
@@ -19,6 +20,8 @@ class User < ApplicationRecord
 
   before_create :set_default_current_period_end
   before_create :set_stripe_customer_id, unless: :admin?
+
+  has_one :plan, dependent: :destroy
 
   def membership_active?
     return false unless current_period_end
