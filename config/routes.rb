@@ -1,4 +1,12 @@
 Rails.application.routes.draw do
+  get 'plan/new'
+
+  get 'plan/edit'
+
+  get 'plan/create'
+
+  get 'plan/update'
+
   # REVIEW: do I have to do as on all of them? What are the automated ones?
   get 'billing' => 'billing#new', as: :new_payment_method
   get 'dashboard' => 'billing#dashboard', as: :billing_dashboard
