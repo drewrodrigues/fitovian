@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180317005254) do
+ActiveRecord::Schema.define(version: 20180317013553) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -21,6 +21,7 @@ ActiveRecord::Schema.define(version: 20180317005254) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "last4"
+    t.boolean "default"
     t.index ["user_id"], name: "index_cards_on_user_id"
   end
 
@@ -38,6 +39,7 @@ ActiveRecord::Schema.define(version: 20180317005254) do
     t.float "price"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "stripe_id"
     t.index ["user_id"], name: "index_plans_on_user_id"
   end
 
@@ -52,6 +54,9 @@ ActiveRecord::Schema.define(version: 20180317005254) do
     t.integer "stripe_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.date "current_period_end"
+    t.boolean "active"
+    t.boolean "subscribed"
     t.index ["user_id"], name: "index_subscriptions_on_user_id"
   end
 
@@ -67,10 +72,8 @@ ActiveRecord::Schema.define(version: 20180317005254) do
     t.inet "current_sign_in_ip"
     t.inet "last_sign_in_ip"
     t.boolean "admin", default: false
-    t.datetime "current_period_end"
-    t.string "stripe_customer_id"
+    t.string "stripe_id"
     t.string "stripe_subscription_id"
-    t.boolean "active", default: false, null: false
     t.string "name", null: false
     t.string "last4"
     t.index ["email"], name: "index_users_on_email", unique: true
