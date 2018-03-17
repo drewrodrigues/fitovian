@@ -1,12 +1,17 @@
-# id                        integer       not null, unique
+# Table
+###############################################################################
 # active                    boolean       default(false)
 # admin                     boolean       default(false)
-# current_period_end        date          default(previous day)
 # email                     string        not null, unique
+# id                        integer       not null, unique
 # name                      string        not null
-# stripe_customer_id        string        not null, unique
-# stripe_subscription_id    string
-# plan                      Plan
+# stripe_id                 string        not null, unique
+
+# Associations
+###############################################################################
+# cards
+# plan
+# subscription
 
 class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
