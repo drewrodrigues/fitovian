@@ -23,12 +23,15 @@ group :test do
   gem 'timecop'
   gem 'rails-controller-testing'
   gem 'launchy'
+  gem 'shoulda-matchers'
 end
 
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   gem 'capybara', '~> 2.13'
   gem 'selenium-webdriver'
+  gem 'rspec-rails'
+  gem 'factory_girl_rails'
 end
 
 group :development do
