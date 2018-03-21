@@ -10,18 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180317013553) do
+ActiveRecord::Schema.define(version: 20180321182317) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "cards", force: :cascade do |t|
-    t.bigint "user_id"
-    t.string "stripe_id"
+    t.bigint "user_id", null: false
+    t.string "stripe_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "last4"
-    t.boolean "default"
+    t.string "last4", null: false
+    t.boolean "default", default: false, null: false
     t.index ["user_id"], name: "index_cards_on_user_id"
   end
 
@@ -34,12 +34,12 @@ ActiveRecord::Schema.define(version: 20180317013553) do
   end
 
   create_table "plans", force: :cascade do |t|
-    t.bigint "user_id"
-    t.string "name"
-    t.float "price"
+    t.bigint "user_id", null: false
+    t.string "name", null: false
+    t.float "price", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "stripe_id"
+    t.string "stripe_id", null: false
     t.index ["user_id"], name: "index_plans_on_user_id"
   end
 
@@ -50,13 +50,13 @@ ActiveRecord::Schema.define(version: 20180317013553) do
   end
 
   create_table "subscriptions", force: :cascade do |t|
-    t.bigint "user_id"
-    t.integer "stripe_id"
+    t.bigint "user_id", null: false
+    t.integer "stripe_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.date "current_period_end"
-    t.boolean "active"
-    t.boolean "subscribed"
+    t.date "current_period_end", null: false
+    t.boolean "active", default: false, null: false
+    t.boolean "subscribed", default: false, null: false
     t.index ["user_id"], name: "index_subscriptions_on_user_id"
   end
 
@@ -75,7 +75,6 @@ ActiveRecord::Schema.define(version: 20180317013553) do
     t.string "stripe_id"
     t.string "stripe_subscription_id"
     t.string "name", null: false
-    t.string "last4"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
