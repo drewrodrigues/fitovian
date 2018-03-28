@@ -1,6 +1,5 @@
 # Table
 ###############################################################################
-# active                    boolean       default(false)
 # admin                     boolean       default(false)
 # email                     string        not null, unique
 # id                        integer       not null, unique
@@ -18,145 +17,47 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :trackable, :validatable
 
   validates_presence_of :name
+  validate :set_stripe_id, on: :create
 
-  scope :admins, -> { where('admin = true').order('name asc') }
-  scope :active_members, -> { where('active = true').order('name asc') }
-  scope :inactive_members, -> { where('active = false').order('name asc') }
-
-  before_create :set_default_current_period_end
-  before_create :set_stripe_customer_id, unless: :admin?
-
+  has_many :cards, dependent: :destroy
   has_one :plan, dependent: :destroy
-
-  def membership_active?
-    return false unless current_period_end
-    self.current_period_end.to_date >= Time.zone.today
-  end
+  has_one :subscription, dependent: :destroy
 
   def admin?
     self.admin
   end
 
-  def end_date(event)
-    self.current_period_end = if event.respond_to?(:current_period_end)
-                                # Upon stripe subscription object
-                                Time.zone.at(event.current_period_end)
-                              else
-                                # Webhook object on invoice.payment_succeeded
-                                Time.zone.at(event.data.object.period_end)
-                              end
-    self.save
+  def active?
+    return false unless self.subscription
   end
 
-  def subscribe
-    raise 'Already subscribed' if subscribed?
-
-    @stripe_subscription = Stripe::Subscription.create(
-      customer: self.stripe_customer_id,
-      items: [{ plan: stripe_plan.id }]
-    )
-
-    end_date(@stripe_subscription)
-    set_active
-
-    self.stripe_subscription_id = @stripe_subscription.id
-    self.save
+  def has_plan?
+    self.plan
   end
 
-  def cancel
-    stripe_subscription.delete(at_period_end: true)
-
-    self.active = false
-    self.save
+  def has_payment_method?
+    !self.cards.empty?
   end
 
-  def add_payment_method(token)
-    new_payment_method = stripe_customer.sources.create(source: token)
-    stripe_customer.default_source = new_payment_method.id
-
-    # REVIEW: doesn't this need a writer method
-    @default_payment_method = new_payment_method
-  end
-
-  def re_activate
-    raise 'Subscription already active' if subscribed?
-
-    stripe_subscription.items = [{
-      id: stripe_subscription.items.data[0].id,
-      plan: stripe_plan.id
-    }]
-    stripe_subscription.save
-
-    self.active = true
-    self.save
-    # REVIEW: do I need to call .save each time?
+  def stripe_customer
+    @stripe_customer ||= Stripe::Customer.retrieve(self.stripe_id)
+  rescue Stripe::StripeError
+    false
   end
 
   def default_payment_method
-    return unless stripe_customer
-    @default_payment_method ||= stripe_customer.sources.retrieve(
-      stripe_customer.default_source
-    )
+    self.cards.where(default: true).first
   end
 
-  def payment_methods
-    return unless stripe_customer
-    stripe_customer.sources.list.data
-  end
-
-  def subscribed?
-    active && membership_active?
+  def has_payment_method?
+    self.cards.count > 0
   end
 
   private
 
-  def set_stripe_customer_id
-    begin
-      self.stripe_customer_id ||= Stripe::Customer.create.id
-    rescue Stripe::StripeError
-      # TODO: raise descriptive error?
-    end
-  end
-
-  def stripe_customer
-    raise 'Cannot get stripe_customer when customer id not set' \
-      unless self.stripe_customer_id
-
-    begin
-      @stripe_customer ||= Stripe::Customer.retrieve(self.stripe_customer_id)
-    rescue Stripe::StripeError => e
-      @stripe_customer ||= nil
-    end
-  end
-
-  def stripe_subscription
-    raise 'Subscription doesn\'t exist' unless self.stripe_subscription_id
-
-    begin
-      @stripe_subscription ||= Stripe::Subscription.retrieve(
-        self.stripe_subscription_id
-      )
-    rescue Stripe::StripeError => e
-      @stripe_subscription ||= nil
-    end
-  end
-
-  def stripe_subscription_active?
-    stripe_subscription.status == 'active'
-  end
-
-  def stripe_plan
-    @stripe_plan ||= Stripe::Plan.retrieve('basic')
-  end
-
-  def set_active
-    raise 'Cannot set membership as active' unless membership_active?
-
-    self.active = true
-    self.save
-  end
-
-  def set_default_current_period_end
-    self.current_period_end = Time.zone.today - 1
+  def set_stripe_id
+    self.stripe_id ||= Stripe::Customer.create.id
+  rescue Stripe::StripeError
+    errors.add(:stripe_id, "cannot be set")
   end
 end
