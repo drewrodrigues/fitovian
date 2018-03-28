@@ -4,6 +4,7 @@ FactoryBot.define do
     email 'drew@example.com'
     name 'Drew'
     password 'password'
+    stripe_id 'fake_id'
 
     factory :admin do
       admin true
