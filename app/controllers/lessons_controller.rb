@@ -1,7 +1,6 @@
 class LessonsController < ApplicationController
   before_action :set_lesson, only: [:show, :edit, :update, :destroy]
-  before_action :authenticate_admin!, except: [:index, :show]
-  before_action :check_subscription, only: [:index, :show]
+  # before_action :check_subscription, only: [:index, :show]
 
   # GET /lessons
   # GET /lessons.json
@@ -79,7 +78,7 @@ class LessonsController < ApplicationController
     end
 
     def check_subscription
-      return if current_user.admin?
-      redirect_to billing_dashboard_path unless current_user.membership_active?
+      return if current_user.active?
+      redirect_to billing_path unless current_user.active?
     end
 end
