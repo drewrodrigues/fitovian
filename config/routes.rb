@@ -1,18 +1,11 @@
 Rails.application.routes.draw do
-  get 'plan/new'
+  get 'choose-plan', to: 'plans#new', as: :choose_plan
+  post 'choose-plan', to: 'plans#create'
 
-  get 'plan/edit'
-
-  get 'plan/create'
-
-  get 'plan/update'
-
-  # REVIEW: do I have to do as on all of them? What are the automated ones?
-  get 'billing' => 'billing#new', as: :new_payment_method
-  get 'dashboard' => 'billing#dashboard', as: :billing_dashboard
-  put 'billing/re_activate' => 'billing#re_activate', as: :re_activate
-  put 'billing/update' => 'billing#update', as: :update_payment_method
-  post 'billing/subscribe/:stripe_token' => 'billing#subscribe', as: :subscribe
+  get 'billing' => 'billing#dashboard', as: :billing
+  get 'billing/new' => 'billing#new', as: :payment_method
+  post 'billing/new' => 'billing#create'
+  post 'billing/subscribe' => 'billing#subscribe', as: :subscribe
   post 'billing/receive' => 'billing#subscribe', as: :receive
   delete 'billing/cancel' => 'billing#cancel', as: :cancel_subscription
 
