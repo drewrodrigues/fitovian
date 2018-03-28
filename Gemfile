@@ -24,6 +24,7 @@ group :test do
   gem 'rails-controller-testing'
   gem 'launchy'
   gem 'shoulda-matchers'
+  gem 'database_cleaner'
 end
 
 group :development, :test do
