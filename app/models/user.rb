@@ -56,7 +56,7 @@ class User < ApplicationRecord
   private
 
   def set_stripe_id
-    self.stripe_id ||= Stripe::Customer.create.id
+    self.stripe_id = Stripe::Customer.create.id
   rescue Stripe::StripeError
     errors.add(:stripe_id, "cannot be set")
   end
