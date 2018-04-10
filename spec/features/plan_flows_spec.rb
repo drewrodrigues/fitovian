@@ -21,7 +21,7 @@ RSpec.feature 'Plan Flows', type: :feature do
 
     click_button 'Choose Starter'
     expect(user.reload.plan.name).to eq('starter')
-    expect(page).to have_text('Successfully chose starter plan')
+    expect(page).to have_text('Successfully chose starter plan', count: 1)
   end
 
   scenario 'User chooses a plan when they already have a plan' do
@@ -35,12 +35,12 @@ RSpec.feature 'Plan Flows', type: :feature do
 
     visit choose_plan_path
     click_button 'Starter'
-    expect(page).to have_text('Successfully chose starter plan')
+    expect(page).to have_text('Successfully chose starter plan', count: 1)
     expect(user.reload.plan.name).to eq('starter')
 
     visit choose_plan_path
     click_button 'Choose Premium'
-    expect(page).to have_text('Successfully chose premium plan')
+    expect(page).to have_text('Successfully chose premium plan', count: 1)
     expect(user.reload.plan.name).to eq('premium')
   end
 end
