@@ -20,7 +20,7 @@ RSpec.describe Card, type: :model do
 
   describe 'factories' do
     it 'has a valid base factory' do
-      expect(build(:card)).to be_valid
+      expect(build_stubbed(:card)).to be_valid
     end
   end
 end
