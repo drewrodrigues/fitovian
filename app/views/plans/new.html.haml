@@ -1,9 +1,46 @@
+=link_to 'Back to Billing', billing_path
+
 %h1 Choose plan
+.plans
+  .row
+    .col-md-6
+      .card
+        .card-body
+          %h5.card-title
+            Starter
+            .float-right.small.text-muted #{Plan::STARTER[:price]}
+          %hr
+          %p.card-text Something goes here, so it goes here when it usually does.
+          = form_tag(url: choose_plan_path) do
+            = hidden_field_tag(:plan, Plan::STARTER[:name])
+            = submit_tag("Choose Starter", class: 'btn btn-success')
+      %ul
+        %li Something goes here, that dgoes oaisdjoai here.
+        %li Something else goes here that wasn't her bfoer.
+        %li OSIoiwjs oiasjdoais iouwiuq jsljsiauda loiqop pdp asdasd.
+        %li Moiasdj wimoias us oiwjiqmms oiadoaidj ptlr tsiaojs d.
+        %li Something goes here, that dgoes oaisdjoai here.
+        %li Something else goes here that wasn't her bfoer.
+        %li OSIoiwjs oiasjdoais iouwiuq jsljsiauda loiqop pdp asdasd.
+        %li Moiasdj wimoias us oiwjiqmms oiadoaidj ptlr tsiaojs d.
 
-= form_tag(url: choose_plan_path) do
-  = hidden_field_tag(:name, Plan.basic[:name])
-  = submit_tag("$#{Plan.basic[:price]} Basic", class: 'btn btn-success')
-
-= form_tag(url: choose_plan_path) do
-  = hidden_field_tag(:name, Plan.premium[:name])
-  = submit_tag("$#{Plan.premium[:price]} Premium", class: 'btn btn-success')
+    .col-md-6
+      .card
+        .card-body
+          %h5.card-title
+            Premium
+            .float-right.small.text-muted #{Plan::PREMIUM[:price]}
+          %hr
+          %p.card-text Something goes here, so it goes here when it usually does.
+          = form_tag(url: choose_plan_path) do
+            = hidden_field_tag(:plan, Plan::PREMIUM[:name])
+            = submit_tag("Choose Premium", class: 'btn btn-success')
+      %ul
+        %li Something goes here, that dgoes oaisdjoai here.
+        %li Something else goes here that wasn't her bfoer.
+        %li OSIoiwjs oiasjdoais iouwiuq jsljsiauda loiqop pdp asdasd.
+        %li Moiasdj wimoias us oiwjiqmms oiadoaidj ptlr tsiaojs d.
+        %li Something goes here, that dgoes oaisdjoai here.
+        %li Something else goes here that wasn't her bfoer.
+        %li OSIoiwjs oiasjdoais iouwiuq jsljsiauda loiqop pdp asdasd.
+        %li Moiasdj wimoias us oiwjiqmms oiadoaidj ptlr tsiaojs d.            
