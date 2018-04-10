@@ -24,19 +24,23 @@ class User < ApplicationRecord
   has_one :subscription, dependent: :destroy
 
   def admin?
-    self.admin
+    admin
   end
 
   def active?
     return false unless self.subscription
   end
 
-  def has_plan?
-    self.plan
+  def plan?
+    plan
   end
 
-  def has_payment_method?
-    !self.cards.empty?
+  def default_card
+    cards.where(default: true).first
+  end
+
+  def payment_method?
+    cards.count > 0
   end
 
   def stripe_customer
