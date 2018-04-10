@@ -30,7 +30,7 @@ end
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   gem 'capybara', '~> 2.13'
-  gem 'selenium-webdriver'
+  gem 'selenium-webdriver', '2.53.4'
   gem 'rspec-rails'
   gem 'factory_bot_rails'
 end

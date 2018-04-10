@@ -4,8 +4,11 @@ require 'rspec/rails'
 require 'factory_bot_rails'
 require 'devise'
 require 'database_cleaner'
+require 'helpers/flow_helper'
 
 RSpec.configure do |config|
+  config.use_transactional_fixtures = true
+
   config.expect_with :rspec do |expectations|
     expectations.include_chain_clauses_in_custom_matcher_descriptions = true
   end
