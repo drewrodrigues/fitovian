@@ -50,7 +50,7 @@ RSpec.describe PlansController, type: :controller do
     end
   end
 
-  describe '#create'
+  describe '#create' do
     context 'user already has a plan' do
       before(:each) do
         @user = create(:starter_plan).user
