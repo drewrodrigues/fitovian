@@ -1,4 +1,19 @@
-%h3 Billing
-%hr
+%h1 Billing
 
-= current_user.plan.name
+.card
+  .card-body
+    %h5.card-title Subscription information
+    %p Plan: #{current_user.plan.name.titleize} #{link_to '(manage)', choose_plan_path}
+    %p Status: 
+    %hr
+    %h5.card-title Billing method
+    = link_to 'Add new payment method', new_cards_path
+    %ul.list-group
+      - @cards.each do |card|
+        %li.list-group-item
+          **** **** **** #{card.last4}
+          - if card.default
+            %span.text-muted.small Default
+          - else
+            =link_to 'Delete', delete_card_path(card), method: :delete, class: 'btn btn-sm btn-danger float-right'
+            =link_to 'Set default', default_card_path(card), method: :put, class: 'btn btn-sm btn-primary float-right'
