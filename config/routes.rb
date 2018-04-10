@@ -3,11 +3,11 @@ Rails.application.routes.draw do
   post 'choose-plan', to: 'plans#create'
 
   get 'billing' => 'billing#dashboard', as: :billing
-  get 'billing/new' => 'billing#new', as: :payment_method
-  post 'billing/new' => 'billing#create'
-  post 'billing/subscribe' => 'billing#subscribe', as: :subscribe
-  post 'billing/receive' => 'billing#subscribe', as: :receive
-  delete 'billing/cancel' => 'billing#cancel', as: :cancel_subscription
+
+  get 'choose-payment-method' => 'cards#new', as: :new_cards
+  post 'choose-payment-method' => 'cards#create'
+  put 'choose-default-payment-method/:id' => 'cards#default', as: :default_card
+  delete 'delete-payment-method/:id' => 'cards#destroy', as: :delete_card 
 
   devise_for :users, controllers: {
     sessions: 'users/sessions',
