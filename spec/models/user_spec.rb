@@ -1,6 +1,14 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
+  before(:all) do
+    StripeMock.start
+  end
+
+  after(:all) do
+    StripeMock.stop
+  end
+
   describe 'validations' do
     it { is_expected.to validate_presence_of(:name) }
     it { is_expected.to validate_presence_of(:email) }
@@ -21,30 +29,26 @@ RSpec.describe User, type: :model do
 
   describe 'factories' do
     it 'has a valid base factory' do
+      StripeMock.start
       expect(build_stubbed(:user)).to be_valid
+      StripeMock.stop
     end
 
     it 'has a valid admin factory' do
+      StripeMock.start
       expect(build_stubbed(:admin)).to be_valid
-    end
-
-    it 'has a valid user_with_card factory' do
-      expect(build_stubbed(:user_with_card)).to be_valid
-    end
-
-    it 'has a valid user_with_cards factory' do
-      expect(build_stubbed(:user_with_cards)).to be_valid
+      StripeMock.stop
     end
   end
 
   describe '#set_stripe_id' do
     context 'successful api call' do
       it 'adds a stripe_id upon creation' do
-        user = build(:user)
-        user.stripe_id = nil
-        expect(user.stripe_id).to be_nil
+        StripeMock.start
+        user = create(:user)
         expect(user.save).to be true
         expect(user.stripe_id).to_not be_nil
+        StripeMock.stop
       end
     end
 
@@ -82,40 +86,6 @@ RSpec.describe User, type: :model do
         expect(user.stripe_customer).to be false
 
         StripeMock.stop
-      end
-    end
-  end
-
-  describe '#default_payment_method' do
-    context 'user has 1 payment method' do
-      it 'returns the default payment method' do
-        StripeMock.start
-        user = create(:user_with_card)
-        expect(user.default_payment_method).to eq(user.cards.first)
-        StripeMock.stop
-      end
-    end
-
-    context 'user has multiple payment methods' do
-      it 'should only have 1 card with default set to true' do
-        StripeMock.start
-        user = create(:user_with_cards)
-        expect(user.cards.where(default: true).count).to eq(1)
-        StripeMock.stop
-      end
-
-      it 'returns the default payment method' do
-        StripeMock.start
-        user = create(:user_with_cards)
-        expect(user.default_payment_method.default).to be true
-        StripeMock.stop
-      end
-    end
-
-    context 'user doesn\'t have a payment method' do
-      it 'returns nil' do
-        user = build_stubbed(:user)
-        expect(user.default_payment_method).to be_nil
       end
     end
   end
