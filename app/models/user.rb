@@ -49,18 +49,12 @@ class User < ApplicationRecord
     false
   end
 
-  def default_payment_method
-    self.cards.where(default: true).first
-  end
-
-  def has_payment_method?
-    self.cards.count > 0
-  end
-
   private
 
   def set_stripe_id
-    self.stripe_id = Stripe::Customer.create.id
+    self.stripe_id = Stripe::Customer.create(
+      email: self.email
+    ).id
   rescue Stripe::StripeError
     errors.add(:stripe_id, "cannot be set")
   end
