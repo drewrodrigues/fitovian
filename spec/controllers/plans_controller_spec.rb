@@ -2,16 +2,22 @@ require 'rails_helper'
 
 RSpec.describe PlansController, type: :controller do
   # TODO: double check stripe that the information is updated correctly, once subscription is implemented
+  
+  before(:all) do
+    StripeMock.start
+  end
+
+  after(:all) do
+    StripeMock.stop
+  end
 
   describe 'Page Access' do
     context 'signed in' do
       it 'renders the new template' do
-        StripeMock.start
         user = create(:user)
         sign_in(user)
         get :new
         expect(response).to render_template('new')
-        StripeMock.stop
       end
     end
 
@@ -27,14 +33,9 @@ RSpec.describe PlansController, type: :controller do
 
   context 'user doesn\'t have a plan yet' do
     before(:each) do
-      StripeMock.start
       @user = create(:user)
       sign_in(@user)
       post :create, params: { plan: Plan::STARTER[:name] }
-    end
-
-    after(:each) do
-      StripeMock.stop
     end
 
     it 'responds with successful message upon create' do
