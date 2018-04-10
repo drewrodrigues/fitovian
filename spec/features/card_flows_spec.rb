@@ -25,7 +25,7 @@ RSpec.feature 'Card Flows', type: :feature do
       '24242'.split('').each { |c| find_field('ZIP').native.send_keys(c) }
     end
     click_button 'Subscribe'
-    expect(page).to have_text('Successfully subscribed to starter plan')
+    expect(page).to have_text('Successfully subscribed to starter plan', count: 1)
     expect(current_path).to eq(lessons_path)
   end
 
@@ -41,7 +41,7 @@ RSpec.feature 'Card Flows', type: :feature do
       '55555'.split('').each { |c| find_field('ZIP').native.send_keys(c) }
     end
     click_button 'Subscribe'
-    expect(page).to have_text('Successfully subscribed to starter plan')
+    expect(page).to have_text('Successfully subscribed to starter plan', count: 1)
     expect(current_path).to eq(lessons_path)
 
     visit billing_path
@@ -54,7 +54,7 @@ RSpec.feature 'Card Flows', type: :feature do
       '24242'.split('').each { |c| find_field('ZIP').native.send_keys(c) }
     end
     click_button 'Add'
-    expect(page).to have_text('Successfully updated payment method')
+    expect(page).to have_text('Successfully updated payment method', count: 1)
     expect(current_path).to eq(billing_path)
     expect(user.cards.count).to eq(2)
   end
@@ -71,7 +71,7 @@ RSpec.feature 'Card Flows', type: :feature do
       '55555'.split('').each { |c| find_field('ZIP').native.send_keys(c) }
     end
     click_button 'Subscribe'
-    expect(page).to have_text('Successfully subscribed to starter plan')
+    expect(page).to have_text('Successfully subscribed to starter plan', count: 1)
     user.default_card.update_attribute(:last4, '4444') # stripe mock changes it
     expect(current_path).to eq(lessons_path)
 
@@ -85,7 +85,7 @@ RSpec.feature 'Card Flows', type: :feature do
       '24242'.split('').each { |c| find_field('ZIP').native.send_keys(c) }
     end
     click_button 'Add'
-    expect(page).to have_text('Successfully updated payment method')
+    expect(page).to have_text('Successfully updated payment method', count: 1)
     user.default_card.update_attribute(:last4, '4242') # stripe mock changes it
     expect(current_path).to eq(billing_path)
 
@@ -106,7 +106,7 @@ RSpec.feature 'Card Flows', type: :feature do
       '55555'.split('').each { |c| find_field('ZIP').native.send_keys(c) }
     end
     click_button 'Subscribe'
-    expect(page).to have_text('Successfully subscribed to starter plan')
+    expect(page).to have_text('Successfully subscribed to starter plan', count: 1)
     user.default_card.update_attribute(:last4, '4444') # stripe mock changes it
     expect(current_path).to eq(lessons_path)
     expect(user.default_card.last4).to eq('4444')
@@ -121,7 +121,7 @@ RSpec.feature 'Card Flows', type: :feature do
       '24242'.split('').each { |c| find_field('ZIP').native.send_keys(c) }
     end
     click_button 'Add'
-    expect(page).to have_text('Successfully updated payment method')
+    expect(page).to have_text('Successfully updated payment method', count: 1)
     user.default_card.update_attribute(:last4, '4242') # stripe mock changes it
     expect(current_path).to eq(billing_path)
     expect(user.default_card.last4).to eq('4242')
