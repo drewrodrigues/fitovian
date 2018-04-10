@@ -6,7 +6,9 @@ services:
 script:
   - bundle exec rake db:setup
   - bundle exec rake db:migrate
-  - bundle exec rake spec
+  - bundle exec rake spec:controllers
+  - bundle exec rake spec:models
+  # TODO: figure out travis ci & feature tests
 test:
   adapter: postgresql
   database: travis_ci_test
