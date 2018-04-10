@@ -8,34 +8,26 @@
 class Plan < ApplicationRecord
   belongs_to :user
 
-  validates :name, presence: true
-  validates :price, presence: true
+  STARTER = {
+    stripe_id: 'starter',
+    name: 'starter',
+    price: 1999
+  }
+
+  PREMIUM = {
+    stripe_id: 'premium',
+    name: 'premium',
+    price: 3999
+  }
+
   validates :user, presence: true
-  
-  validate :is_valid_plan?
-
-  def self.basic
-    {
-      stripe_id: 'basic',
-      name: 'basic',
-      price: 1999
-    }
-  end
-
-  def self.premium
-    {
-      stripe_id: 'premium',
-      name: 'premium',
-      price: 3999
-    }
-  end
+  validate :defined_plan?
 
   private
 
-  def is_valid_plan?
-    [:name, :stripe_id, :price].each do |attribute|
-      self_attribute = self.send(attribute)
-      errors.add(:plan, 'not valid') unless self_attribute == Plan.basic[attribute] || self_attribute == Plan.premium[attribute]
-    end
+  def defined_plan?
+    return true if self.name == STARTER[:name] && self.stripe_id == STARTER[:stripe_id] && self.price == STARTER[:price]
+    return true if self.name == PREMIUM[:name] && self.stripe_id == PREMIUM[:stripe_id] && self.price == PREMIUM[:price]
+    errors.add(:plan, 'is invalid.')
   end
 end
