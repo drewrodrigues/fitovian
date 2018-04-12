@@ -49,6 +49,46 @@ class User < ApplicationRecord
     false
   end
 
+  def select_starter_plan
+    self.plan = Plan.starter_plan
+  end
+
+  def select_premium_plan
+    self.plan = Plan.premium_plan
+  end
+
+  def add_fake_card
+    token = StripeMock.create_test_helper.generate_card_token()
+    card = stripe_customer.sources.create(source: token)
+    self.cards << Card.new(stripe_id: card.id, last4: card.last4, default: true)
+  end
+
+  def subscribe
+    raise 'Please choose a plan before subscribing' unless self.plan
+    raise 'Please add a credit card before subscribing' if self.cards.empty?
+    @stripe_subscription = Stripe::Subscription.create(
+      customer: self.stripe_id,
+      items: [{ plan: self.plan.name }]
+    )
+    subscription = self.build_subscription(
+      active: true,
+      current_period_end: Time.zone.at(@stripe_subscription.current_period_end),
+      stripe_id: @stripe_subscription.id,
+      subscribed: true
+    )
+    self.subscription = subscription
+  end
+
+  def re_activate
+    return false unless self.subscription
+    self.subscription.re_activate
+  end
+
+  def cancel
+    return true unless self.subscription
+    self.subscription.cancel
+  end
+
   private
 
   def set_stripe_id
@@ -56,6 +96,6 @@ class User < ApplicationRecord
       email: self.email
     ).id
   rescue Stripe::StripeError
-    errors.add(:stripe_id, "cannot be set")
+    errors.add(:stripe_id, 'cannot be set')
   end
 end
