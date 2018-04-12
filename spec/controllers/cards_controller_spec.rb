@@ -2,24 +2,30 @@ require 'rails_helper'
 
 RSpec.describe CardsController, type: :controller do
   # TODO: double check stripe that the information is updated correctly
+  before(:all) do
+    StripeMock.start
+    StripeMock.create_test_helper.create_plan(:id => 'starter', :amount => 1999)
+    StripeMock.create_test_helper.create_plan(:id => 'premium', :amount => 3999)
+  end
+
+  after(:all) do
+    StripeMock.stop
+  end
+
   describe 'Page Access' do
     context 'Signed in' do
       it 'doesn\'t allow access when user doesn\'t have a plan' do
-        StripeMock.start
         user = create(:user)
         sign_in(user)
         get :new
         expect(response).to redirect_to(choose_plan_path)
-        StripeMock.stop
       end
 
       it 'allows access once the user has a plan selected' do
-        StripeMock.start
         user = create(:starter_plan).user
         sign_in(user)
         get :new
         expect(response).to render_template('new')
-        StripeMock.stop
       end
     end
   end
@@ -27,15 +33,10 @@ RSpec.describe CardsController, type: :controller do
   describe '#create' do
     context 'user doesn\'t have a card yet' do
       before(:each) do
-        StripeMock.start
         token = StripeMock.create_test_helper.generate_card_token(last4: '1212')
         @user = create(:starter_plan).user
         sign_in(@user)
         post :create, params: { stripeToken: token }
-      end
-  
-      after(:each) do
-        StripeMock.stop
       end
   
       it 'should respond with a successful message' do
@@ -67,17 +68,12 @@ RSpec.describe CardsController, type: :controller do
   
     context 'user already has a card' do
       before(:each) do
-        StripeMock.start
         token = StripeMock.create_test_helper.generate_card_token(last4: '1111')
         token2 = StripeMock.create_test_helper.generate_card_token(last4: '2222')
         @user = create(:premium_plan).user
         sign_in(@user)
         post :create, params: { stripeToken: token }
         post :create, params: { stripeToken: token2 }
-      end
-  
-      after(:each) do
-        StripeMock.stop
       end
   
       it 'should response with a successful message' do
@@ -110,7 +106,6 @@ RSpec.describe CardsController, type: :controller do
 
   describe '#default' do
     before(:each) do
-      StripeMock.start
       token = StripeMock.create_test_helper.generate_card_token(last4: '1111')
       token2 = StripeMock.create_test_helper.generate_card_token(last4: '2222')
       @user = create(:premium_plan).user
@@ -120,7 +115,7 @@ RSpec.describe CardsController, type: :controller do
     end
 
     after(:each) do
-      StripeMock.stop
+
     end
 
     context 'user sets the other card as the default' do
@@ -168,17 +163,12 @@ RSpec.describe CardsController, type: :controller do
 
   describe '#destroy' do
     before(:each) do
-      StripeMock.start
       token = StripeMock.create_test_helper.generate_card_token(last4: '1111')
       token2 = StripeMock.create_test_helper.generate_card_token(last4: '2222')
       @user = create(:premium_plan).user
       sign_in(@user)
       post :create, params: { stripeToken: token }
       post :create, params: { stripeToken: token2 }
-    end
-
-    after(:each) do
-      StripeMock.stop
     end
 
     context 'user deletes the other card' do
