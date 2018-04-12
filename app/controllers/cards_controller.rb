@@ -8,7 +8,7 @@ class CardsController < ApplicationController
     stripe_customer = current_user.stripe_customer
     new_payment_method = stripe_customer.sources.create(source: params[:stripeToken])
     @card = current_user.cards.new(stripe_id: new_payment_method.id, last4: new_payment_method.last4)
-    if !current_user.payment_method? && @card.save
+    if !current_user.payment_method? && @card.save && current_user.subscribe
       update_defaults
       redirect_to lessons_path, flash: {
         success: "Successfully subscribed to #{current_user.plan.name} plan"

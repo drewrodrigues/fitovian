@@ -54,6 +54,15 @@ RSpec.describe CardsController, type: :controller do
       it 'should be the user\'s default card' do
         expect(@user.default_card.last4).to eq('1212')
       end
+
+      it 'should subscribe the user to the selected plan' do
+        expect(@user.subscription).to_not be_nil
+      end
+
+      it 'should set the Stripe subscription' do
+        subscription = Stripe::Subscription.retrieve(@user.subscription.stripe_id)
+        expect(subscription.status).to eq('active')
+      end
   
       it 'should add the card as the Stripe default' do
         stripe_default = Stripe::Customer.retrieve(@user.stripe_id).default_source
