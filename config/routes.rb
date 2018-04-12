@@ -7,7 +7,11 @@ Rails.application.routes.draw do
   get 'choose-payment-method' => 'cards#new', as: :new_cards
   post 'choose-payment-method' => 'cards#create'
   put 'choose-default-payment-method/:id' => 'cards#default', as: :default_card
-  delete 'delete-payment-method/:id' => 'cards#destroy', as: :delete_card 
+  delete 'delete-payment-method/:id' => 'cards#destroy', as: :delete_card
+
+  post 'subscription' => 'subscriptions#create', as: :subscription
+  put 'subscription' => 'subscriptions#re_activate'
+  delete 'subscription' => 'subscriptions#cancel'
 
   devise_for :users, controllers: {
     sessions: 'users/sessions',
