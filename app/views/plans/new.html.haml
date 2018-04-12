@@ -12,7 +12,7 @@
           %hr
           %p.card-text Something goes here, so it goes here when it usually does.
           = form_tag(url: choose_plan_path) do
-            = hidden_field_tag(:plan, Plan::STARTER[:name])
+            = hidden_field_tag(:plan, 'starter')
             = submit_tag("Choose Starter", class: 'btn btn-success')
       %ul
         %li Something goes here, that dgoes oaisdjoai here.
@@ -33,7 +33,7 @@
           %hr
           %p.card-text Something goes here, so it goes here when it usually does.
           = form_tag(url: choose_plan_path) do
-            = hidden_field_tag(:plan, Plan::PREMIUM[:name])
+            = hidden_field_tag(:plan, 'premium')
             = submit_tag("Choose Premium", class: 'btn btn-success')
       %ul
         %li Something goes here, that dgoes oaisdjoai here.

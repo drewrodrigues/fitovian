@@ -23,6 +23,22 @@ class Plan < ApplicationRecord
   validates :user, presence: true
   validate :defined_plan?
 
+  def self.starter_plan
+    plan = Plan.new
+    plan.stripe_id = STARTER[:stripe_id]
+    plan.name = STARTER[:name]
+    plan.price = STARTER[:price]
+    plan
+  end
+
+  def self.premium_plan
+    plan = Plan.new
+    plan.stripe_id = PREMIUM[:stripe_id]
+    plan.name = PREMIUM[:name]
+    plan.price = PREMIUM[:price]
+    plan
+  end
+
   private
 
   def defined_plan?

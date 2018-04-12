@@ -35,7 +35,7 @@ RSpec.describe PlansController, type: :controller do
     before(:each) do
       @user = create(:user)
       sign_in(@user)
-      post :create, params: { plan: Plan::STARTER[:name] }
+      post :create, params: { plan: 'starter' }
     end
 
     it 'responds with successful message upon create' do
@@ -57,7 +57,7 @@ RSpec.describe PlansController, type: :controller do
         @user = create(:starter_plan).user
         sign_in(@user)
         expect(@user.plan.name).to eq('starter')
-        post :create, params: { plan: Plan::PREMIUM[:name] }
+        post :create, params: { plan: 'premium' }
       end
 
       it 'responds with successful message' do
