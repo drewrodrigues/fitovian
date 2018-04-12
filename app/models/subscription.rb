@@ -25,7 +25,7 @@ class Subscription < ApplicationRecord
   end
 
   def re_activate
-    return true if subscribed
+    return true if self.active
     stripe_subscription.items = [{
       id: stripe_subscription.items.data[0].id,
       plan: stripe_plan.id

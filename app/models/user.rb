@@ -73,8 +73,7 @@ class User < ApplicationRecord
     subscription = self.build_subscription(
       active: true,
       current_period_end: Time.zone.at(@stripe_subscription.current_period_end),
-      stripe_id: @stripe_subscription.id,
-      subscribed: true
+      stripe_id: @stripe_subscription.id
     )
     self.subscription = subscription
   end

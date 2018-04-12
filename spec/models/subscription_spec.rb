@@ -15,7 +15,6 @@ RSpec.describe Subscription, type: :model do
     it { is_expected.to have_db_column(:active) }
     it { is_expected.to have_db_column(:current_period_end) }
     it { is_expected.to have_db_column(:stripe_id) }
-    it { is_expected.to have_db_column(:subscribed) }
   end
 
   before(:all) do
