@@ -2,7 +2,6 @@
   # current_period_end    date              default(yesterday)
   # id                    integer           not null, unique
   # stripe_id             string            not null
-  # subscribed            boolean           not null, default(false)
 
 class Subscription < ApplicationRecord
   belongs_to :user
@@ -33,7 +32,6 @@ class Subscription < ApplicationRecord
     }]
     stripe_subscription.save
     self.active = true
-    self.subscribed = true
     self.save
   end
  
