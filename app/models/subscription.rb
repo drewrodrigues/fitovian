@@ -14,6 +14,7 @@ class Subscription < ApplicationRecord
   def cancel
     return true unless self.active
     stripe_subscription.delete(at_period_end: true)
+    self.status = 'canceled'
     self.active = false
     self.save
   end

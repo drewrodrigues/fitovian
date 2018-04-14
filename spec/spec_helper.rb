@@ -8,6 +8,7 @@ require 'helpers/flow_helper'
 
 RSpec.configure do |config|
   config.use_transactional_fixtures = true
+  config.example_status_persistence_file_path = 'examples.txt'
 
   config.expect_with :rspec do |expectations|
     expectations.include_chain_clauses_in_custom_matcher_descriptions = true

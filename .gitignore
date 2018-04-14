@@ -25,3 +25,4 @@
 .DS_S*
 ngrok
 .vscode/*
+examples.txt
