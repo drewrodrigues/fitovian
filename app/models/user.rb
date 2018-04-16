@@ -36,11 +36,34 @@ class User < ApplicationRecord
   end
 
   def default_card
-    cards.where(default: true).first
+    self.cards.find_by_default(true)
   end
 
   def payment_method?
     cards.count > 0
+  end
+
+  def subscribe
+    raise 'Please choose a plan before subscribing' unless self.plan
+    raise 'Please add a credit card before subscribing' if self.cards.empty?
+    self.subscription.re_activate || self.subscription.subscribe
+  end
+
+  def cancel
+    raise 'No subscription to cancel' unless self.subscription
+    self.subscription.cancel
+  end
+
+  def select_starter_plan
+    # TODO: ensure if user is subscribed, it changed the plan
+    self.plan = Plan.starter_plan
+    self.save
+  end
+
+  def select_premium_plan
+    # TODO: ensure if user is subscribed, it changed the plan
+    self.plan = Plan.premium_plan
+    self.save
   end
 
   def stripe_customer
@@ -49,44 +72,11 @@ class User < ApplicationRecord
     false
   end
 
-  def select_starter_plan
-    self.plan = Plan.starter_plan
-  end
-
-  def select_premium_plan
-    self.plan = Plan.premium_plan
-  end
-
   def add_fake_card
     token = StripeMock.create_test_helper.generate_card_token()
     card = stripe_customer.sources.create(source: token)
     self.cards << Card.new(stripe_id: card.id, last4: card.last4, default: true)
-  end
-
-  def subscribe
-    raise 'Please choose a plan before subscribing' unless self.plan
-    raise 'Please add a credit card before subscribing' if self.cards.empty?
-    @stripe_subscription = Stripe::Subscription.create(
-      customer: self.stripe_id,
-      items: [{ plan: self.plan.name }]
-    )
-    subscription = self.build_subscription(
-      active: true,
-      current_period_end: Time.zone.at(@stripe_subscription.current_period_end),
-      stripe_id: @stripe_subscription.id,
-      status: 'subscribed'
-    )
-    self.subscription = subscription
-  end
-
-  def re_activate
-    return false unless self.subscription
-    self.subscription.re_activate
-  end
-
-  def cancel
-    return true unless self.subscription
-    self.subscription.cancel
+    @card = default_card
   end
 
   private
