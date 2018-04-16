@@ -20,94 +20,158 @@ RSpec.describe Subscription, type: :model do
   before(:all) do
     StripeMock.start
     StripeMock.create_test_helper.create_plan(:id => 'starter', :amount => 1999)
-  end
-
-  before(:each) do
-    @user = create(:user)
-    @user.select_starter_plan
-    @user.add_fake_card
+    StripeMock.create_test_helper.create_plan(:id => 'premium', :amount => 3999)
   end
 
   after(:all) do
     StripeMock.stop
   end
 
-  describe '#subscribe' do
-    context 'user subscribed' do
-      it 'returns true' do
+  describe '#re_activate' do
+    context 'user has an in-active subscription that can be re-activated' do
+      before(:each) do
+        @user = create(:user)
+        @user.select_starter_plan
+        @user.add_fake_card
         @user.subscribe
-        expect(@user.subscribe).to be_truthy
+        @user.cancel
+      end
+
+      it 'should return true' do
+        expect(@user.subscription.re_activate).to eq(true)
+      end
+
+      it 'should not add another subscription to the user' do
+        subscription_count = Stripe::Customer.retrieve(@user.stripe_id).subscriptions.total_count
+        expect(subscription_count).to eq(1)
       end
     end
 
-    context 'user not subscribed' do
-      it 'returns true' do
-        expect(@user.subscribe).to be_truthy
+    context 'user has an in-active subscription that can\'t be re-activated' do
+      before(:each) do
+        @user = create(:user)
+        @user.select_starter_plan
+        @user.add_fake_card
+        @user.subscribe
+        @user.cancel
+        Timecop.freeze(Date.today + 32)
+      end
+
+      after(:all) do
+        Timecop.return
+      end
+
+      it 'should return false' do
+        expect(@user.subscription.re_activate).to eq(false)
+      end
+    end
+  end
+
+  describe '#subscribe' do
+    context 'user doesn\'t have a subscription' do
+      before(:each) do
+        @user = create(:user)
+        @user.select_starter_plan
+        @user.add_fake_card
+        @user.subscribe
+      end
+
+      it 'should add the subscription to the user' do
+        expect(@user.subscription).to_not be_nil
+      end
+
+      it 'should subscribe the user to the plan' do
+        stripe_subscription = @user.subscription.stripe_subscription
+        expect(stripe_subscription.customer).to eq(@user.stripe_id)
+      end
+
+      it 'should set the user\'s subscription to active' do
+        expect(@user.subscription.active).to be true
+      end
+
+      it 'should set the user\'s Stripe subscription status to active' do
+        subscription = @user.subscription.stripe_subscription
+        expect(subscription.status).to eq('active')
+      end
+
+      it 'should set the current_period_end 1 month out' do
+        subscription = @user.subscription
+        expect(subscription.current_period_end).to eq(Time.zone.today + 30)
+      end
+
+      it 'should have 1 stripe subscription' do
+        subscription_count = Stripe::Customer.retrieve(@user.stripe_id).subscriptions.total_count
+        expect(subscription_count).to eq(1)
       end
     end
 
-    context 'user doesn\'t have plan' do
-      it 'raises an error' do
-        @user.plan = nil
-        expect { @user.subscribe }.to raise_error {|e| 
-          expect(e.message).to eq('Please choose a plan before subscribing')
-        }
+    context 'user already has an active subscription' do
+      before(:each) do
+        @user = create(:user)
+        @user.select_premium_plan
+        @user.add_fake_card
+        @user.subscribe
+        @user.subscribe
       end
-    end
 
-    context 'user doesn\'t have card' do
-      it 'raises an error' do
-        @user.cards.destroy_all
-        expect { @user.subscribe }.to raise_error {|e|
-          expect(e.message).to eq('Please add a credit card before subscribing')
-        }
+      it 'should return true' do
+        expect(@user.subscription.subscribe).to be true
       end
-    end
 
-    context 'errored api call' do
-      it 'allows error to fall through' do
-        StripeMock.prepare_card_error(:card_declined, :create_subscription)
-        expect { @user.subscribe }.to raise_error {|e|
-          expect(e.message).to eq('The card was declined')
-        }
+      it 'should not add another subscription to the user' do
+        subscription_count = Stripe::Customer.retrieve(@user.stripe_id).subscriptions.total_count
+        expect(subscription_count).to eq(1)
       end
     end
   end
 
   describe '#cancel' do
-    context 'user subscribed' do
-      it 'returns true' do
+    context 'user doesn\'t have a subscription' do
+      before(:each) do
+        @user = create(:user)
+        @user.select_premium_plan
+        @user.add_fake_card
         @user.subscribe
-        expect(@user.cancel).to be_truthy
+        @user.cancel
+      end
+
+      it 'should set to cancel at period end' do
+        subscription = @user.subscription.stripe_subscription
+        expect(subscription.cancel_at_period_end).to be true
+      end
+
+      it 'should set active to false' do
+        expect(@user.subscription.active).to be false
+      end
+
+      it 'should set status to canceled' do
+        subscription = @user.subscription
+        expect(subscription.status).to eq('canceled')
       end
     end
 
-    context 'user not-subscribed' do
-      it 'returns true' do
-        expect(@user.cancel).to be_truthy
-      end
-    end
-  end
-
-  describe '#re_activate' do
-    context 'user already subscribed' do
-      it 'returns true' do
+    context 'user\'s subscription is already canceled' do
+      before(:each) do
+        @user = create(:user)
+        @user.select_premium_plan
+        @user.add_fake_card
         @user.subscribe
-        expect(@user.re_activate).to be_truthy
+        @user.cancel
       end
-    end
 
-    context 'user not subscribed' do
-      it 'returns false' do
-        expect(@user.re_activate).to be false
+      it 'should set to cancel at period end' do
+        subscription = @user.subscription.stripe_subscription
+        expect(subscription.cancel_at_period_end).to be true
       end
-    end
-  end
 
-  describe '#update_end_date(event)' do
-    context 'upon incoming webhook' do
-      it 'sets current_period end to a month out'
-      it 'returns true'
+      it 'should set active to false' do
+        expect(@user.subscription.active).to be false
+      end
+
+      it 'should set status to canceled' do
+        subscription = @user.subscription
+        expect(subscription.status).to eq('canceled')
+      end
     end
   end
 end

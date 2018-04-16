@@ -46,7 +46,9 @@ class User < ApplicationRecord
   def subscribe
     raise 'Please choose a plan before subscribing' unless self.plan
     raise 'Please add a credit card before subscribing' if self.cards.empty?
-    self.subscription.re_activate || self.subscription.subscribe
+    subscription = self.subscription || self.build_subscription
+    subscription.re_activate || subscription.subscribe
+    self.subscription = subscription
   end
 
   def cancel
