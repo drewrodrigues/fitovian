@@ -45,10 +45,6 @@ RSpec.describe PlansController, type: :controller do
     it 'redirects to new payment method' do
       expect(response).to redirect_to(new_cards_path)
     end
-
-    it 'adds the plan to the user' do
-      expect(@user.reload.plan.name).to eq('starter')
-    end
   end
 
   describe '#create' do
@@ -56,7 +52,6 @@ RSpec.describe PlansController, type: :controller do
       before(:each) do
         @user = create(:starter_plan).user
         sign_in(@user)
-        expect(@user.plan.name).to eq('starter')
         post :create, params: { plan: 'premium' }
       end
 
@@ -66,10 +61,6 @@ RSpec.describe PlansController, type: :controller do
 
       it 'redirects to new payment method' do
         expect(response).to redirect_to(billing_path)
-      end
-
-      it 'changes the user\'s plan' do
-        expect(@user.reload.plan.name).to eq('premium')
       end
     end
   end
