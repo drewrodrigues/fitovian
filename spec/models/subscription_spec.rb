@@ -27,46 +27,6 @@ RSpec.describe Subscription, type: :model do
     StripeMock.stop
   end
 
-  describe '#re_activate' do
-    context 'user has an in-active subscription that can be re-activated' do
-      before(:each) do
-        @user = create(:user)
-        @user.select_starter_plan
-        @user.add_fake_card
-        @user.subscribe
-        @user.cancel
-      end
-
-      it 'should return true' do
-        expect(@user.subscription.re_activate).to eq(true)
-      end
-
-      it 'should not add another subscription to the user' do
-        subscription_count = Stripe::Customer.retrieve(@user.stripe_id).subscriptions.total_count
-        expect(subscription_count).to eq(1)
-      end
-    end
-
-    context 'user has an in-active subscription that can\'t be re-activated' do
-      before(:each) do
-        @user = create(:user)
-        @user.select_starter_plan
-        @user.add_fake_card
-        @user.subscribe
-        @user.cancel
-        Timecop.freeze(Date.today + 32)
-      end
-
-      after(:all) do
-        Timecop.return
-      end
-
-      it 'should return false' do
-        expect(@user.subscription.re_activate).to eq(false)
-      end
-    end
-  end
-
   describe '#subscribe' do
     context 'user doesn\'t have a subscription' do
       before(:each) do
@@ -116,6 +76,25 @@ RSpec.describe Subscription, type: :model do
 
       it 'should return true' do
         expect(@user.subscription.subscribe).to be true
+      end
+
+      it 'should not add another subscription to the user' do
+        subscription_count = Stripe::Customer.retrieve(@user.stripe_id).subscriptions.total_count
+        expect(subscription_count).to eq(1)
+      end
+    end
+
+    context 'user has an in-active subscription' do
+      before(:each) do
+        @user = create(:user)
+        @user.select_starter_plan
+        @user.add_fake_card
+        @user.subscribe
+        @user.cancel
+      end
+
+      it 'should return true' do
+        expect(@user.subscription.subscribe).to be_truthy
       end
 
       it 'should not add another subscription to the user' do

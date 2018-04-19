@@ -46,9 +46,8 @@ class User < ApplicationRecord
   def subscribe
     raise 'Please choose a plan before subscribing' unless self.plan
     raise 'Please add a credit card before subscribing' if self.cards.empty?
-    subscription = self.subscription || self.build_subscription
-    subscription.re_activate || subscription.subscribe
-    self.subscription = subscription
+    # FIXME: how can we simplify this line? Make a call to subscribe only
+    self.subscription ? self.subscription.subscribe : Subscription.subscribe(self)
   end
 
   def cancel
