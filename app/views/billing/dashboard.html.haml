@@ -4,10 +4,11 @@
   .card-body
     %h5.card-title Subscription information
     %p Plan: #{current_user.plan.name.titleize} #{link_to '(manage)', choose_plan_path}
-    %p Status: 
+    %p Status: #{current_user.subscription.status.titleize}
+    = render subscription_buttons_path
     %hr
     %h5.card-title Billing method
-    = link_to 'Add new payment method', new_cards_path
+    = link_to 'Add new payment method', new_cards_path, class: 'btn btn-sm btn-success'
     %ul.list-group
       - @cards.each do |card|
         %li.list-group-item

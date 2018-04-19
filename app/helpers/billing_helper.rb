@@ -26,4 +26,12 @@ module BillingHelper
       content_tag('span', 'No card on file')
     end
   end
+
+  def subscription_buttons_path
+    if current_user.subscription.active
+      'cancel_button'
+    else
+      'reactivate_button'
+    end
+  end
 end
