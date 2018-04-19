@@ -15,7 +15,5 @@ class AddDatabaseValidations < ActiveRecord::Migration[5.1]
     change_column_null :subscriptions, :current_period_end, false
     change_column :subscriptions, :active, :boolean, default: false, null: false
     change_column :subscriptions, :subscribed, :boolean, default: false, null: false
-
-    remove_column :users, :last4
   end
 end
