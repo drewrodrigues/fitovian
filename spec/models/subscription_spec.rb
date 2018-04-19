@@ -94,7 +94,7 @@ RSpec.describe Subscription, type: :model do
       end
 
       it 'should return true' do
-        expect(@user.subscription.subscribe).to be_truthy
+        expect(@user.subscription).to be_truthy
       end
 
       it 'should not add another subscription to the user' do
