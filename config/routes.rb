@@ -10,7 +10,6 @@ Rails.application.routes.draw do
   delete 'delete-payment-method/:id' => 'cards#destroy', as: :delete_card
 
   post 'subscription' => 'subscriptions#create', as: :subscription
-  put 'subscription' => 'subscriptions#re_activate'
   delete 'subscription' => 'subscriptions#cancel'
 
   devise_for :users, controllers: {
