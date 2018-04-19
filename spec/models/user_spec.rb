@@ -75,43 +75,7 @@ RSpec.describe User, type: :model do
     end
   end
 
-  describe '#subscribe' do
-    context 'user doesn\'t have a card' do
-      it 'should raise an error' do
-        user = create(:user)
-        user.select_starter_plan
-
-        expect { user.subscribe }.to raise_error {|e|
-          expect(e.message).to eq('Please add a credit card before subscribing')  
-        }
-      end
-    end
-
-    context 'user doesn\'t have a plan' do
-      it 'should raise an error' do
-        user = create(:user)
-        user.add_fake_card
-
-        expect { user.subscribe }.to raise_error {|e|
-          expect(e.message).to eq('Please choose a plan before subscribing')  
-        }
-      end
-    end
-  end
-
-  describe '#cancel' do
-    context 'user doesn\'t have a subscription' do
-      it 'should raise an error' do
-        user = create(:user)
-        user.add_fake_card
-        user.select_starter_plan
-
-        expect { user.cancel }.to raise_error {|e|
-          expect(e.message).to eq('No subscription to cancel')  
-        }
-      end
-    end
-  end
+  # TODO: text new implementation of subscribe and cancel
 
   # describe '#select_starter_plan' do
   #   context 'user doesn\'t have a subscription yet' do
