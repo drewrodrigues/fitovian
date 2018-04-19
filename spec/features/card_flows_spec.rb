@@ -5,6 +5,8 @@ RSpec.feature 'Card Flows', type: :feature do
 
   before(:all) do
     StripeMock.start
+    StripeMock.create_test_helper.create_plan(:id => 'starter', :amount => 1999)
+    StripeMock.create_test_helper.create_plan(:id => 'premium', :amount => 3999)
   end
 
   after(:all) do
@@ -18,12 +20,7 @@ RSpec.feature 'Card Flows', type: :feature do
     sign_in_user(user, 'Sign in')
 
     expect(current_path).to eq(new_cards_path)
-    within_frame 0 do
-      '4242424242424242'.split('').each { |c| find_field('Card number').native.send_keys(c) }
-      '4242'.split('').each { |c| find_field('MM / YY').native.send_keys(c) }
-      '424'.split('').each { |c| find_field('CVC').native.send_keys(c) }
-      '24242'.split('').each { |c| find_field('ZIP').native.send_keys(c) }
-    end
+    add_card2
     click_button 'Subscribe'
     expect(page).to have_text('Successfully subscribed to starter plan', count: 1)
     expect(current_path).to eq(lessons_path)
@@ -34,12 +31,7 @@ RSpec.feature 'Card Flows', type: :feature do
     sign_in_user(user, 'Sign in')
 
     visit new_cards_path
-    within_frame 0 do
-      '5555555555554444'.split('').each { |c| find_field('Card number').native.send_keys(c) }
-      '5555'.split('').each { |c| find_field('MM / YY').native.send_keys(c) }
-      '555'.split('').each { |c| find_field('CVC').native.send_keys(c) }
-      '55555'.split('').each { |c| find_field('ZIP').native.send_keys(c) }
-    end
+    add_card
     click_button 'Subscribe'
     expect(page).to have_text('Successfully subscribed to starter plan', count: 1)
     expect(current_path).to eq(lessons_path)
@@ -47,12 +39,7 @@ RSpec.feature 'Card Flows', type: :feature do
     visit billing_path
     click_on 'Add new payment method'
     expect(current_path).to eq(new_cards_path)
-    within_frame 0 do
-      '4242424242424242'.split('').each { |c| find_field('Card number').native.send_keys(c) }
-      '4242'.split('').each { |c| find_field('MM / YY').native.send_keys(c) }
-      '424'.split('').each { |c| find_field('CVC').native.send_keys(c) }
-      '24242'.split('').each { |c| find_field('ZIP').native.send_keys(c) }
-    end
+    add_card2
     click_button 'Add'
     expect(page).to have_text('Successfully updated payment method', count: 1)
     expect(current_path).to eq(billing_path)
@@ -64,12 +51,7 @@ RSpec.feature 'Card Flows', type: :feature do
     sign_in_user(user, 'Sign in')
 
     visit new_cards_path
-    within_frame 0 do
-      '5555555555554444'.split('').each { |c| find_field('Card number').native.send_keys(c) }
-      '5555'.split('').each { |c| find_field('MM / YY').native.send_keys(c) }
-      '555'.split('').each { |c| find_field('CVC').native.send_keys(c) }
-      '55555'.split('').each { |c| find_field('ZIP').native.send_keys(c) }
-    end
+    add_card
     click_button 'Subscribe'
     expect(page).to have_text('Successfully subscribed to starter plan', count: 1)
     user.default_card.update_attribute(:last4, '4444') # stripe mock changes it
@@ -78,12 +60,7 @@ RSpec.feature 'Card Flows', type: :feature do
     visit billing_path
     click_on 'Add new payment method'
     expect(current_path).to eq(new_cards_path)
-    within_frame 0 do
-      '4242424242424242'.split('').each { |c| find_field('Card number').native.send_keys(c) }
-      '4242'.split('').each { |c| find_field('MM / YY').native.send_keys(c) }
-      '424'.split('').each { |c| find_field('CVC').native.send_keys(c) }
-      '24242'.split('').each { |c| find_field('ZIP').native.send_keys(c) }
-    end
+    add_card2
     click_button 'Add'
     expect(page).to have_text('Successfully updated payment method', count: 1)
     user.default_card.update_attribute(:last4, '4242') # stripe mock changes it
@@ -99,12 +76,7 @@ RSpec.feature 'Card Flows', type: :feature do
     sign_in_user(user, 'Sign in')
 
     visit new_cards_path
-    within_frame 0 do
-      '5555555555554444'.split('').each { |c| find_field('Card number').native.send_keys(c) }
-      '5555'.split('').each { |c| find_field('MM / YY').native.send_keys(c) }
-      '555'.split('').each { |c| find_field('CVC').native.send_keys(c) }
-      '55555'.split('').each { |c| find_field('ZIP').native.send_keys(c) }
-    end
+    add_card
     click_button 'Subscribe'
     expect(page).to have_text('Successfully subscribed to starter plan', count: 1)
     user.default_card.update_attribute(:last4, '4444') # stripe mock changes it
@@ -114,12 +86,7 @@ RSpec.feature 'Card Flows', type: :feature do
     visit billing_path
     click_on 'Add new payment method'
     expect(current_path).to eq(new_cards_path)
-    within_frame 0 do
-      '4242424242424242'.split('').each { |c| find_field('Card number').native.send_keys(c) }
-      '4242'.split('').each { |c| find_field('MM / YY').native.send_keys(c) }
-      '424'.split('').each { |c| find_field('CVC').native.send_keys(c) }
-      '24242'.split('').each { |c| find_field('ZIP').native.send_keys(c) }
-    end
+    add_card2
     click_button 'Add'
     expect(page).to have_text('Successfully updated payment method', count: 1)
     user.default_card.update_attribute(:last4, '4242') # stripe mock changes it

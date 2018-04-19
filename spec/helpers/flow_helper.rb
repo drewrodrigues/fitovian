@@ -14,4 +14,13 @@ module FlowHelper
       '55555'.split('').each { |c| find_field('ZIP').native.send_keys(c) }
     end
   end
+
+  def add_card2
+    within_frame 0 do
+      '4242424242424242'.split('').each { |c| find_field('Card number').native.send_keys(c) }
+      '4242'.split('').each { |c| find_field('MM / YY').native.send_keys(c) }
+      '424'.split('').each { |c| find_field('CVC').native.send_keys(c) }
+      '24242'.split('').each { |c| find_field('ZIP').native.send_keys(c) }
+    end
+  end
 end

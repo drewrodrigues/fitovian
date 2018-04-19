@@ -4,7 +4,7 @@
   .card-body
     %h5.card-title Subscription information
     %p Plan: #{current_user.plan.name.titleize} #{link_to '(manage)', choose_plan_path}
-    %p Status: #{current_user.subscription.status.titleize}
+    %p Status: #{current_user.subscription.status.titleize if current_user.subscription}
     = render subscription_buttons_path
     %hr
     %h5.card-title Billing method
