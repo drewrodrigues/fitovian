@@ -9,18 +9,10 @@ class SubscriptionsController < ApplicationController
         alert: 'Failed to subscribe'
       }
     end
-  end
-
-  def re_activate
-    if current_user.re_activate
-      redirect_to billing_path, flash: {
-        success: 'Successfully re-activated membership'
-      }
-    else
-      redirect_to billing_path, flash: {
-        alert: 'Failed to re-activate membership'
-      }
-    end
+  rescue Stripe::StripeError => e
+    redirect_to billing_path, flash: {
+      alert: e.message
+    }
   end
 
   def cancel
@@ -33,5 +25,9 @@ class SubscriptionsController < ApplicationController
         alert: 'Failed to cancel membership'
       }
     end
+  rescue Stripe::StripeError => e
+    redirect_to billing_path, flash: {
+      alert: e.message
+    }
   end
 end
