@@ -1,8 +1,3 @@
-%h2 Lessons
-- if current_user.admin?
-  = link_to 'New Lesson', new_lesson_path, class: 'btn btn-primary'
-  %small #{User.all.count} Users
-
 .panel-lessons
   - @lessons.each do |lesson|
     %p.panel-lessons-lesson
