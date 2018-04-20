@@ -1,17 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe SubscriptionsController, type: :controller do
-  # TODO: ensure all errors are caught by controller
-  before(:all) do
-    StripeMock.start
-    StripeMock.create_test_helper.create_plan(:id => 'starter', :amount => 1999)
-    StripeMock.create_test_helper.create_plan(:id => 'premium', :amount => 3999)
-  end
-
-  after(:all) do
-    StripeMock.stop
-  end
-
   describe '#create' do
     context 'successfully subscribed' do
       before(:each) do

@@ -26,8 +26,17 @@ RSpec.configure do |config|
   config.include Devise::Test::IntegrationHelpers, type: :feature
 
   config.before(:suite) do
+    # DB Cleaner
     DatabaseCleaner.strategy = :transaction
     DatabaseCleaner.clean_with(:truncation)
+
+    # StripeMock
+    StripeMock.start
+    StripeMock.create_test_helper.create_plan(:id => 'starter', :amount => 1999)
+  end
+
+  config.after(:suite) do
+    StripeMock.stop
   end
 
   config.around(:each) do |example|

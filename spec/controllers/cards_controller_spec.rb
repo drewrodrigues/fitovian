@@ -1,17 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe CardsController, type: :controller do
-  # TODO: double check stripe that the information is updated correctly
-  before(:all) do
-    StripeMock.start
-    StripeMock.create_test_helper.create_plan(:id => 'starter', :amount => 1999)
-    StripeMock.create_test_helper.create_plan(:id => 'premium', :amount => 3999)
-  end
-
-  after(:all) do
-    StripeMock.stop
-  end
-
   describe 'Page Access' do
     context 'Signed in' do
       it 'doesn\'t allow access when user doesn\'t have a plan' do

@@ -2,18 +2,6 @@ require 'rails_helper'
 
 RSpec.feature 'Card Flows', type: :feature do
   include FlowHelper
-
-  before(:all) do
-    StripeMock.start
-    StripeMock.create_test_helper.create_plan(:id => 'starter', :amount => 1999)
-    StripeMock.create_test_helper.create_plan(:id => 'premium', :amount => 3999)
-  end
-
-  after(:all) do
-    StripeMock.stop
-  end
-
-  # TODO: make helper methods to reduce code
   
   scenario 'New User adds a new card', js: true do
     user = create(:starter_plan).user

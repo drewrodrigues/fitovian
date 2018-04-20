@@ -3,16 +3,6 @@ require 'rails_helper'
 RSpec.feature 'Subscription Flows', type: :feature do
   include FlowHelper
 
-  before(:all) do
-    StripeMock.start
-    StripeMock.create_test_helper.create_plan(:id => 'starter', :amount => 1999)
-    StripeMock.create_test_helper.create_plan(:id => 'premium', :amount => 3999)
-  end
-
-  after(:all) do
-    StripeMock.stop
-  end
-
   scenario 'New User subscribes to starter plan', js: true do
     user = create(:user)
     sign_in_user(user, 'Sign in')

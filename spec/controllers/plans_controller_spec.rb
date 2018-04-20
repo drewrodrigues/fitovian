@@ -1,16 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe PlansController, type: :controller do
-  # TODO: double check stripe that the information is updated correctly, once subscription is implemented
-  
-  before(:all) do
-    StripeMock.start
-  end
-
-  after(:all) do
-    StripeMock.stop
-  end
-
   describe 'Page Access' do
     context 'signed in' do
       it 'renders the new template' do
