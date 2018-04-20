@@ -35,13 +35,57 @@ class User < ApplicationRecord
     plan
   end
 
-  def default_card
-    self.cards.find_by_default(true)
-  end
+  # CARDS ###########################################################
 
   def payment_method?
     cards.count > 0
   end
+
+  # add a card and set to default
+  def add_card(token)
+    card = Card.add(self, token)
+    default_card(card)
+  end
+
+  # set the card to default
+  # or retrieve the default card
+  def default_card(card = nil)
+    if card
+      stripe_card_default(card)
+      remove_previous_default
+      card.default = true
+      card.save
+    else
+      self.cards.find_by_default(true)
+    end
+  end
+
+  # delete the card from stripe and the db
+  # don't allow if it's the default card
+  def delete_card(card)
+    return false if card.default
+    self.stripe_customer.sources.retrieve(card.stripe_id).delete
+    card.destroy
+  end
+
+  # if there's a default card
+  # set it to default = false
+  def remove_previous_default
+    previous_default = self.cards.where(default: true).first 
+    return true unless previous_default
+    previous_default.default = false
+    previous_default.save
+  end
+
+  # set the passed card to stripe's default card
+  def stripe_card_default(card)
+    stripe_customer.default_source = card.stripe_id
+    stripe_customer.save
+  end
+
+  private :remove_previous_default, :stripe_card_default
+
+  # SUBSCRIPTIONS ###################################################
 
   def subscribe
     # FIXME: how can we simplify this line? Make a call to subscribe only
@@ -52,6 +96,8 @@ class User < ApplicationRecord
     return false unless self.subscription
     self.subscription.cancel
   end
+
+  # PLANS ###########################################################
 
   def select_starter_plan
     # TODO: ensure if user is subscribed, it changed the plan
@@ -80,11 +126,11 @@ class User < ApplicationRecord
 
   private
 
-  def set_stripe_id
-    self.stripe_id = Stripe::Customer.create(
-      email: self.email
-    ).id
-  rescue Stripe::StripeError
-    errors.add(:stripe_id, 'cannot be set')
-  end
+    def set_stripe_id
+      self.stripe_id = Stripe::Customer.create(
+        email: self.email
+      ).id
+    rescue Stripe::StripeError
+      errors.add(:stripe_id, 'cannot be set')
+    end
 end
