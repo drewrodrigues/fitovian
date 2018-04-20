@@ -16,6 +16,7 @@ gem 'bootstrap-sass', '~> 3.3.7'
 gem 'jquery-rails'
 gem 'tinymce-rails'
 gem 'stripe'
+gem 'newrelic_rpm'
 
 group :test do
   gem 'minitest', '5.10.0'
