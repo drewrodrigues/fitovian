@@ -17,3 +17,7 @@
 //= require_tree .
 
 // TODO: // = require turbolinks (make this work with TINY MCE)
+
+$(function() {
+  $('.alert').slideDown(500).delay(3000).slideUp(500);
+});
