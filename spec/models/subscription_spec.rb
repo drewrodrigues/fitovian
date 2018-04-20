@@ -58,7 +58,7 @@ RSpec.describe Subscription, type: :model do
     context 'user already has an active subscription' do
       before(:each) do
         @user = create(:user)
-        @user.select_premium_plan
+        @user.select_starter_plan
         @user.add_fake_card
         @user.subscribe
         @user.subscribe
@@ -98,7 +98,7 @@ RSpec.describe Subscription, type: :model do
     context 'user doesn\'t have a subscription' do
       before(:each) do
         @user = create(:user)
-        @user.select_premium_plan
+        @user.select_starter_plan
         @user.add_fake_card
         @user.subscribe
         @user.cancel
@@ -122,7 +122,7 @@ RSpec.describe Subscription, type: :model do
     context 'user\'s subscription is already canceled' do
       before(:each) do
         @user = create(:user)
-        @user.select_premium_plan
+        @user.select_starter_plan
         @user.add_fake_card
         @user.subscribe
         @user.cancel

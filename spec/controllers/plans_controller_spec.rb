@@ -42,11 +42,11 @@ RSpec.describe PlansController, type: :controller do
       before(:each) do
         @user = create(:starter_plan).user
         sign_in(@user)
-        post :create, params: { plan: 'premium' }
+        post :create, params: { plan: 'starter' }
       end
 
       it 'responds with successful message' do
-        expect(flash[:success]).to eq('Successfully chose premium plan')
+        expect(flash[:success]).to eq('Successfully chose starter plan')
       end
 
       it 'redirects to new payment method' do

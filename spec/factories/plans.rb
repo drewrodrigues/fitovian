@@ -7,11 +7,5 @@ FactoryBot.define do
       price { Plan::STARTER[:price] }
       stripe_id { Plan::STARTER[:stripe_id] }
     end
-
-    factory :premium_plan do
-      name { Plan::PREMIUM[:name] }
-      price { Plan::PREMIUM[:price] }
-      stripe_id { Plan::PREMIUM[:stripe_id] }
-    end
   end
 end

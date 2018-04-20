@@ -4,7 +4,7 @@ RSpec.describe Plan, type: :model do
   describe 'validations' do
     context 'name isn\'t correct' do
       it 'returns invalid' do
-        plans = [ Plan::STARTER, Plan::PREMIUM ]
+        plans = [ Plan::STARTER ]
         new_plan = Plan.new(user: build_stubbed(:user))
 
         plans.each do |plan|
@@ -18,7 +18,7 @@ RSpec.describe Plan, type: :model do
 
     context 'stripe_id isn\'t correct' do
       it 'returns invalid' do
-        plans = [ Plan::STARTER, Plan::PREMIUM ]
+        plans = [ Plan::STARTER ]
         new_plan = Plan.new(user: build_stubbed(:user))
 
         plans.each do |plan|
@@ -32,7 +32,7 @@ RSpec.describe Plan, type: :model do
 
     context 'price isn\'t correct' do
       it 'returns invalid' do
-        plans = [ Plan::STARTER, Plan::PREMIUM ]
+        plans = [ Plan::STARTER ]
         new_plan = Plan.new(user: build(:user))
 
         plans.each do |plan|
@@ -59,10 +59,6 @@ RSpec.describe Plan, type: :model do
   describe 'factories' do
     it 'has a valid starter_plan factory' do
       expect(build_stubbed(:starter_plan)).to be_valid
-    end
-
-    it 'has a valid premium_plan factory' do
-      expect(build_stubbed(:premium_plan)).to be_valid
     end
   end
 end

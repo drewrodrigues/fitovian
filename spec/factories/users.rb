@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :user do
     admin false
-    email 'drew@example.com'
+    sequence(:email) {|e| "drew#{e}@example.com"}
     name 'Drew'
     password 'password'
     stripe_id nil

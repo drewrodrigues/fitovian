@@ -23,17 +23,21 @@ class User < ApplicationRecord
   has_one :plan, dependent: :destroy
   has_one :subscription, dependent: :destroy
 
+  # USER ############################################################
+
   def admin?
     admin
   end
 
-  def active?
-    return false unless self.subscription
+  def set_stripe_id
+    self.stripe_id = Stripe::Customer.create(
+      email: self.email
+    ).id
+  rescue Stripe::StripeError
+    errors.add(:stripe_id, 'cannot be set')
   end
 
-  def plan?
-    plan
-  end
+  private :set_stripe_id
 
   # CARDS ###########################################################
 
@@ -97,17 +101,15 @@ class User < ApplicationRecord
     self.subscription.cancel
   end
 
+  def active?
+    return false unless self.subscription
+  end
+
   # PLANS ###########################################################
 
   def select_starter_plan
     # TODO: ensure if user is subscribed, it changed the plan
     self.plan = Plan.starter_plan
-    self.save
-  end
-
-  def select_premium_plan
-    # TODO: ensure if user is subscribed, it changed the plan
-    self.plan = Plan.premium_plan
     self.save
   end
 
@@ -124,13 +126,7 @@ class User < ApplicationRecord
     @card = default_card
   end
 
-  private
-
-    def set_stripe_id
-      self.stripe_id = Stripe::Customer.create(
-        email: self.email
-      ).id
-    rescue Stripe::StripeError
-      errors.add(:stripe_id, 'cannot be set')
-    end
+  def plan?
+    plan
+  end
 end

@@ -68,7 +68,7 @@ RSpec.describe CardsController, type: :controller do
       before(:each) do
         token = StripeMock.create_test_helper.generate_card_token(last4: '1111')
         token2 = StripeMock.create_test_helper.generate_card_token(last4: '2222')
-        @user = create(:premium_plan).user
+        @user = create(:starter_plan).user
         sign_in(@user)
         post :create, params: { stripeToken: token }
         post :create, params: { stripeToken: token2 }
@@ -106,14 +106,10 @@ RSpec.describe CardsController, type: :controller do
     before(:each) do
       token = StripeMock.create_test_helper.generate_card_token(last4: '1111')
       token2 = StripeMock.create_test_helper.generate_card_token(last4: '2222')
-      @user = create(:premium_plan).user
+      @user = create(:starter_plan).user
       sign_in(@user)
       post :create, params: { stripeToken: token }
       post :create, params: { stripeToken: token2 }
-    end
-
-    after(:each) do
-
     end
 
     context 'user sets the other card as the default' do
@@ -163,7 +159,7 @@ RSpec.describe CardsController, type: :controller do
     before(:each) do
       token = StripeMock.create_test_helper.generate_card_token(last4: '1111')
       token2 = StripeMock.create_test_helper.generate_card_token(last4: '2222')
-      @user = create(:premium_plan).user
+      @user = create(:starter_plan).user
       sign_in(@user)
       post :create, params: { stripeToken: token }
       post :create, params: { stripeToken: token2 }
