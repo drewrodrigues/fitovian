@@ -113,6 +113,11 @@ class User < ApplicationRecord
     self.save
   end
 
+  def select_admin_plan
+    self.plan = Plan.admin_plan
+    self.save
+  end
+
   def stripe_customer
     @stripe_customer ||= Stripe::Customer.retrieve(self.stripe_id)
   rescue Stripe::StripeError

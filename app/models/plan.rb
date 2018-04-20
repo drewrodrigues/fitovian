@@ -14,6 +14,12 @@ class Plan < ApplicationRecord
     price: 1999
   }
 
+  ADMIN = {
+    stripe_id: 'admin',
+    name: 'admin',
+    price: 0
+  }
+
   validates :user, presence: true
   validate :defined_plan?
 
@@ -25,8 +31,17 @@ class Plan < ApplicationRecord
     plan
   end
 
+  def self.admin_plan
+    plan = Plan.new
+    plan.stripe_id = ADMIN[:stripe_id]
+    plan.name = ADMIN[:name]
+    plan.price = ADMIN[:price]
+    plan
+  end
+
   def defined_plan?
     return true if self.name == STARTER[:name] && self.stripe_id == STARTER[:stripe_id] && self.price == STARTER[:price]
+    return true if self.name == ADMIN[:name] && self.stripe_id == ADMIN[:stripe_id] && self.price == ADMIN[:price]
     errors.add(:plan, 'is invalid.')
   end
 
