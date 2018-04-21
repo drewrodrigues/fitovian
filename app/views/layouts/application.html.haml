@@ -1,15 +1,15 @@
 %html
-%head
-  %meta{:content => "text/html; charset=utf-8", "http-equiv" => "Content-Type"}/
-  %meta{:content => "width=device-width, initial-scale=1", :name => "viewport"}/
-  %title West Coast Weight Loss Center
-  = csrf_meta_tags
-  = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload'
-  = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
-  = tag :meta, :name => "stripe-key", :content => STRIPE_PUBLIC_KEY
-%body
-  = render 'shared/navbar'
-  = render 'shared/flash'
-  .bb-background
-    .container
-      = yield
+  %head
+    %meta{:content => "text/html; charset=utf-8", "http-equiv" => "Content-Type"}/
+    %meta{:content => "width=device-width, initial-scale=1", :name => "viewport"}/
+    %title West Coast Weight Loss Center
+    = csrf_meta_tags
+    = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload'
+    = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
+    = tag :meta, :name => "stripe-key", :content => STRIPE_PUBLIC_KEY
+  %body
+    = render 'shared/navbar'
+    = render 'shared/flash'
+    .bb-background
+      .container
+        = yield
