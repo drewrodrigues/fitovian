@@ -26,3 +26,5 @@
 ngrok
 .vscode/*
 examples.txt
+.yardoc/
+.idea
