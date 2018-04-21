@@ -14,9 +14,9 @@ class Plan < ApplicationRecord
     price: 1999
   }.freeze
 
-  ADMIN = {
-    stripe_id: 'admin',
-    name: 'admin',
+  TEST = {
+    stripe_id: 'test',
+    name: 'test',
     price: 0
   }.freeze
 
@@ -31,18 +31,18 @@ class Plan < ApplicationRecord
     plan
   end
 
-  def self.admin_plan
+  def self.test_plan
     plan = Plan.new
-    plan.stripe_id = ADMIN[:stripe_id]
-    plan.name = ADMIN[:name]
-    plan.price = ADMIN[:price]
+    plan.stripe_id = TEST[:stripe_id]
+    plan.name = TEST[:name]
+    plan.price = TEST[:price]
     plan
   end
 
   def defined_plan?
     defined = true
     %i[stripe_id name price].each do |attri|
-      unless [ADMIN[attri], STARTER[attri]].include?(self.send(attri))
+      unless [TEST[attri], STARTER[attri]].include?(self.send(attri))
         defined = false
         break
       end

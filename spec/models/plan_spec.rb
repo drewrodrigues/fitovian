@@ -4,7 +4,7 @@ RSpec.describe Plan, type: :model do
   describe 'validations' do
     context 'name isn\'t correct' do
       it 'returns invalid' do
-        plans = [ Plan::STARTER ]
+        plans = [ Plan::STARTER, Plan::TEST ]
         new_plan = Plan.new(user: build_stubbed(:user))
 
         plans.each do |plan|
@@ -18,7 +18,7 @@ RSpec.describe Plan, type: :model do
 
     context 'stripe_id isn\'t correct' do
       it 'returns invalid' do
-        plans = [ Plan::STARTER ]
+        plans = [ Plan::STARTER, Plan::TEST ]
         new_plan = Plan.new(user: build_stubbed(:user))
 
         plans.each do |plan|
@@ -32,7 +32,7 @@ RSpec.describe Plan, type: :model do
 
     context 'price isn\'t correct' do
       it 'returns invalid' do
-        plans = [ Plan::STARTER ]
+        plans = [ Plan::STARTER, Plan::TEST ]
         new_plan = Plan.new(user: build(:user))
 
         plans.each do |plan|
