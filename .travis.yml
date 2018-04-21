@@ -15,8 +15,7 @@ before_script:
   - chmod +x ./cc-test-reporter
   - ./cc-test-reporter before-build
 script:
-  - bundle exec rake spec:controllers
-  - bundle exec rake spec:models
+  - rspec spec/controllers/* spec/models/*
   # TODO: figure out travis ci & feature tests
 after_script:
   # code climate
