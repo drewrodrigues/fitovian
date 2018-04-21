@@ -1,4 +1,8 @@
 language: ruby
+env:
+  global:
+    - CC_TEST_REPORTER_ID=2fd56a78ab0cb06e62e28471a1c9f501b484678ebff5eb588d3c19f328f07bfe
+    - CF_RUN_PERM_SPECS=false
 rvm:
   - 2.4.1
 services:
@@ -20,7 +24,3 @@ after_script:
 test:
   adapter: postgresql
   database: travis_ci_test
-env:
-  global:
-    - CC_TEST_REPORTER_ID=2fd56a78ab0cb06e62e28471a1c9f501b484678ebff5eb588d3c19f328f07bfe
-    - CF_RUN_PERM_SPECS=false

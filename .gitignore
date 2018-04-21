@@ -28,3 +28,4 @@ ngrok
 examples.txt
 .yardoc/
 .idea
+coverage
