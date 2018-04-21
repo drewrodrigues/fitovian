@@ -7,12 +7,12 @@ class ApplicationController < ActionController::Base
   private
 
   def require_plan!
-    return if current_user && current_user.admin?
-    redirect_to choose_plan_path unless current_user && current_user.plan?
+    return if current_user&.admin?
+    redirect_to choose_plan_path unless current_user&.plan?
   end
 
   def require_payment_method!
-    return if current_user && current_user.admin?
-    redirect_to new_cards_path unless current_user && current_user.payment_method?
+    return if current_user&.admin?
+    redirect_to new_cards_path unless current_user&.payment_method?
   end
 end

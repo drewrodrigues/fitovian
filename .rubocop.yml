@@ -8,3 +8,5 @@ Style/Documentation:
   Enabled: false
 Style/FrozenStringLiteralComment:
   Enabled: false
+AllCops:
+  TargetRubyVersion: 2.4.1

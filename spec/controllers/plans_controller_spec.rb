@@ -21,36 +21,20 @@ RSpec.describe PlansController, type: :controller do
     end
   end
 
-  context 'user doesn\'t have a plan yet' do
-    before(:each) do
-      @user = create(:user)
-      sign_in(@user)
-      post :create, params: { plan: 'starter' }
-    end
-
-    it 'responds with successful message upon create' do
-      expect(flash[:success]).to eq('Successfully chose starter plan')
-    end
-
-    it 'redirects to new payment method' do
-      expect(response).to redirect_to(new_cards_path)
-    end
-  end
-
   describe '#create' do
-    context 'user already has a plan' do
+    context 'user doesn\'t have a plan yet' do
       before(:each) do
-        @user = create(:starter_plan).user
+        @user = create(:user)
         sign_in(@user)
         post :create, params: { plan: 'starter' }
       end
 
-      it 'responds with successful message' do
+      it 'responds with successful message upon create' do
         expect(flash[:success]).to eq('Successfully chose starter plan')
       end
 
       it 'redirects to new payment method' do
-        expect(response).to redirect_to(billing_path)
+        expect(response).to redirect_to(new_cards_path)
       end
     end
   end

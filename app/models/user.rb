@@ -16,7 +16,7 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
-  validates_presence_of :name
+  validates :name, presence: true
   validate :set_stripe_id, on: :create
 
   has_many :cards, dependent: :destroy
@@ -42,7 +42,7 @@ class User < ApplicationRecord
   # CARDS ###########################################################
 
   def payment_method?
-    cards.count > 0
+    cards.count.positive?
   end
 
   # add a card and set to default
@@ -55,12 +55,13 @@ class User < ApplicationRecord
   # or retrieve the default card
   def default_card(card = nil)
     if card
+      return true if card == self.default_card
       stripe_card_default(card)
       remove_previous_default
       card.default = true
       card.save
     else
-      self.cards.find_by_default(true)
+      self.cards.find_by(default: true)
     end
   end
 
@@ -75,7 +76,7 @@ class User < ApplicationRecord
   # if there's a default card
   # set it to default = false
   def remove_previous_default
-    previous_default = self.cards.where(default: true).first 
+    previous_default = self.cards.find_by(default: true)
     return true unless previous_default
     previous_default.default = false
     previous_default.save
@@ -93,7 +94,11 @@ class User < ApplicationRecord
 
   def subscribe
     # FIXME: how can we simplify this line? Make a call to subscribe only
-    self.subscription ? self.subscription.subscribe : Subscription.subscribe(self)
+    if self.subscription
+      self.subscription.subscribe
+    else
+      Subscription.subscribe(self)
+    end
   end
 
   def cancel
@@ -125,7 +130,7 @@ class User < ApplicationRecord
   end
 
   def add_fake_card
-    token = StripeMock.create_test_helper.generate_card_token()
+    token = StripeMock.create_test_helper.generate_card_token
     card = stripe_customer.sources.create(source: token)
     self.cards << Card.new(stripe_id: card.id, last4: card.last4, default: true)
     @card = default_card

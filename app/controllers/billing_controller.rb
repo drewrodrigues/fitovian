@@ -15,7 +15,9 @@ class BillingController < ApplicationController
 
   def cancel
     current_user.cancel
-    redirect_to billing_path, flash: { success: 'Successfully canceled subscription' }
+    redirect_to billing_path, flash: { 
+      success: 'Successfully canceled subscription'
+    }
   rescue Stripe::StripeError
     flash.now[:alert] = e.message
     redirect_to billing_path

@@ -2,8 +2,8 @@
 
 %h1 Add payment method
 
--# Add payment method
-= form_tag(new_cards_path, method: :post, authenticity_token: true, id: 'payment-form') do
+- path = current_user.payment_method? ? update_card_path : new_cards_path
+= form_tag(path, method: :post, authenticity_token: true, id: 'payment-form') do
   .form-group
     #card-element.form-control
       / A Stripe Element will be inserted here.

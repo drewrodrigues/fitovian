@@ -30,6 +30,9 @@ RSpec.configure do |config|
     DatabaseCleaner.strategy = :transaction
     DatabaseCleaner.clean_with(:truncation)
 
+    # Capybara
+    Capybara.default_max_wait_time = 5
+
     # StripeMock
     StripeMock.start
     StripeMock.create_test_helper.create_plan(:id => 'starter', :amount => 1999)

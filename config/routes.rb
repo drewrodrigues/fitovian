@@ -6,6 +6,7 @@ Rails.application.routes.draw do
 
   get 'choose-payment-method' => 'cards#new', as: :new_cards
   post 'choose-payment-method' => 'cards#create'
+  post 'update-payment-method' => 'cards#update', as: :update_card
   put 'choose-default-payment-method/:id' => 'cards#default', as: :default_card
   delete 'delete-payment-method/:id' => 'cards#destroy', as: :delete_card
 

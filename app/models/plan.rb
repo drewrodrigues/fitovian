@@ -12,13 +12,13 @@ class Plan < ApplicationRecord
     stripe_id: 'starter',
     name: 'starter',
     price: 1999
-  }
+  }.freeze
 
   ADMIN = {
     stripe_id: 'admin',
     name: 'admin',
     price: 0
-  }
+  }.freeze
 
   validates :user, presence: true
   validate :defined_plan?
@@ -40,9 +40,14 @@ class Plan < ApplicationRecord
   end
 
   def defined_plan?
-    return true if self.name == STARTER[:name] && self.stripe_id == STARTER[:stripe_id] && self.price == STARTER[:price]
-    return true if self.name == ADMIN[:name] && self.stripe_id == ADMIN[:stripe_id] && self.price == ADMIN[:price]
-    errors.add(:plan, 'is invalid.')
+    defined = true
+    %i[stripe_id name price].each do |attri|
+      unless [ADMIN[attri], STARTER[attri]].include?(self.send(attri))
+        defined = false
+        break
+      end
+    end
+    errors.add(:plan, 'is invalid.') unless defined
   end
 
   private :defined_plan?

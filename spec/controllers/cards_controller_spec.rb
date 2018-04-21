@@ -71,7 +71,7 @@ RSpec.describe CardsController, type: :controller do
         @user = create(:starter_plan).user
         sign_in(@user)
         post :create, params: { stripeToken: token }
-        post :create, params: { stripeToken: token2 }
+        post :update, params: { stripeToken: token2 }
       end
   
       it 'should response with a successful message' do
@@ -109,7 +109,7 @@ RSpec.describe CardsController, type: :controller do
       @user = create(:starter_plan).user
       sign_in(@user)
       post :create, params: { stripeToken: token }
-      post :create, params: { stripeToken: token2 }
+      post :update, params: { stripeToken: token2 }
     end
 
     context 'user sets the other card as the default' do
@@ -134,7 +134,7 @@ RSpec.describe CardsController, type: :controller do
         expect(stripe_default).to eq(@user.default_card.stripe_id)
       end
     end
-  
+
     context 'user tries to set the current default as the default card' do
       before(:each) do
         put :default, params: { id: @user.default_card.id }

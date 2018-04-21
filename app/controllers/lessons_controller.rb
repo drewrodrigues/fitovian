@@ -63,22 +63,23 @@ class LessonsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_lesson
-      @lesson = Lesson.find(params[:id])
-    end
+  
+  # Use callbacks to share common setup or constraints between actions.
+  def set_lesson
+    @lesson = Lesson.find(params[:id])
+  end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def lesson_params
-      params.require(:lesson).permit(:title, :body, :position, :user_id)
-    end
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def lesson_params
+    params.require(:lesson).permit(:title, :body, :position, :user_id)
+  end
 
-    def authenticate_admin!
-      redirect_to root_path unless current_user&.admin?
-    end
+  def authenticate_admin!
+    redirect_to root_path unless current_user&.admin?
+  end
 
-    def check_subscription
-      return if current_user.active?
-      redirect_to billing_path unless current_user.active?
-    end
+  def check_subscription
+    return if current_user.active?
+    redirect_to billing_path unless current_user.active?
+  end
 end

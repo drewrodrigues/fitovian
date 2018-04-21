@@ -8,7 +8,7 @@
     = render subscription_buttons_path
     %hr
     %h5.card-title Billing method
-    = link_to 'Add new payment method', new_cards_path, class: 'btn btn-sm btn-success'
+    = link_to 'Add new payment method', new_cards_path, class: 'btn btn-sm btn-success', :"data-turbolinks" => false
     %ul.list-group
       - @cards.each do |card|
         %li.list-group-item
