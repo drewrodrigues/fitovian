@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :categories
   get 'choose-plan', to: 'plans#new', as: :choose_plan
   post 'choose-plan', to: 'plans#create'
 
