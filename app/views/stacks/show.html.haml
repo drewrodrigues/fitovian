@@ -1,0 +1,12 @@
+%p#notice= notice
+
+%p
+  %b Title:
+  = @stack.title
+%p
+  %b Category:
+  = @stack.category
+
+= link_to 'Edit', edit_stack_path(@stack)
+\|
+= link_to 'Back', stacks_path

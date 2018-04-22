@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180421234648) do
+ActiveRecord::Schema.define(version: 20180421235445) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -55,6 +55,14 @@ ActiveRecord::Schema.define(version: 20180421234648) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "stacks", force: :cascade do |t|
+    t.string "title"
+    t.bigint "category_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["category_id"], name: "index_stacks_on_category_id"
+  end
+
   create_table "subscriptions", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.string "stripe_id", null: false
@@ -86,5 +94,6 @@ ActiveRecord::Schema.define(version: 20180421234648) do
 
   add_foreign_key "cards", "users"
   add_foreign_key "plans", "users"
+  add_foreign_key "stacks", "categories"
   add_foreign_key "subscriptions", "users"
 end
