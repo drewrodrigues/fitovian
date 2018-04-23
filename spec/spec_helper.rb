@@ -12,7 +12,7 @@ require 'database_cleaner'
 require 'helpers/flow_helper'
 
 RSpec.configure do |config|
-  config.use_transactional_fixtures = true
+  config.use_transactional_fixtures = true # feature specs fails without this
   config.example_status_persistence_file_path = 'examples.txt'
 
   config.expect_with :rspec do |expectations|
@@ -37,13 +37,15 @@ RSpec.configure do |config|
 
     # Capybara
     Capybara.default_max_wait_time = 5
-
+  end
+  
+  config.before(:each) do
     # StripeMock
     StripeMock.start
     StripeMock.create_test_helper.create_plan(:id => 'starter', :amount => 1999)
   end
-
-  config.after(:suite) do
+  
+  config.after(:each) do
     StripeMock.stop
   end
 
