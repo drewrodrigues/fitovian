@@ -1,61 +1,65 @@
 .jumbotron.jumbotron-fluid
-  .container
+  .container.text-center
     .row
-      .col-md-6
+      .offset-md-3.col-md-6
         %h1 Reach your goals in record time
         %p.lead Our application is currently under construction. Enter your email below to get updates on our progress.
-        .form-group
-          .row
-            .col-md-10
-              %input.form-control{'placeholder': 'email'}
-            .col-md-2
-              %button.btn.btn-success Get updates
+        = form_tag updates_path do
+          .form-group
+            .row
+              .col-md-10
+                = text_field_tag :email, '', placeholder: 'Enter email to receive updates', class: 'form-control'
+              .col-md-2
+                %button.btn.btn-success Get updates
 .container
   .row.text-center.landing_features
-    .col-md-3.landing_feature
+    .col-md-3.col-sm-6.landing_feature
       = image_tag 'checked.png'
       %h5 Take on challenges
       %p All of our tracks have challenges to make lessons become action.
-    .col-md-3.landing_feature
+    .col-md-3.col-sm-6.landing_feature
       = image_tag 'certificate.png'
       %h5 Earn badges
       %p Show off your accomplishments through badges.
-    .col-md-3.landing_feature
+    .col-md-3.col-sm-6.landing_feature
       = image_tag 'help.png'
       %h5 Use our support system
       %p Our members achieve their goals, and so will you..
-    .col-md-3.landing_feature
+    .col-md-3.col-sm-6.landing_feature
       = image_tag 'clipboard.png'
       %h5 Complete personalized plans
       %p We have countless plans that'll guide you to your goal.
-    .col-md-3.landing_feature
+    .col-md-3.col-sm-6.landing_feature
       = image_tag 'shield.png'
       %h5 Join our community
       %p Our community is made with members from all walks of life.
-    .col-md-3.landing_feature
+    .col-md-3.col-sm-6.landing_feature
       = image_tag 'target.png'
       %h5 Reach all of your goals
       %p No matter what your goal, we are here to guide you to it.
-    .col-md-3.landing_feature
+    .col-md-3.col-sm-6.landing_feature
       = image_tag 'calendar.png'
       %h5 Stay on track with pathways
       %p A clear path will be created for you based on your goals.
-    .col-md-3.landing_feature
+    .col-md-3.col-sm-6.landing_feature
       = image_tag 'chat.png'
       %h5 Get help from coaches
       %p Easily communicate with life coaches and trainers.
 .jumbotron.jumbotron-fluid
-  .container
+  .container.text-center
     .row
-      .col-md-6
+      .offset-md-3.col-md-6
         %h1 Contact us to learn more
         %p.lead If you want to learn more, or have some great ideas for our program, shoot us a message! We would love to hear from you.
-        .form-group
-          .col-md-10
+        = form_tag contact_us_path do
+          .form-group
             .row
-              %input.form-control{'placeholder': 'Enter email'}
-        .form-group
-          .col-md-12
-            .row
-              %textarea.form-control.landing_contact_message{'placeholder': 'How can we help?'}
-        %button.btn.btn-success Contact us
+              .col-md-6
+                = text_field_tag :name, '', class: 'form-control', placeholder: 'Enter your name'
+              .col-md-6
+                = text_field_tag :email, '', class: 'form-control', placeholder: 'Enter your email'
+          .form-group
+            .col-md-12
+              .row
+                = text_area_tag :body, '', class: 'landing_contact_message form-control', placeholder: 'How can we help?'
+          %button.btn.btn-success Contact us

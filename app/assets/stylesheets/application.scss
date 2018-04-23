@@ -1,5 +1,9 @@
 @import "bootstrap";
 
+.alert {
+  text-align: center;
+}
+
 .jumbotron-fluid {
   background-image: image-url('landing.png');
   background-repeat: repeat;
@@ -20,4 +24,8 @@
 .landing_contact_message {
   margin-bottom: 10px;
   height: 100px;
+}
+
+.alert-notice {
+  @extend .alert-success;
 }

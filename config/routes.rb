@@ -25,15 +25,12 @@ Rails.application.routes.draw do
   end
 
   root 'pages#landing'
+  get '' => 'pages#landing', as: :landing
+  post 'contact-us' => 'pages#contact_us', as: :contact_us
+  post 'updates' => 'pages#updates', as: :updates
   get 'dashboard', to: 'pages#dashboard'
-  get 'panel', to: 'pages#panel'
-  get 'choose-us', to: 'pages#choose_us'
-  get 'rates', to: 'pages#rates'
-  get 'services', to: 'pages#services'
-  get 'get-started', to: 'pages#get_started'
-  get 'about', to: 'pages#about'
-  get 'our-program', to: 'pages#our_program'
-  get 'contact-us', to: 'pages#contact_us'
+  get 'panel', to: 'pages#panel', as: 'panel'
+  
 
   resources :lessons
 end
