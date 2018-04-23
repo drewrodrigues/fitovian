@@ -74,7 +74,6 @@ class Subscription < ApplicationRecord
 
   def re_activate_stripe_subscription
     stripe_subscription.items = [{
-      cancel_at_period_end: false,
       id: stripe_subscription.items.data[0].id,
       plan: self.user.plan.stripe_id
     }]
