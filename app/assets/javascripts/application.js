@@ -16,7 +16,3 @@
 //= require tinymce-jquery
 //= require turbolinks
 //= require_tree .
-
-$(document).on('turbolinks:load', function() {
-  $('.alert').slideDown(500).delay(3000).slideUp(500);
-});
