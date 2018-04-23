@@ -118,7 +118,7 @@ class User < ApplicationRecord
     self.save
   end
 
-  def select_admin_plan
+  def select_test_plan
     self.plan = Plan.admin_plan
     self.save
   end
