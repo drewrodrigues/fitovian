@@ -1,2 +1,23 @@
-@import "bootstrap-sprockets";
 @import "bootstrap";
+
+.jumbotron-fluid {
+  background-image: image-url('landing.png');
+  background-repeat: repeat;
+}
+
+.landing_features {
+  padding: 20px 0;
+}
+
+.landing_feature {
+  margin-bottom: 25px;
+
+  img {
+    margin-bottom: 20px;
+  }
+}
+
+.landing_contact_message {
+  margin-bottom: 10px;
+  height: 100px;
+}
