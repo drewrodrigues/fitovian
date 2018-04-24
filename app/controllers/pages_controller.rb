@@ -30,6 +30,7 @@ class PagesController < ApplicationController
   def dashboard; end
 
   def panel
-    @lessons = Lesson.all.sort_by(&:position)
+    @category = Category.new
+    @categories = Category.all
   end
 end

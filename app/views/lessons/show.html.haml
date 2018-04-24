@@ -1,8 +1,11 @@
-%ul.breadcrumb
-  %li= link_to 'Lessons', lessons_path, class: 'breadcrumb-item'
-  %li.breadcrumb-item.active= @lesson.title
-.card.lesson-card
-  .card-block
-    .jumbotron
-      %h2= @lesson.title
+%nav.breadcrumb
+  %ol.breadcrumb
+    %li.breadcrumb-item
+      = link_to @lesson.stack.category.title, @lesson.stack.category
+    %li.breadcrumb-item
+      = link_to @lesson.stack.title, @lesson.stack
+    %li.breadcrumb-item.active= @lesson.title
+.card
+  .card-body
+    %h2= @lesson.title
     .card-text= @lesson.body.html_safe

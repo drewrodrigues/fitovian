@@ -1,14 +1,40 @@
-.bb-background
-  .container
-    %h2 Panel
-    = link_to 'New Lesson', new_lesson_path, class: 'btn btn-primary'
-    %small #{User.all.count} Users
-    .panel-lessons
-      - @lessons.each do |lesson|
-        %p.panel-lessons-lesson
-          %span.panel-week-number
-            Week #{lesson.position}
-          = link_to lesson.title, lesson
-          %span.panel-lessons-lesson-links
-            = link_to "Edit", edit_lesson_path(lesson), data: { no_turbolink: true }
-            = link_to "Delete", lesson, method: :delete
+.container
+  = render 'categories/form'
+
+  - @categories.each do |category|
+    %h4.clearfix
+      = category.title
+      .float-right
+        = link_to new_stack_path, class: 'btn btn-link btn-sm' do
+          %i.icon.ion-plus-round
+          Add stack
+        = link_to edit_category_path(category), class: 'btn btn-link btn-sm' do
+          %i.icon.ion-edit
+          Edit category
+        = link_to category, method: :delete, class: 'btn btn-sm', confirm: 'Are you sure?' do
+          %i.icon.ion-close-round
+    - category.stacks.each do |stack|
+      .card
+        .card-header
+          = stack.title
+          .float-right
+            = link_to new_lesson_path, class: 'btn btn-link btn-sm' do
+              %i.icon.ion-plus-round
+              Add lesson
+            = link_to edit_stack_path(stack), class: 'btn btn-link btn-sm' do
+              %i.icon.ion-edit
+              Edit stack
+            = link_to stack, method: :delete, class: 'btn btn-sm', confirm: 'Are you sure?' do
+              %i.icon.ion-close-round
+      %table.table.table-stripe.table-bordered
+        %tbody
+          - stack.lessons.each do |lesson|
+            %tr
+              %td
+                = link_to lesson.title, lesson
+                .float-right
+                  = link_to edit_lesson_path(lesson), data: { no_turbolink: true }, class: 'btn btn-link btn-sm' do
+                    %i.icon.ion-edit
+                    Edit lesson
+                  = link_to lesson, method: :delete, class: 'btn btn-sm', confirm: 'Are you sure?' do
+                    %i.icon.ion-close-round

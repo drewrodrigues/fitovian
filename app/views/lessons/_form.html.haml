@@ -6,6 +6,9 @@
         - @lesson.errors.full_messages.each do |message|
           %li= message
   .form-group
+    .field
+      = f.label :stack
+      = f.collection_select(:stack_id, Stack.all, :id, :title)
     = f.text_field :title, class: 'form-control'
   = tinymce
   = f.text_area :body, :class => "tinymce"
