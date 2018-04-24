@@ -17,6 +17,7 @@ gem 'jquery-rails'
 gem 'tinymce-rails'
 gem 'stripe'
 gem 'newrelic_rpm'
+gem 'ionicons-rails'
 
 group :test do
   gem 'minitest', '5.10.0'
