@@ -12,3 +12,4 @@ plugins:
   - wordcount
   - uploadimage
 toolbar: 'undo redo |  formatselect | bold italic backcolor forecolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat | link hr uploadimage'
+min_height: 500
