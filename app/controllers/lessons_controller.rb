@@ -69,7 +69,7 @@ class LessonsController < ApplicationController
     response = s3.put_object({body: file.tempfile, bucket: ENV['S3_BUCKET_NAME'], key: file.original_filename, acl: 'public-read'})
     if s3.get_object({bucket: ENV['S3_BUCKET_NAME'], key: file.original_filename}) # ensure file persisted
       render json: {
-        image: { url: view_context.image_url("https://s3-us-west-1.amazonaws.com/wcwlc/#{file.original_filename}") }
+        image: { url: view_context.image_url("https://s3-us-west-1.amazonaws.com/#{ENV['S3_BUCKET_NAME']}/#{file.original_filename}") }
       }, content_type: 'text/html'
     end
   rescue Aws::S3::Error => e
