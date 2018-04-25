@@ -7,17 +7,24 @@ gem 'puma', '~> 3.7'
 gem 'sass-rails', '~> 5.0'
 gem 'uglifier', '>= 1.3.0'
 gem 'coffee-rails', '~> 4.2'
-gem 'turbolinks', '~> 5.0.0'
 gem 'jbuilder', '~> 2.5'
 gem 'pg'
 gem 'devise'
-gem 'haml-rails'
-gem 'bootstrap', '~> 4.1.0'
-gem 'jquery-rails'
-gem 'tinymce-rails'
 gem 'stripe'
-gem 'ionicons-rails'
+
+# front-end
+gem 'turbolinks', '~> 5.0.0'
+gem 'ionicons-rails' # icons
+gem 'bootstrap', '~> 4.1.0'
+gem 'haml-rails' # templating
+gem 'jquery-rails'
+
+# error tracking
 gem 'sentry-raven'
+
+# lesson cms
+gem 'tinymce-rails'
+gem 'tinymce-rails-imageupload', '~> 4.0.0.beta'
 
 group :test do
   gem 'minitest', '5.10.0'
