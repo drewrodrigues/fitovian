@@ -25,7 +25,7 @@ gem 'sentry-raven'
 # lesson cms
 gem 'tinymce-rails'
 gem 'tinymce-rails-imageupload', '~> 4.0.0.beta'
-gem 'aws-sdk'
+gem 'aws-sdk-s3'
 
 group :test do
   gem 'minitest', '5.10.0'

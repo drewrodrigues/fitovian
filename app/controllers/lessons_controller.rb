@@ -64,12 +64,16 @@ class LessonsController < ApplicationController
 
   # handle image posts to s3
   def images
-    # catch params[:file]
-    # respond with json which has the url to the image
-
-    render json: {
-      image: { url: 'image_url' }
-    }, content_type: 'text/html'
+    file = params[:file]
+    s3 = Aws::S3::Client.new
+    response = s3.put_object({body: file.tempfile, bucket: ENV['S3_BUCKET_NAME'], key: file.original_filename, acl: 'public-read'})
+    if s3.get_object({bucket: ENV['S3_BUCKET_NAME'], key: file.original_filename}) # ensure file persisted
+      render json: {
+        image: { url: view_context.image_url("https://s3-us-west-1.amazonaws.com/wcwlc/#{file.original_filename}") }
+      }, content_type: 'text/html'
+    end
+  rescue Aws::S3::Error => e
+    # TODO: log error  
   end
 
   private
