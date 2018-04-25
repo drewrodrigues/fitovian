@@ -16,8 +16,8 @@ gem 'bootstrap', '~> 4.1.0'
 gem 'jquery-rails'
 gem 'tinymce-rails'
 gem 'stripe'
-gem 'newrelic_rpm'
 gem 'ionicons-rails'
+gem 'sentry-raven'
 
 group :test do
   gem 'minitest', '5.10.0'
