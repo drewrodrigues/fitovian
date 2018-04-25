@@ -1,14 +1,14 @@
-toolbar:
-  - styleselect | bold italic | undo redo | format | table
-  - colorpicker backcolor forecolor | emoticons
-  - image media | link | hr | spellchecker
+# toolbar:
+  # - styleselect | bold italic | undo redo | format | table
+  # - colorpicker backcolor forecolor | emoticons
+  # - image media | link | hr | spellchecker
+menubar: false
 plugins:
-  - image
   - link
   - textcolor
   - colorpicker
-  - emoticons
   - hr
-  - media
   - spellchecker
   - wordcount
+  - uploadimage
+toolbar: 'undo redo |  formatselect | bold italic backcolor forecolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat | link hr uploadimage'
