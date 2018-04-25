@@ -33,4 +33,5 @@ Rails.application.routes.draw do
   
 
   resources :lessons
+  post '/tinymce_assets' => 'lessons#images'
 end

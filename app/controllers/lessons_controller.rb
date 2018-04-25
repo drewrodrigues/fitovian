@@ -62,6 +62,16 @@ class LessonsController < ApplicationController
     end
   end
 
+  # handle image posts to s3
+  def images
+    # catch params[:file]
+    # respond with json which has the url to the image
+
+    render json: {
+      image: { url: 'image_url' }
+    }, content_type: 'text/html'
+  end
+
   private
   
   # Use callbacks to share common setup or constraints between actions.
