@@ -27,6 +27,9 @@ gem 'tinymce-rails'
 gem 'tinymce-rails-imageupload', '~> 4.0.0.beta'
 gem 'aws-sdk-s3'
 
+# stack images
+gem 'paperclip', '~> 6.0.0'
+
 group :test do
   gem 'minitest', '5.10.0'
   gem 'stripe-ruby-mock', '~> 2.5.2', :require => 'stripe_mock'
