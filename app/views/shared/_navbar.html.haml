@@ -9,8 +9,7 @@
         - if current_user&.admin?
           %li.nav-item= link_to 'Panel', panel_path, class: 'nav-link'
         - if user_signed_in?
-          %li.nav-item= link_to 'Lessons', lessons_path, class: 'nav-link'
-          %li.nav-item= link_to 'Billing', billing_path, class: 'nav-link'
+          %li.nav-item= link_to 'Library', library_path, class: 'nav-link'
           %li.nav-item= link_to 'Settings', edit_user_registration_path, class: 'nav-link'
           %li.nav-item= link_to 'Sign out', destroy_user_session_path, class: 'nav-link', method: :delete
         - else
