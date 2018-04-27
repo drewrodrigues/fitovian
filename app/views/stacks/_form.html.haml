@@ -14,5 +14,8 @@
     = f.collection_select(:category_id, Category.all, :id, :title)
   .field
     = f.file_field :icon
+  .field
+    = f.label :color
+    = f.text_field :color
   .actions
     = f.submit 'Save'
