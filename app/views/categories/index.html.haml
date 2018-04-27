@@ -1,21 +1,31 @@
-%h1 Listing categories
+.container
+  = render 'categories/form' if current_user&.admin?
 
-%table
-  %thead
-    %tr
-      %th Title
-      %th
-      %th
-      %th
+  - @categories.each do |category|
+    %h4.clearfix
+      = category.title
+      - if current_user&.admin?
+        .float-right
+          = link_to new_stack_path, class: 'btn btn-link btn-sm' do
+            %i.icon.ion-plus-round
+            Add stack
+          = link_to edit_category_path(category), class: 'btn btn-link btn-sm' do
+            %i.icon.ion-edit
+            Edit category
+          = link_to category, method: :delete, class: 'btn btn-sm', confirm: 'Are you sure?' do
+            %i.icon.ion-close-round
+    .stack-index_columns
+      - category.stacks.each do |stack|
+        .stack-index
+          = link_to stack do
+            .stack-index_body{style: "background-color: #{stack.color}"}
+              = image_tag stack.icon.url
+              %li.stack-index_progressicon
+              %li.stack-index_progressicon
+              %li.stack-index_progressicon
+            .stack-index_body
+              .stack-index_body_title= stack.title
+              .stack-index_body_summary           
+                The Beginning WordPress track trains one on how to be a WordPress Power Use. 
 
-  %tbody
-    - @categories.each do |category|
-      %tr
-        %td= category.title
-        %td= link_to 'Show', category
-        %td= link_to 'Edit', edit_category_path(category)
-        %td= link_to 'Destroy', category, method: :delete, data: { confirm: 'Are you sure?' }
-
-%br
-
-= link_to 'New Category', new_category_path
+    

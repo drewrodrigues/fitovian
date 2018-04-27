@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   resources :stacks
-  resources :categories
+  resources :categories, except: [:show, :index]
+  get 'library', to: 'categories#index', as: :library
   get 'choose-plan', to: 'plans#new', as: :choose_plan
   post 'choose-plan', to: 'plans#create'
 
