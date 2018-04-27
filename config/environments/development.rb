@@ -78,6 +78,6 @@ Rails.application.configure do
     s3_region: ENV['S3_REGION'],
     s3_permissions: 'public-read',
     url: ":s3_domain_url",
-    path: "/:class/stacks/:id_:basename.:style.:extension"
+    path: "/:class/:id/:style/:filename"
   }
 end
