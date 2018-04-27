@@ -1,5 +1,6 @@
 @import "bootstrap";
 @import 'ionicons';
+@import 'partials/stack';
 
 .alert {
   text-align: center;
@@ -29,4 +30,8 @@
 
 .alert-notice {
   @extend .alert-success;
+}
+
+body {
+  background-color: #edeff0
 }

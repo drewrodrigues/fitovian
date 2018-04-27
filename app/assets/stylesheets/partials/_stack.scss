@@ -1,0 +1,64 @@
+// stack index -----------------------------------------------------------------
+.stack-index {
+  @extend .card;
+  border: 0;
+  border-radius: 5px 5px 0 0;
+  box-shadow: 0px 5px 22px -9px rgba(0,0,0,0.25);
+  transition: all ease 0.3s;
+
+  img {
+    width: 32px;
+    height: 32px;
+    margin-right: 10px;
+    float: left;
+  }
+
+  &:hover {
+    text-decoration: none;
+    box-shadow: 0px 5px 22px -9px rgba(0,0,0,0.6);
+  }
+
+  a {
+    color: $dark;
+    font-size: bold;
+    text-decoration: none;
+  }
+}
+
+.stack-index_body {
+  @extend .card-body;
+  border-radius: 5px 5px 0 0;
+}
+
+.stack-index_body_title {
+  @extend .card-text;
+  margin-top: 5px;
+  font-weight: bold;
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.stack-index_body_summary {
+  @extend .card-text;
+  color: #adadad;
+  font-weight: 300;
+  font-size: 14px;
+}
+
+.stack-index_columns {
+  @extend .card-columns;
+  margin-bottom: 20px;
+}
+
+.stack-index_progressicon {
+  margin-top: -3px;
+  margin-left: 5px;
+  float: right;
+  width: 10px;
+  height: 10px;
+  border: 2px solid rgba(256, 256, 256, 0.6);
+  border-radius: 50%;
+  display: inline-block;
+
+  // TODO: create complete and incomplete
+}
