@@ -29,3 +29,4 @@ examples.txt
 .yardoc/
 .idea
 coverage
+public/system/*
