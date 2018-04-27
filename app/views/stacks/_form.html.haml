@@ -12,5 +12,7 @@
   .field
     = f.label :category_id
     = f.collection_select(:category_id, Category.all, :id, :title)
+  .field
+    = f.file_field :icon
   .actions
     = f.submit 'Save'

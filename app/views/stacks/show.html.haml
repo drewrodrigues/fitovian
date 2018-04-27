@@ -6,6 +6,8 @@
 %p
   %b Category:
   = @stack.category
+%p
+  = image_tag @stack.icon.url
 
 = link_to 'Edit', edit_stack_path(@stack)
 \|
