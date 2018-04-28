@@ -22,7 +22,7 @@ Rails.application.routes.draw do
   }
 
   authenticated :user do
-    root 'lessons#index', as: :authenticated_root
+    root 'categories#index', as: :authenticated_root
   end
 
   root 'pages#landing'
