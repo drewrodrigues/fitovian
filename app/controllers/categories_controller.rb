@@ -45,7 +45,6 @@ class CategoriesController < ApplicationController
     respond_to do |format|
       if @category.update(category_params)
         # view_context gives up access to helper methods
-        undo_link = view_context.link_to('Undo', revert_version_path(@category.versions.last), method: :post)
         format.html { 
           redirect_to library_path, notice: "Category was successfully updated. #{undo_link}"
         }
@@ -62,19 +61,24 @@ class CategoriesController < ApplicationController
   def destroy
     @category.destroy
     respond_to do |format|
-      format.html { redirect_to library_path, notice: 'Category was successfully destroyed.' }
+      format.html { redirect_to library_path, notice: "Category was successfully destroyed. #{undo_link}" }
       format.json { head :no_content }
     end
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_category
-      @category = Category.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def category_params
-      params.require(:category).permit(:title, :color)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_category
+    @category = Category.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def category_params
+    params.require(:category).permit(:title, :color)
+  end
+
+  def undo_link
+    view_context.link_to('Undo', revert_version_path(@category.versions.scope.last), method: :post)
+  end
 end

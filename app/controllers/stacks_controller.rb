@@ -37,7 +37,6 @@ class StacksController < ApplicationController
   def update
     respond_to do |format|
       if @stack.update(stack_params)
-        undo_link = view_context.link_to('Undo', revert_version_path(@stack.versions.last), method: :post)
         format.html { redirect_to @stack, notice: "Stack was successfully updated. #{undo_link}" }
         format.json { render :show, status: :ok, location: @stack }
       else
@@ -52,19 +51,24 @@ class StacksController < ApplicationController
   def destroy
     @stack.destroy
     respond_to do |format|
-      format.html { redirect_to library_path, notice: 'Stack was successfully destroyed.' }
+      format.html { redirect_to library_path, notice: "Stack was successfully destroyed. #{undo_link}" }
       format.json { head :no_content }
     end
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_stack
-      @stack = Stack.find(params[:id])
-    end
+  
+  # Use callbacks to share common setup or constraints between actions.
+  def set_stack
+    @stack = Stack.find(params[:id])
+  end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def stack_params
-      params.require(:stack).permit(:title, :category_id, :icon, :color)
-    end
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def stack_params
+    params.require(:stack).permit(:title, :category_id, :icon, :color)
+  end
+
+  def undo_link
+    view_context.link_to('Undo', revert_version_path(@stack.versions.scope.last), method: :post)
+  end
 end

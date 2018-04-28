@@ -45,7 +45,6 @@ class LessonsController < ApplicationController
   def update
     respond_to do |format|
       if @lesson.update(lesson_params)
-        undo_link = view_context.link_to('Undo', revert_version_path(@lesson.versions.last), method: :post)
         format.html { redirect_to @lesson, notice: "Lesson was successfully updated. #{undo_link}" }
         format.json { render :show, status: :ok, location: @lesson }
       else
@@ -60,7 +59,7 @@ class LessonsController < ApplicationController
   def destroy
     @lesson.destroy
     respond_to do |format|
-      format.html { redirect_to @lesson.stack, notice: 'Lesson was successfully destroyed.' }
+      format.html { redirect_to @lesson.stack, notice: "Lesson was successfully destroyed. #{undo_link}" }
       format.json { head :no_content }
     end
   end
@@ -98,5 +97,9 @@ class LessonsController < ApplicationController
   def check_subscription
     return if current_user.active?
     redirect_to billing_path unless current_user.active?
+  end
+
+  def undo_link
+    view_context.link_to('Undo', revert_version_path(@lesson.versions.scope.last), method: :post)
   end
 end
