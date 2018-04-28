@@ -33,7 +33,7 @@ RSpec.describe CardsController, type: :controller do
       end
   
       it 'should redirect to lessons' do
-        expect(response).to redirect_to(lessons_path)
+        expect(response).to redirect_to(library_path)
       end
   
       it 'should add the card to the user' do
