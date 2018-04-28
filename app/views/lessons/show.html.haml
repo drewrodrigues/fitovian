@@ -1,6 +1,6 @@
 .lesson-show-stack
   = link_to @stack do
-    .card-body{style: "background-color: #{@stack.color}"}
+    .card-body{style: "background-color: #{@stack.category.color}"}
       = image_tag @stack.icon.url
       %span= @stack.title
       %li.stack-index_progressicon
@@ -13,7 +13,7 @@
         %p.stack-show-lesson_body_summary.lesson-lesson Lesson
         %h2.lesson-title= @lesson.title
         .card-text.lesson-text= @lesson.body.html_safe
-        %a.lesson-complete.btn.btn-sm{style: "background-color: #{@stack.color}"} Mark complete
+        %a.lesson-complete.btn.btn-sm{style: "background-color: #{@stack.category.color}"} Mark complete
   
 = link_to 'Edit lesson', edit_lesson_path(@lesson), class: 'btn btn-sm btn-link'
 = link_to 'Delete lesson', lesson_path(@lesson), method: :delete, class: 'btn btn-sm btn-link'

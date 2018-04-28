@@ -17,7 +17,7 @@
     - category.stacks.order('title').each do |stack|
       .stack-index
         = link_to stack do
-          .stack-index_body{style: "background-color: #{stack.color}"}
+          .stack-index_body{style: "background-color: #{category.color}"}
             = image_tag stack.icon.url
             %li.stack-index_progressicon
             %li.stack-index_progressicon
