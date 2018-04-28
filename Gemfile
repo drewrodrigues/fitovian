@@ -22,10 +22,11 @@ gem 'jquery-rails'
 # error tracking
 gem 'sentry-raven'
 
-# lesson cms
+# cms
 gem 'tinymce-rails'
 gem 'tinymce-rails-imageupload', '~> 4.0.0.beta'
 gem 'aws-sdk-s3'
+gem 'paper_trail'
 
 # stack images
 gem 'paperclip', '~> 6.0.0'
