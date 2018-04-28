@@ -65,7 +65,7 @@ class StacksController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def stack_params
-    params.require(:stack).permit(:title, :category_id, :icon, :color)
+    params.require(:stack).permit(:title, :category_id, :icon, :color, :summary)
   end
 
   def undo_link
