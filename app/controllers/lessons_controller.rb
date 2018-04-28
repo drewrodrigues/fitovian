@@ -58,7 +58,7 @@ class LessonsController < ApplicationController
   def destroy
     @lesson.destroy
     respond_to do |format|
-      format.html { redirect_to panel_path, notice: 'Lesson was successfully destroyed.' }
+      format.html { redirect_to @lesson.stack, notice: 'Lesson was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
