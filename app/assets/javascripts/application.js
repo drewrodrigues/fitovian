@@ -17,3 +17,16 @@
 //= require tinymce-jquery
 //= require turbolinks
 //= require_tree .
+
+$(document).on('turbolinks:load', function() {
+  $deleteModalButton = $('button#deleteModal');
+
+  $deleteModalButton.on('click', function(e) {
+    let link = $(this).data().path;
+
+    // ensure the modal is loaded in
+    $('#deleteModal').on('shown.bs.modal', function() {
+      $('#deleteModalPath').replaceWith(link);
+    });
+  });
+});

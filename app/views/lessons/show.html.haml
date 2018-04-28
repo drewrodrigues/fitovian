@@ -17,4 +17,4 @@
 
 - if current_user&.admin?
   = link_to 'Edit lesson', edit_lesson_path(@lesson), class: 'btn btn-sm btn-link'
-  = link_to 'Delete lesson', lesson_path(@lesson), method: :delete, class: 'btn btn-sm btn-link'
+  %button{"data-path" => "#{link_to 'Delete stack', lesson_path(@lesson), method: :delete, class: 'btn btn-danger'}", "data-target" => "#deleteModal", "data-toggle" => "modal", :type => "button", id: 'deleteModal', class: 'btn btn-sm btn-link'} Delete lesson
