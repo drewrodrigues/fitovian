@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  resources :stacks
+  resources :stacks, except: :index
   resources :categories, except: [:show, :index]
   get 'library', to: 'categories#index', as: :library
   get 'choose-plan', to: 'plans#new', as: :choose_plan
@@ -33,6 +33,6 @@ Rails.application.routes.draw do
   get 'panel', to: 'pages#panel', as: 'panel'
   
 
-  resources :lessons
+  resources :lessons, except: :index
   post '/tinymce_assets' => 'lessons#images'
 end

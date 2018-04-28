@@ -4,8 +4,6 @@ class ApplicationController < ActionController::Base
   before_action :require_plan!
   before_action :require_payment_method!
 
-  private
-
   def require_plan!
     return if current_user&.admin?
     redirect_to choose_plan_path unless current_user&.plan?
@@ -14,5 +12,10 @@ class ApplicationController < ActionController::Base
   def require_payment_method!
     return if current_user&.admin?
     redirect_to new_cards_path unless current_user&.payment_method?
+  end
+
+  def authenticate_admin!
+    return if current_user&.admin?
+    redirect_to library_path
   end
 end

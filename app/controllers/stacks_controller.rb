@@ -1,11 +1,6 @@
 class StacksController < ApplicationController
   before_action :set_stack, only: [:show, :edit, :update, :destroy]
-
-  # GET /stacks
-  # GET /stacks.json
-  def index
-    @stacks = Stack.all
-  end
+  before_action :authenticate_admin!, except: :show
 
   # GET /stacks/1
   # GET /stacks/1.json
