@@ -6,4 +6,5 @@ class Stack < ApplicationRecord
   validates_attachment_content_type :icon, content_type: /\Aimage\/.*\z/
 
   validates :title, presence: true
+  has_paper_trail
 end

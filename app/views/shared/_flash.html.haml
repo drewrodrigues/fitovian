@@ -1,5 +1,5 @@
 - flash.each do |name, message|
   %div{class: "alert alert-#{name} alert-dismissible fade show", role: 'alert'}
-    = message
+    = raw(message)
     %button.close{'type': 'button', 'data-dismiss': 'alert', 'aria-label': 'close'}
       %span{'aria-hidden': 'true'} &times;

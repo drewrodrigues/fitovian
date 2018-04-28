@@ -37,7 +37,8 @@ class StacksController < ApplicationController
   def update
     respond_to do |format|
       if @stack.update(stack_params)
-        format.html { redirect_to @stack, notice: 'Stack was successfully updated.' }
+        undo_link = view_context.link_to('Undo', revert_version_path(@stack.versions.last), method: :post)
+        format.html { redirect_to @stack, notice: "Stack was successfully updated. #{undo_link}" }
         format.json { render :show, status: :ok, location: @stack }
       else
         format.html { render :edit }

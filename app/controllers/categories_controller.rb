@@ -44,7 +44,11 @@ class CategoriesController < ApplicationController
   def update
     respond_to do |format|
       if @category.update(category_params)
-        format.html { redirect_to library_path, notice: 'Category was successfully updated.' }
+        # view_context gives up access to helper methods
+        undo_link = view_context.link_to('Undo', revert_version_path(@category.versions.last), method: :post)
+        format.html { 
+          redirect_to library_path, notice: "Category was successfully updated. #{undo_link}"
+        }
         format.json { render :show, status: :ok, location: @category }
       else
         format.html { render :edit }
