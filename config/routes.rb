@@ -35,4 +35,7 @@ Rails.application.routes.draw do
 
   resources :lessons, except: :index
   post '/tinymce_assets' => 'lessons#images'
+
+  # paper trail
+  post 'versions/:id/revert' => 'versions#revert', :as => 'revert_version'
 end
