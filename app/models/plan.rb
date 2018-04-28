@@ -1,28 +1,36 @@
-# Table
-###############################################################################
-# id                integer
-# name              string
-# price             float
-# stripe_id         string
+# == Schema Information
+# Table name: plans
+#
+#  id                     :integer          not null, primary key
+#  name                   :string           not null
+#  price                  :float            not null
+#  stripe_id              :string           not null
+#  user_id                :integer          not null, foreign key
 
+# Plan is the User's selected plan. It represents a Stripe::Plan which is
+# created using the Stripe dashboard.
 class Plan < ApplicationRecord
-  belongs_to :user
-
+  # Stripe::Plan attributes created on Stripe using the Stripe Dashboard
   STARTER = {
     stripe_id: 'starter',
     name: 'starter',
     price: 1999
   }.freeze
 
+  # Stripe::Plan attributes created on Stripe using the Stripe Dashboard
   TEST = {
     stripe_id: 'test',
     name: 'test',
     price: 0
   }.freeze
 
+  belongs_to :user
+
   validates :user, presence: true
   validate :defined_plan?
 
+  # Builds a Plan from the STARTER plan attributes
+  # @return [Plan] the plan with STARTER attributes assigned
   def self.starter_plan
     plan = Plan.new
     plan.stripe_id = STARTER[:stripe_id]
@@ -31,6 +39,8 @@ class Plan < ApplicationRecord
     plan
   end
 
+  # Builds a Plan from the STARTER plan attributes.
+  # @return [Plan] the plan with STARTER attributes assigned
   def self.test_plan
     plan = Plan.new
     plan.stripe_id = TEST[:stripe_id]

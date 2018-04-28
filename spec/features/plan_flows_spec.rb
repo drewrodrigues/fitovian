@@ -1,14 +1,6 @@
 require 'rails_helper'
 
 RSpec.feature 'Plan Flows', type: :feature do
-  before(:all) do
-    StripeMock.start
-  end
-
-  after(:all) do
-    StripeMock.stop
-  end
-
   scenario 'New User chooses a plan' do
     user = create(:user)
     visit new_user_session_path

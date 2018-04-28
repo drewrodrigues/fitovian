@@ -1,6 +1,9 @@
 require 'rails_helper'
+require_relative '../helpers/cards_helper.rb'
 
 RSpec.describe Subscription, type: :model do
+  include CardsHelper
+
   describe 'validations' do
     it { is_expected.to validate_presence_of(:current_period_end) }
     it { is_expected.to validate_presence_of(:stripe_id) }
@@ -22,7 +25,7 @@ RSpec.describe Subscription, type: :model do
       before(:each) do
         @user = create(:user)
         @user.select_starter_plan
-        @user.add_fake_card
+        add_fake_card(@user)
         @user.subscribe
       end
 
@@ -59,7 +62,7 @@ RSpec.describe Subscription, type: :model do
       before(:each) do
         @user = create(:user)
         @user.select_starter_plan
-        @user.add_fake_card
+        add_fake_card(@user)
         @user.subscribe
         @user.subscribe
       end
@@ -78,7 +81,7 @@ RSpec.describe Subscription, type: :model do
       before(:each) do
         @user = create(:user)
         @user.select_starter_plan
-        @user.add_fake_card
+        add_fake_card(@user)
         @user.subscribe
         @user.cancel
       end
@@ -99,7 +102,7 @@ RSpec.describe Subscription, type: :model do
       before(:each) do
         @user = create(:user)
         @user.select_starter_plan
-        @user.add_fake_card
+        add_fake_card(@user)
         @user.subscribe
         @user.cancel
       end
@@ -123,7 +126,7 @@ RSpec.describe Subscription, type: :model do
       before(:each) do
         @user = create(:user)
         @user.select_starter_plan
-        @user.add_fake_card
+        add_fake_card(@user)
         @user.subscribe
         @user.cancel
       end

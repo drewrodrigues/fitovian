@@ -30,3 +30,4 @@ examples.txt
 .idea
 coverage
 public/system/*
+/doc

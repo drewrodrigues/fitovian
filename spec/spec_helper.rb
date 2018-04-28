@@ -9,7 +9,6 @@ require 'rspec/rails'
 require 'factory_bot_rails'
 require 'devise'
 require 'database_cleaner'
-require 'helpers/flow_helper'
 
 RSpec.configure do |config|
   config.use_transactional_fixtures = true # feature specs fails without this

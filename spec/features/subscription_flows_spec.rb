@@ -1,4 +1,5 @@
 require 'rails_helper'
+require_relative '../helpers/flow_helper'
 
 RSpec.feature 'Subscription Flows', type: :feature do
   include FlowHelper

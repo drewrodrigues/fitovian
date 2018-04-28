@@ -1,12 +1,15 @@
 require 'rails_helper'
+require_relative '../helpers/cards_helper.rb'
 
 RSpec.describe SubscriptionsController, type: :controller do
+  include CardsHelper
+
   describe '#create' do
     context 'successfully subscribed' do
       before(:each) do
         @user = create(:user)
         @user.select_starter_plan
-        @user.add_fake_card
+        add_fake_card(@user)
         sign_in(@user)
         post :create
       end
@@ -24,7 +27,7 @@ RSpec.describe SubscriptionsController, type: :controller do
       before(:each) do
         @user = create(:user)
         @user.select_starter_plan
-        @user.add_fake_card
+        add_fake_card(@user)
         sign_in(@user)
         post :create
       end
@@ -41,10 +44,9 @@ RSpec.describe SubscriptionsController, type: :controller do
 
   describe '#destroy' do
     before(:each) do
-      # TODO: make helper methods, take these out of the model
       @user = create(:user)
       @user.select_starter_plan
-      @user.add_fake_card
+      add_fake_card(@user)
       sign_in(@user)
     end
 

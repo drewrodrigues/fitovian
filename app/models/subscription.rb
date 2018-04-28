@@ -38,6 +38,7 @@ class Subscription < ApplicationRecord
     end
   end
 
+  # Retrieves Stripe Subscription
   def stripe_subscription
     return nil unless self.stripe_id
     @stripe_subscription ||= Stripe::Subscription.retrieve(self.stripe_id)
