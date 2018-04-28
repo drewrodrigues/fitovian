@@ -1,11 +1,19 @@
-%nav.breadcrumb
-  %ol.breadcrumb
-    %li.breadcrumb-item
-      = link_to @lesson.stack.category.title, @lesson.stack.category
-    %li.breadcrumb-item
-      = link_to @lesson.stack.title, @lesson.stack
-    %li.breadcrumb-item.active= @lesson.title
-.card
+.lesson-show-stack
+  = link_to @stack do
+    .card-body{style: "background-color: #{@stack.color}"}
+      = image_tag @stack.icon.url
+      %span= @stack.title
+      %li.stack-index_progressicon
+      %li.stack-index_progressicon
+      %li.stack-index_progressicon.stack-index-progressicon-done
+.stack-show-lesson
   .card-body
-    %h2= @lesson.title
-    .card-text= @lesson.body.html_safe
+    .row
+      .col-md-8.offset-md-2
+        %p.stack-show-lesson_body_summary.lesson-lesson Lesson
+        %h2.lesson-title= @lesson.title
+        .card-text.lesson-text= @lesson.body.html_safe
+        %a.lesson-complete.btn.btn-sm{style: "background-color: #{@stack.color}"} Mark complete
+  
+= link_to 'Edit lesson', edit_lesson_path(@lesson), class: 'btn btn-sm btn-link'
+= link_to 'Delete lesson', lesson_path(@lesson), method: :delete, class: 'btn btn-sm btn-link'

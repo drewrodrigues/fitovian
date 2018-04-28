@@ -110,3 +110,59 @@
     float: none;
   }
 }
+
+.stack-show-lesson span {
+  color: white;
+  font-size: 18px;
+  font-weight: bold;
+  margin-left: 20px;
+}
+
+.lesson-show-stack {
+  img {
+    width: 32px;
+    height: 32px;
+  }
+
+  span {
+    margin-left: 20px;
+    margin-top: 5px;
+    font-size: 18px;
+    display: inline-block;
+  }
+
+  a {
+    color: white;
+
+    &:hover {
+      text-decoration: none;
+    }
+  }
+}
+
+.stack-index-progressicon-done {
+  background-color: white;
+}
+
+.stack-show-lesson {
+  padding-bottom: 5%;
+}
+
+.lesson-title {
+  margin-bottom: 20px;
+}
+
+.lesson-lesson {
+  margin-top: 5%;
+}
+
+.lesson-text {
+  font-size: 16px;
+  font-weight: 400;
+  color: #576366;
+  margin-bottom: 50px;
+}
+
+.lesson-complete {
+  color: white !important;
+}

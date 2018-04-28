@@ -11,6 +11,7 @@ class LessonsController < ApplicationController
   # GET /lessons/1
   # GET /lessons/1.json
   def show
+    @stack = @lesson.stack
   end
 
   # GET /lessons/new
