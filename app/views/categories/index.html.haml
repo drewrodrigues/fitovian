@@ -15,7 +15,7 @@
           = link_to category, method: :delete, class: 'btn btn-sm', confirm: 'Are you sure?' do
             %i.icon.ion-close-round
     .stack-index_columns
-      - category.stacks.each do |stack|
+      - category.stacks.order('title').each do |stack|
         .stack-index
           = link_to stack do
             .stack-index_body{style: "background-color: #{stack.color}"}

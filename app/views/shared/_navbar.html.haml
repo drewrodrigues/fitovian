@@ -7,7 +7,7 @@
     .collapse.navbar-collapse#navbarNav
       %ul.navbar-nav
         - if current_user&.admin?
-          %li.nav-item= link_to 'Panel', panel_path, class: 'nav-link'
+          -# %li.nav-item= link_to 'Panel', panel_path, class: 'nav-link'
         - if user_signed_in?
           %li.nav-item= link_to 'Library', library_path, class: 'nav-link'
           %li.nav-item= link_to 'Settings', edit_user_registration_path, class: 'nav-link'
