@@ -14,6 +14,7 @@
         %h2.lesson-title= @lesson.title
         .card-text.lesson-text= @lesson.body.html_safe
         %a.lesson-complete.btn.btn-sm{style: "background-color: #{@stack.category.color}"} Mark complete
-  
-= link_to 'Edit lesson', edit_lesson_path(@lesson), class: 'btn btn-sm btn-link'
-= link_to 'Delete lesson', lesson_path(@lesson), method: :delete, class: 'btn btn-sm btn-link'
+
+- if current_user&.admin?
+  = link_to 'Edit lesson', edit_lesson_path(@lesson), class: 'btn btn-sm btn-link'
+  = link_to 'Delete lesson', lesson_path(@lesson), method: :delete, class: 'btn btn-sm btn-link'
