@@ -6,7 +6,7 @@ class CardsController < ApplicationController
   def create
     if current_user.add_card(params[:stripeToken])
       current_user.subscribe
-      redirect_to lessons_path, flash: {
+      redirect_to library_path, flash: {
         success: "Successfully subscribed to #{current_user.plan.name} plan"
       }
     else
