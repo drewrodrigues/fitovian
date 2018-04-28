@@ -100,14 +100,12 @@ class Subscription < ApplicationRecord
   end
 
   def active!
-    self.active = true
-    self.status = 'subscribed'
+    self.attributes = {status: 'subscribed', active: true}
     self.save
   end
 
   def cancel!
-    self.status = 'canceled'
-    self.active = false
+    self.attributes = {status: 'canceled', active: false}
     self.save
   end
 end
