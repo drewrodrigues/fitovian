@@ -1,0 +1,5 @@
+app/controllers/*
+app/helpers/*
+app/mailers/*
+app/models/*
+spec/helpers/*
