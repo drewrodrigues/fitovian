@@ -22,8 +22,7 @@
           .stack-index_body
             .stack-show-lesson_body_summary Lesson           
             .stack-show-lesson_body_title= lesson.title
-            .stack-show-lesson_body_summary           
-              The Beginning WordPress track trains one on how to be a WordPress Power Use.
+            .stack-show-lesson_body_summary= truncate(raw(lesson.body), length: 220, escape: false)
     .stack-show-lesson.course-complete-badge
       .stack-index_body
         .course-complete-badge
