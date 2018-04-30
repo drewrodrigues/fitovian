@@ -27,6 +27,7 @@ gem 'tinymce-rails'
 gem 'tinymce-rails-imageupload', '~> 4.0.0.beta'
 gem 'aws-sdk-s3'
 gem 'paper_trail'
+gem 'faker'
 
 # stack images
 gem 'paperclip', '~> 6.0.0'
