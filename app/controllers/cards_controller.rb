@@ -1,5 +1,6 @@
 class CardsController < ApplicationController
-  skip_before_action :require_payment_method!, on: %i[new create]
+  before_action :authenticate_user!
+  before_action :require_plan!
 
   def new; end
 

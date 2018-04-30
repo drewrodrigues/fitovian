@@ -1,8 +1,5 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
-  before_action :authenticate_user!
-  before_action :require_plan!
-  before_action :require_payment_method!
 
   def require_plan!
     return if current_user&.admin?
@@ -14,8 +11,8 @@ class ApplicationController < ActionController::Base
     redirect_to new_cards_path unless current_user&.payment_method?
   end
 
-  def authenticate_admin!
+  def require_admin!
     return if current_user&.admin?
-    redirect_to library_path
+    redirect_to dashboard_path, flash: { info: 'You must be an admin.' }
   end
 end

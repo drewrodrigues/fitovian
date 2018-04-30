@@ -1,17 +1,12 @@
 class CategoriesController < ApplicationController
   before_action :set_category, only: [:show, :edit, :update, :destroy]
-  before_action :authenticate_admin!, except: :index
+  before_action :require_admin!, except: :index
 
   # GET /categories
   # GET /categories.json
   def index
     @categories = Category.order('title').all
     @category = Category.new
-  end
-
-  # GET /categories/1
-  # GET /categories/1.json
-  def show
   end
 
   # GET /categories/new

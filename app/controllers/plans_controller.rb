@@ -1,6 +1,5 @@
 class PlansController < ApplicationController
-  skip_before_action :require_plan!
-  skip_before_action :require_payment_method!
+  before_action :authenticate_user!
 
   def new; end
 

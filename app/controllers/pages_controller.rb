@@ -1,8 +1,5 @@
 class PagesController < ApplicationController
   layout 'pages'
-  skip_before_action :authenticate_user!
-  skip_before_action :require_plan!
-  skip_before_action :require_payment_method!
 
   def landing; end
 
@@ -28,9 +25,4 @@ class PagesController < ApplicationController
   end
 
   def dashboard; end
-
-  def panel
-    @category = Category.new
-    @categories = Category.all
-  end
 end
