@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180428082850) do
+ActiveRecord::Schema.define(version: 20180501154329) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -27,8 +27,6 @@ ActiveRecord::Schema.define(version: 20180428082850) do
 
   create_table "categories", force: :cascade do |t|
     t.string "title"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
     t.string "color"
   end
 
@@ -36,8 +34,6 @@ ActiveRecord::Schema.define(version: 20180428082850) do
     t.string "title"
     t.text "body"
     t.integer "position"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
     t.bigint "stack_id"
     t.index ["stack_id"], name: "index_lessons_on_stack_id"
   end
@@ -52,17 +48,9 @@ ActiveRecord::Schema.define(version: 20180428082850) do
     t.index ["user_id"], name: "index_plans_on_user_id"
   end
 
-  create_table "registrations", force: :cascade do |t|
-    t.string "card_token"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "stacks", force: :cascade do |t|
     t.string "title"
     t.bigint "category_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
     t.string "icon_file_name"
     t.string "icon_content_type"
     t.integer "icon_file_size"
@@ -100,14 +88,6 @@ ActiveRecord::Schema.define(version: 20180428082850) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
-  create_table "version_associations", force: :cascade do |t|
-    t.integer "version_id"
-    t.string "foreign_key_name", null: false
-    t.integer "foreign_key_id"
-    t.index ["foreign_key_name", "foreign_key_id"], name: "index_version_associations_on_foreign_key"
-    t.index ["version_id"], name: "index_version_associations_on_version_id"
-  end
-
   create_table "versions", force: :cascade do |t|
     t.string "item_type", null: false
     t.integer "item_id", null: false
@@ -115,9 +95,7 @@ ActiveRecord::Schema.define(version: 20180428082850) do
     t.string "whodunnit"
     t.text "object"
     t.datetime "created_at"
-    t.integer "transaction_id"
     t.index ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id"
-    t.index ["transaction_id"], name: "index_versions_on_transaction_id"
   end
 
   add_foreign_key "cards", "users"
