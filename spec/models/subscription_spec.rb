@@ -49,7 +49,7 @@ RSpec.describe Subscription, type: :model do
 
       it 'should set the current_period_end 1 month out' do
         subscription = @user.subscription
-        expect(subscription.current_period_end).to eq(Time.zone.today + 30)
+        expect(subscription.current_period_end).to eq(Time.zone.today + 1.month)
       end
 
       it 'should have 1 stripe subscription' do
