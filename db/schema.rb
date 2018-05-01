@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180501223752) do
+ActiveRecord::Schema.define(version: 20180501230409) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -46,6 +46,13 @@ ActiveRecord::Schema.define(version: 20180501223752) do
     t.datetime "updated_at", null: false
     t.string "stripe_id", null: false
     t.index ["user_id"], name: "index_plans_on_user_id"
+  end
+
+  create_table "stack_tracks", force: :cascade do |t|
+    t.bigint "track_id", null: false
+    t.bigint "stack_id", null: false
+    t.index ["stack_id"], name: "index_stack_tracks_on_stack_id"
+    t.index ["track_id"], name: "index_stack_tracks_on_track_id"
   end
 
   create_table "stacks", force: :cascade do |t|
@@ -105,6 +112,8 @@ ActiveRecord::Schema.define(version: 20180501223752) do
   add_foreign_key "cards", "users"
   add_foreign_key "lessons", "stacks"
   add_foreign_key "plans", "users"
+  add_foreign_key "stack_tracks", "stacks"
+  add_foreign_key "stack_tracks", "tracks"
   add_foreign_key "stacks", "categories"
   add_foreign_key "subscriptions", "users"
 end

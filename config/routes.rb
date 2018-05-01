@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :stack_tracks
   resources :tracks
   resources :categories, except: [:show, :index]
   get 'library', to: 'categories#index', as: :library

@@ -1,0 +1,23 @@
+%h1 Listing stack_tracks
+
+%table
+  %thead
+    %tr
+      %th Track
+      %th Stack
+      %th
+      %th
+      %th
+
+  %tbody
+    - @stack_tracks.each do |stack_track|
+      %tr
+        %td= stack_track.track
+        %td= stack_track.stack
+        %td= link_to 'Show', stack_track
+        %td= link_to 'Edit', edit_stack_track_path(stack_track)
+        %td= link_to 'Destroy', stack_track, method: :delete, data: { confirm: 'Are you sure?' }
+
+%br
+
+= link_to 'New Stack track', new_stack_track_path

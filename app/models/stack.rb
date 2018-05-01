@@ -13,6 +13,8 @@ class Stack < ApplicationRecord
 
   has_paper_trail
   has_many :lessons, dependent: :destroy
+  has_many :stack_tracks
+  has_many :tracks, through: :stack_tracks
   has_attached_file :icon,
                     styles: { medium: '300x300', thumb: '100x100' }
 
