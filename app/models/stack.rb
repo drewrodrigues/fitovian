@@ -13,11 +13,12 @@ class Stack < ApplicationRecord
 
   has_paper_trail
   has_many :lessons, dependent: :destroy
-  has_many :stack_tracks
+  has_many :stack_tracks, dependent: :destroy
   has_many :tracks, through: :stack_tracks
   has_attached_file :icon,
                     styles: { medium: '300x300', thumb: '100x100' }
 
   validates_attachment_content_type :icon, content_type: /\Aimage\/.*\z/
+  validates :category, presence: true
   validates :title, presence: true
 end
