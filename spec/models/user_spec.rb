@@ -1,14 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
-  before(:all) do
-    StripeMock.start
-  end
-
-  after(:all) do
-    StripeMock.stop
-  end
-
   describe 'validations' do
     it { is_expected.to validate_presence_of(:name) }
     it { is_expected.to validate_presence_of(:email) }

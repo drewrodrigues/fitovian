@@ -41,6 +41,8 @@ group :test do
   gem 'shoulda-matchers'
   gem 'database_cleaner'
   gem 'simplecov', require: false
+  gem 'guard', require: false
+  gem 'guard-rspec', require: false
 end
 
 group :development, :test do
@@ -49,6 +51,7 @@ group :development, :test do
   gem 'selenium-webdriver', '2.53.4'
   gem 'rspec-rails'
   gem 'factory_bot_rails'
+  gem 'fuubar', require: false
 end
 
 group :development do
