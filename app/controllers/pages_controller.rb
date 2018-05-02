@@ -1,5 +1,7 @@
 class PagesController < ApplicationController
   layout 'pages'
+  before_action :require_plan!, only: :dashboard
+  before_action :require_payment_method!, only: :dashboard
 
   def landing; end
 
