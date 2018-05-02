@@ -14,11 +14,11 @@ RSpec.describe SubscriptionsController, type: :controller do
         post :create
       end
 
-      it 'should respond with a successful message' do
+      it 'responds with a successful message' do
         expect(flash[:success]).to eq("Successfully subscribed to #{@user.plan.name} plan")
       end
 
-      it 'should redirect to billing' do
+      it 'redirects to billing' do
         expect(response).to redirect_to(billing_path)
       end
     end
@@ -32,11 +32,11 @@ RSpec.describe SubscriptionsController, type: :controller do
         post :create
       end
 
-      it 'should respond with a successful message' do
+      it 'responds with a successful message' do
         expect(flash[:success]).to eq("Successfully subscribed to #{@user.plan.name} plan")
       end
 
-      it 'should redirect to billing' do
+      it 'redirects to billing' do
         expect(response).to redirect_to(billing_path)
       end
     end
@@ -56,11 +56,11 @@ RSpec.describe SubscriptionsController, type: :controller do
         delete :cancel
       end
 
-      it 'should respond with a successful message' do
+      it 'responds with a successful message' do
         expect(flash[:success]).to eq('Successfully canceled membership')
       end
 
-      it 'should redirect to billing' do
+      it 'redirects to billing' do
         expect(response).to redirect_to(billing_path)
       end
     end
@@ -70,11 +70,11 @@ RSpec.describe SubscriptionsController, type: :controller do
         delete :cancel
       end
 
-      it 'should respond with a successful message' do
+      it 'responds with a successful message' do
         expect(flash[:alert]).to eq('Failed to cancel membership')
       end
 
-      it 'should redirect to billing' do
+      it 'redirects to billing' do
         expect(response).to redirect_to(billing_path)
       end
     end

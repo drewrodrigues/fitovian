@@ -26,30 +26,30 @@ RSpec.describe Subscription, type: :model do
 
       before { user.subscribe }
 
-      it 'should add the subscription to the user' do
+      it 'adds the subscription to the user' do
         expect(user.subscription).to_not be_nil
       end
 
-      it 'should subscribe the user to the plan' do
+      it 'subscribes the user to the plan' do
         stripe_subscription = user.subscription.stripe_subscription
         expect(stripe_subscription.customer).to eq(user.stripe_id)
       end
 
-      it 'should set the user\'s subscription to active' do
+      it 'sets the user\'s subscription to active' do
         expect(user.subscription.active).to be true
       end
 
-      it 'should set the user\'s Stripe subscription status to active' do
+      it 'sets the user\'s Stripe subscription status to active' do
         subscription = user.subscription.stripe_subscription
         expect(subscription.status).to eq('active')
       end
 
-      it 'should set the current_period_end 1 month out' do
+      it 'sets the current_period_end 1 month out' do
         subscription = user.subscription
         expect(subscription.current_period_end).to eq(Time.zone.today + 1.month)
       end
 
-      it 'should have 1 stripe subscription' do
+      it 'has 1 stripe subscription' do
         subscription_count = Stripe::Customer.retrieve(user.stripe_id).subscriptions.total_count
         expect(subscription_count).to eq(1)
       end
@@ -60,11 +60,11 @@ RSpec.describe Subscription, type: :model do
 
       before { user.subscribe }
 
-      it 'should return true' do
+      it 'returns true' do
         expect(user.subscription.subscribe).to be true
       end
 
-      it 'should not add another subscription to the user' do
+      it 'prevents duplicate subscriptions' do
         subscription_count = Stripe::Customer.retrieve(user.stripe_id).subscriptions.total_count
         expect(subscription_count).to eq(1)
       end
@@ -75,11 +75,11 @@ RSpec.describe Subscription, type: :model do
 
       before { user.cancel }
 
-      it 'should return true' do
+      it 'returns true' do
         expect(user.subscription).to be_truthy
       end
 
-      it 'should not add another subscription to the user' do
+      it 'prevents duplicate subscriptions' do
         subscription_count = Stripe::Customer.retrieve(user.stripe_id).subscriptions.total_count
         expect(subscription_count).to eq(1)
       end
@@ -92,16 +92,16 @@ RSpec.describe Subscription, type: :model do
 
       before { user.cancel }
 
-      it 'should set to cancel at period end' do
+      it 'sets to cancel at period end' do
         subscription = user.subscription.stripe_subscription
         expect(subscription.cancel_at_period_end).to be true
       end
 
-      it 'should set active to false' do
+      it 'sets active to false' do
         expect(user.subscription.active).to be false
       end
 
-      it 'should set status to canceled' do
+      it 'sets status to canceled' do
         subscription = user.subscription
         expect(subscription.status).to eq('canceled')
       end
@@ -112,16 +112,16 @@ RSpec.describe Subscription, type: :model do
 
       before { user.cancel }
 
-      it 'should set to cancel at period end' do
+      it 'sets to cancel at period end' do
         subscription = user.subscription.stripe_subscription
         expect(subscription.cancel_at_period_end).to be true
       end
 
-      it 'should set active to false' do
+      it 'sets active to false' do
         expect(user.subscription.active).to be false
       end
 
-      it 'should set status to canceled' do
+      it 'sets status to canceled' do
         subscription = user.subscription
         expect(subscription.status).to eq('canceled')
       end

@@ -77,33 +77,33 @@ RSpec.describe User, type: :model do
 
   # describe '#select_starter_plan' do
   #   context 'user doesn\'t have a subscription yet' do
-  #     it 'should set the users plan'
+  #     it 'sets the users plan'
   #   end
 
   #   context 'user has an active subscription' do
-  #     it 'should set the users plan'
-  #     it 'should change the Stripe Subscription to the chosen plan'
+  #     it 'sets the users plan'
+  #     it 'sets the Stripe Subscription to the chosen plan'
   #   end
 
   #   context 'user has an in-active subscription' do
-  #     it 'should subscribe the user to the plan'
-  #     it 'should change the Stripe Subscription to the chosen plan'
+  #     it 'subscribes the user to the plan'
+  #     it 'sets the Stripe Subscription to the chosen plan'
   #   end
   # end
 
   # describe '#select_premium_plan' do
   #   context 'user doesn\'t have a subscription yet' do
-  #     it 'should set the users plan'
+  #     it 'sets the users plan'
   #   end
 
   #   context 'user has an active subscription' do
-  #     it 'should set the users plan'
-  #     it 'should change the Stripe Subscription to the chosen plan'
+  #     it 'sets the users plan'
+  #     it 'sets the Stripe Subscription to the chosen plan'
   #   end
 
   #   context 'user has an in-active subscription' do
-  #     it 'should subscribe the user to the plan'
-  #     it 'should change the Stripe Subscription to the chosen plan'
+  #     it 'subscribes the user to the plan'
+  #     it 'changes the Stripe Subscription to the chosen plan'
   #   end
   # end
 end
