@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe PlansController, type: :controller do
   describe 'Page Access' do
-    context 'signed in' do
+    context 'when signed in' do
       it 'renders the new template' do
         user = create(:user)
         sign_in(user)
@@ -11,7 +11,7 @@ RSpec.describe PlansController, type: :controller do
       end
     end
 
-    context 'signed out' do
+    context 'when signed out' do
       it 're-directs to the login page' do
         get :new
         expect(response).to redirect_to(new_user_session_path)
@@ -22,7 +22,7 @@ RSpec.describe PlansController, type: :controller do
   end
 
   describe '#create' do
-    context 'user doesn\'t have a plan yet' do
+    context 'when user doesn\'t have a plan yet' do
       before do
         @user = create(:user)
         sign_in(@user)

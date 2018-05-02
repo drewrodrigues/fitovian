@@ -21,7 +21,7 @@ RSpec.describe Subscription, type: :model do
   end
 
   describe '#subscribe' do
-    context 'user doesn\'t have a subscription' do
+    context 'when user doesn\'t have a subscription' do
       let(:user) { create(:user, :with_plan_and_card) }
 
       before { user.subscribe }
@@ -55,7 +55,7 @@ RSpec.describe Subscription, type: :model do
       end
     end
 
-    context 'user already has an active subscription' do
+    context 'when user already has an active subscription' do
       let(:user) { create(:user, :onboarded) }
 
       before { user.subscribe }
@@ -70,7 +70,7 @@ RSpec.describe Subscription, type: :model do
       end
     end
 
-    context 'user has an in-active subscription' do
+    context 'when user has an in-active subscription' do
       let(:user) { create(:user, :onboarded) }
 
       before { user.cancel }

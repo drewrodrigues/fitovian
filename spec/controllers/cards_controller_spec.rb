@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe CardsController, type: :controller do
   describe 'Page Access' do
-    context 'Signed in' do
+    context 'when user signed in' do
       it 'doesn\'t allow access when user doesn\'t have a plan' do
         user = create(:user)
         sign_in(user)
@@ -20,26 +20,26 @@ RSpec.describe CardsController, type: :controller do
   end
 
   describe '#create' do
-    context 'user doesn\'t have a card yet' do
+    context 'when user doesn\'t have a card yet' do
       before do
         token = StripeMock.create_test_helper.generate_card_token(last4: '1212')
         @user = create(:starter_plan).user
         sign_in(@user)
         post :create, params: { stripeToken: token }
       end
-  
+
       it 'responds with a successful message' do
         expect(flash[:success]).to eq('Successfully subscribed to starter plan')
       end
-  
+
       it 'redirects to lessons' do
         expect(response).to redirect_to(library_path)
       end
-  
+
       it 'adds the card to the user' do
         expect(@user.cards.count).to eq(1)
       end
-  
+
       it 'becomes the user\'s default card' do
         expect(@user.default_card.last4).to eq('1212')
       end
@@ -52,7 +52,7 @@ RSpec.describe CardsController, type: :controller do
         subscription = Stripe::Subscription.retrieve(@user.subscription.stripe_id)
         expect(subscription.status).to eq('active')
       end
-  
+
       it 'adds the card as the Stripe default' do
         stripe_default = Stripe::Customer.retrieve(@user.stripe_id).default_source
         expect(stripe_default).to eq(@user.default_card.stripe_id)
@@ -63,8 +63,8 @@ RSpec.describe CardsController, type: :controller do
         expect(stripe_cards.count).to eq(1)
       end
     end
-  
-    context 'user already has a card' do
+
+    context 'when user already has a card' do
       before do
         token = StripeMock.create_test_helper.generate_card_token(last4: '1111')
         token2 = StripeMock.create_test_helper.generate_card_token(last4: '2222')
@@ -73,23 +73,23 @@ RSpec.describe CardsController, type: :controller do
         post :create, params: { stripeToken: token }
         post :update, params: { stripeToken: token2 }
       end
-  
+
       it 'responds with a successful message' do
         expect(flash[:success]).to eq('Successfully updated payment method')
       end
-  
+
       it 'redirects to billing' do
         expect(response).to redirect_to(billing_path)
       end
-  
+
       it 'adds the card to the user' do
         expect(@user.cards.count).to eq(2)
       end
-  
+
       it 'updates the most recent card to the default' do
         expect(@user.default_card.last4).to eq('2222')
       end
-  
+
       it 'adds the card as the Stripe default' do
         stripe_default = Stripe::Customer.retrieve(@user.stripe_id).default_source
         expect(stripe_default).to eq(@user.default_card.stripe_id)
@@ -112,7 +112,7 @@ RSpec.describe CardsController, type: :controller do
       post :update, params: { stripeToken: token2 }
     end
 
-    context 'user sets the other card as the default' do
+    context 'when user sets the other card as the default' do
       before do
         put :default, params: { id: @user.cards.first.id }
       end
@@ -135,7 +135,7 @@ RSpec.describe CardsController, type: :controller do
       end
     end
 
-    context 'user tries to set the current default as the default card' do
+    context 'when user tries to set the current default as the default card' do
       before do
         put :default, params: { id: @user.default_card.id }
       end
@@ -165,7 +165,7 @@ RSpec.describe CardsController, type: :controller do
       post :create, params: { stripeToken: token2 }
     end
 
-    context 'user deletes the other card' do
+    context 'when user deletes the other card' do
       before do
         delete :destroy, params: { id: @user.cards.first }
       end
@@ -188,7 +188,7 @@ RSpec.describe CardsController, type: :controller do
       end
     end
 
-    context 'user tries to delete the default card' do
+    context 'when user tries to delete the default card' do
       before do
         delete :destroy, params: { id: @user.default_card.id }
       end

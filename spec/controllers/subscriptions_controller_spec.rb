@@ -5,7 +5,7 @@ RSpec.describe SubscriptionsController, type: :controller do
   include CardsHelper
 
   describe '#create' do
-    context 'successfully subscribed' do
+    context 'when successfully subscribed' do
       before do
         @user = create(:user)
         @user.select_starter_plan
@@ -23,7 +23,7 @@ RSpec.describe SubscriptionsController, type: :controller do
       end
     end
 
-    context 'duplicate subscribe' do
+    context 'when duplicate subscribe' do
       before do
         @user = create(:user)
         @user.select_starter_plan
@@ -50,7 +50,7 @@ RSpec.describe SubscriptionsController, type: :controller do
       sign_in(@user)
     end
 
-    context 'successfully canceled' do
+    context 'when successfully canceled' do
       before do
         post :create
         delete :cancel
@@ -65,7 +65,7 @@ RSpec.describe SubscriptionsController, type: :controller do
       end
     end
 
-    context 'failed canceled' do
+    context 'when failed canceled' do
       before do
         delete :cancel
       end
