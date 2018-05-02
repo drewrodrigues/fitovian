@@ -24,7 +24,7 @@ RSpec.describe Subscription, type: :model do
     context 'user doesn\'t have a subscription' do
       let(:user) { create(:user, :with_plan_and_card) }
 
-      before(:each) { user.subscribe }
+      before { user.subscribe }
 
       it 'should add the subscription to the user' do
         expect(user.subscription).to_not be_nil
@@ -58,7 +58,7 @@ RSpec.describe Subscription, type: :model do
     context 'user already has an active subscription' do
       let(:user) { create(:user, :onboarded) }
 
-      before(:each) { user.subscribe }
+      before { user.subscribe }
 
       it 'should return true' do
         expect(user.subscription.subscribe).to be true
@@ -73,7 +73,7 @@ RSpec.describe Subscription, type: :model do
     context 'user has an in-active subscription' do
       let(:user) { create(:user, :onboarded) }
 
-      before(:each) { user.cancel }
+      before { user.cancel }
 
       it 'should return true' do
         expect(user.subscription).to be_truthy
@@ -90,7 +90,7 @@ RSpec.describe Subscription, type: :model do
     context 'when user doesn\'t have a subscription' do
       let(:user) { create(:user, :onboarded) }
 
-      before(:each) { user.cancel }
+      before { user.cancel }
 
       it 'should set to cancel at period end' do
         subscription = user.subscription.stripe_subscription
@@ -110,7 +110,7 @@ RSpec.describe Subscription, type: :model do
     context 'when user\'s subscription is already canceled' do
       let(:user) { create(:user, :onboarded) }
 
-      before(:each) { user.cancel }
+      before { user.cancel }
 
       it 'should set to cancel at period end' do
         subscription = user.subscription.stripe_subscription

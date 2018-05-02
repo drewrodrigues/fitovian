@@ -23,7 +23,7 @@ RSpec.describe PlansController, type: :controller do
 
   describe '#create' do
     context 'user doesn\'t have a plan yet' do
-      before(:each) do
+      before do
         @user = create(:user)
         sign_in(@user)
         post :create, params: { plan: 'starter' }

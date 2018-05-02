@@ -6,7 +6,7 @@ RSpec.describe SubscriptionsController, type: :controller do
 
   describe '#create' do
     context 'successfully subscribed' do
-      before(:each) do
+      before do
         @user = create(:user)
         @user.select_starter_plan
         add_fake_card(@user)
@@ -24,7 +24,7 @@ RSpec.describe SubscriptionsController, type: :controller do
     end
 
     context 'duplicate subscribe' do
-      before(:each) do
+      before do
         @user = create(:user)
         @user.select_starter_plan
         add_fake_card(@user)
@@ -43,7 +43,7 @@ RSpec.describe SubscriptionsController, type: :controller do
   end
 
   describe '#destroy' do
-    before(:each) do
+    before do
       @user = create(:user)
       @user.select_starter_plan
       add_fake_card(@user)
@@ -51,7 +51,7 @@ RSpec.describe SubscriptionsController, type: :controller do
     end
 
     context 'successfully canceled' do
-      before(:each) do
+      before do
         post :create
         delete :cancel
       end
@@ -66,7 +66,7 @@ RSpec.describe SubscriptionsController, type: :controller do
     end
 
     context 'failed canceled' do
-      before(:each) do
+      before do
         delete :cancel
       end
 

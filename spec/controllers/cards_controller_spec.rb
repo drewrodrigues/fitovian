@@ -21,7 +21,7 @@ RSpec.describe CardsController, type: :controller do
 
   describe '#create' do
     context 'user doesn\'t have a card yet' do
-      before(:each) do
+      before do
         token = StripeMock.create_test_helper.generate_card_token(last4: '1212')
         @user = create(:starter_plan).user
         sign_in(@user)
@@ -65,7 +65,7 @@ RSpec.describe CardsController, type: :controller do
     end
   
     context 'user already has a card' do
-      before(:each) do
+      before do
         token = StripeMock.create_test_helper.generate_card_token(last4: '1111')
         token2 = StripeMock.create_test_helper.generate_card_token(last4: '2222')
         @user = create(:starter_plan).user
@@ -103,7 +103,7 @@ RSpec.describe CardsController, type: :controller do
   end
 
   describe '#default' do
-    before(:each) do
+    before do
       token = StripeMock.create_test_helper.generate_card_token(last4: '1111')
       token2 = StripeMock.create_test_helper.generate_card_token(last4: '2222')
       @user = create(:starter_plan).user
@@ -113,7 +113,7 @@ RSpec.describe CardsController, type: :controller do
     end
 
     context 'user sets the other card as the default' do
-      before(:each) do
+      before do
         put :default, params: { id: @user.cards.first.id }
       end
 
@@ -136,7 +136,7 @@ RSpec.describe CardsController, type: :controller do
     end
 
     context 'user tries to set the current default as the default card' do
-      before(:each) do
+      before do
         put :default, params: { id: @user.default_card.id }
       end
 
@@ -156,7 +156,7 @@ RSpec.describe CardsController, type: :controller do
   end
 
   describe '#destroy' do
-    before(:each) do
+    before do
       token = StripeMock.create_test_helper.generate_card_token(last4: '1111')
       token2 = StripeMock.create_test_helper.generate_card_token(last4: '2222')
       @user = create(:starter_plan).user
@@ -166,7 +166,7 @@ RSpec.describe CardsController, type: :controller do
     end
 
     context 'user deletes the other card' do
-      before(:each) do
+      before do
         delete :destroy, params: { id: @user.cards.first }
       end
 
@@ -189,7 +189,7 @@ RSpec.describe CardsController, type: :controller do
     end
 
     context 'user tries to delete the default card' do
-      before(:each) do
+      before do
         delete :destroy, params: { id: @user.default_card.id }
       end
 

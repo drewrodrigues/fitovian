@@ -30,19 +30,21 @@ RSpec.describe User, type: :model do
   end
 
   describe '#set_stripe_id' do
-    context 'successful api call' do
+    context 'with a successful api call' do
+      let(:user) { create(:user) }
+
       it 'adds a stripe_id upon creation' do
-        user = create(:user)
-        expect(user.save).to be true
         expect(user.stripe_id).to_not be_nil
       end
     end
 
-    context 'errored api call' do
-      it 'prevents user creation' do
+    context 'with an errored api call' do
+      before do
         stripe_error = Stripe::StripeError.new('Pretend stripe error')
         StripeMock.prepare_error(stripe_error, :new_customer)
+      end
 
+      it 'prevents user creation' do
         user = build(:user)
         expect(user.stripe_id).to be_nil
         expect(user.save).to be false
@@ -58,10 +60,14 @@ RSpec.describe User, type: :model do
     end
 
     context 'errored api call' do
-      it 'returns false' do
+      let(:user) { create(:user) }
+
+      before do
         stripe_error = Stripe::StripeError.new('Pretend stripe error')
-        user = create(:user)
         StripeMock.prepare_error(stripe_error, :get_customer)
+      end
+
+      it 'returns false' do
         expect(user.stripe_customer).to be false
       end
     end
