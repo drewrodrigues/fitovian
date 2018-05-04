@@ -18,7 +18,8 @@
         %p
           It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a.
         %p
-          = link_to 'Select Track', new_user_registration_path, class: 'btn btn-success'
+          -# TODO: change text based on which track is selected
+          = link_to 'Select Track', select_track_path(@track), method: :post, class: 'btn btn-success'
   .card-body.track-show-stacks
     -# TODO: render stack collection
     .col-md-6.offset-md-3

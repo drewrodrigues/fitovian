@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180504182314) do
+ActiveRecord::Schema.define(version: 20180504192912) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -99,8 +99,10 @@ ActiveRecord::Schema.define(version: 20180504182314) do
     t.boolean "admin", default: false
     t.string "stripe_id"
     t.string "name", null: false
+    t.bigint "track_id"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+    t.index ["track_id"], name: "index_users_on_track_id"
   end
 
   create_table "versions", force: :cascade do |t|
@@ -120,4 +122,5 @@ ActiveRecord::Schema.define(version: 20180504182314) do
   add_foreign_key "stack_tracks", "tracks"
   add_foreign_key "stacks", "categories"
   add_foreign_key "subscriptions", "users"
+  add_foreign_key "users", "tracks"
 end

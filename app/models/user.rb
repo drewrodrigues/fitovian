@@ -13,6 +13,8 @@
 # User class' responsiblity to watch over its resources and handle them
 # accordingly.
 class User < ApplicationRecord
+  belongs_to :track, optional: true
+
   has_many :cards, dependent: :destroy
   has_one :plan, dependent: :destroy
   has_one :subscription, dependent: :destroy

@@ -1,5 +1,5 @@
 class TracksController < ApplicationController
-  before_action :set_track, only: [:show, :edit, :update, :destroy]
+  before_action :set_track, only: [:show, :edit, :update, :destroy, :select]
   before_action :set_stack_track, only: [:new, :edit]
 
   # GET /tracks
@@ -59,6 +59,15 @@ class TracksController < ApplicationController
     respond_to do |format|
       format.html { redirect_to tracks_url, notice: 'Track was successfully destroyed.' }
       format.json { head :no_content }
+    end
+  end
+
+  def select
+    current_user.track = @track
+    if current_user.save
+      redirect_to @track, flash: { success: "#{@track.title} track selected." }
+    else
+      redirect_to tracks_path, flash: { alert: "#{@track.title} not selected." }
     end
   end
 

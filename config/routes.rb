@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
   resources :stack_tracks
+
   resources :tracks
+  post 'tracks/:id/select' => 'tracks#select', as: :select_track
 
   resources :categories, except: [:show, :index]
   get 'library', to: 'categories#index', as: :library

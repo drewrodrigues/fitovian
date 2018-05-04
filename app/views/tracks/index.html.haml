@@ -8,7 +8,7 @@
           = image_tag track.icon
           %h2= track.title
           .btn-group
-            = link_to 'Select track', '#', class: 'btn btn-sm btn-success'
+            = link_to 'Select track', select_track_path(track), method: :post, class: 'btn btn-sm btn-success'
             = link_to 'Check it out', track, class: 'btn btn-sm btn-light'
 
 = link_to 'New Track', new_track_path()
