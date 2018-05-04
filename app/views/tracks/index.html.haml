@@ -3,16 +3,12 @@
 %tbody
   .card-columns
     - @tracks.each do |track|
-      .card
+      .card.track-card
         .card-body
-          %p
-            = image_tag track.icon
+          = image_tag track.icon
           %h2= track.title
-          %ul.list-group
-            - track.stacks.each do |stack|
-              %li.list-group-item= stack.title
-          %td= link_to 'Show', track
-          %td= link_to 'Edit', edit_track_path(track)
-          %td= link_to 'Destroy', track, method: :delete, data: { confirm: 'Are you sure?' }
+          .btn-group
+            = link_to 'Select track', '#', class: 'btn btn-sm btn-success'
+            = link_to 'Check it out', track, class: 'btn btn-sm btn-light'
 
-= link_to 'New Track', new_track_path
+= link_to 'New Track', new_track_path()

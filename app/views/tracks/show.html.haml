@@ -1,9 +1,33 @@
 %p#notice= notice
 
-= @track.title
-%ul.list-group
-  - @track.stacks.each do |stack|
-    %li.list-group-item= stack.title
+%p
+  = link_to tracks_path, class: 'btn btn-sm btn-link' do
+    %i.icon.ion-android-arrow-back
+    Tracks
+
+.card.library-intro
+  .card-body.track-show
+    .row
+      .col-md-6.offset-md-3.text-center
+        = image_tag @track.icon
+        %h2= @track.title
+        %p
+          TIt is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem.
+        %h5
+          Ready to start losing weight?
+        %p
+          It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a.
+        %p
+          = link_to 'Select Track', new_user_registration_path, class: 'btn btn-success'
+  .card-body.track-show-stacks
+    -# TODO: render stack collection
+    .col-md-6.offset-md-3
+      %h2 Included Courses
+      %ul.list-group
+        - @track.stacks.each do |stack|
+          %li.list-group-item
+            = image_tag stack.icon
+            = stack.title
 
 
 = link_to 'Edit', edit_track_path(@track)

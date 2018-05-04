@@ -2,6 +2,8 @@
 
 = render 'form'
 
+%td= link_to 'Destroy', @track, method: :delete, data: { confirm: 'Are you sure?' }
+
 = link_to 'Show', @track
 \|
 = link_to 'Back', tracks_path

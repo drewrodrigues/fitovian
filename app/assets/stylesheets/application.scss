@@ -80,3 +80,30 @@ input[type='textarea'].lesson-form {
     font-weight: bold;
   }
 }
+
+.track-card {
+  text-decoration: none;
+  text-align: center;
+  padding: 20px 0;
+
+  img {
+    max-width: 128px;
+    margin-bottom: 20px;
+  }
+
+  &:hover {
+    text-decoration: none;
+  }
+}
+
+.track-show {
+  padding: 50px 0;
+
+  img {
+    margin-bottom: 50px;
+  }
+}
+
+.track-show-stacks {
+  padding-bottom: 50px;
+}
