@@ -4,10 +4,12 @@ Rails.application.routes.draw do
 
   resources :categories, except: [:show, :index]
   get 'library', to: 'categories#index', as: :library
+
   resources :stacks, except: [:index, :new]
   get 'stacks/new/:category_id' => 'stacks#new', as: :new_stack
 
-  resources :lessons, except: :index
+  resources :lessons, except: [:index, :new]
+  get 'lessons/new/:stack_id' => 'lessons#new', as: :new_lesson
   post '/tinymce_assets' => 'lessons#images'
 
   # dashboard

@@ -43,3 +43,25 @@ body {
 .navbar-dark {
   margin-bottom: 20px;
 }
+
+.lesson-form {
+  border: 0;
+  padding: 0;
+
+  &:active,
+  &:focus {
+    border: 0;
+    outline: none;
+    -webkit-box-shadow: none;
+  }
+}
+
+input[type='text'].lesson-form {
+  @extend .lesson-title;
+  @extend h2;
+}
+
+input[type='textarea'].lesson-form {
+  @extend .card-text;
+  @extend .lesson-text;
+}

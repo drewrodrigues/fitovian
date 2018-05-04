@@ -18,15 +18,19 @@
 //= require turbolinks
 //= require_tree .
 
-$(document).on('turbolinks:load', function() {
+var deleteModal = function() {
   $deleteModalButton = $('button#deleteModal');
-
+  
   $deleteModalButton.on('click', function(e) {
     var link = $(this).data().path;
-
+  
     // ensure the modal is loaded in
     $('#deleteModal').on('shown.bs.modal', function() {
       $('#deleteModalPath').replaceWith(link);
     });
   });
+}
+
+$(document).on('turbolinks:load', function() {
+  deleteModal();
 });

@@ -1,10 +1,11 @@
 class LessonsController < ApplicationController
-  before_action :set_lesson, only: [:show, :edit, :update, :destroy]
   # before_action :check_subscription, only: [:index, :show]
   before_action :require_admin!, except: :show
   before_action :authenticate_user!, only: :show
   before_action :require_plan!, only: :show
   before_action :require_payment_method!, only: :show
+  before_action :set_lesson, only: [:show, :edit, :update, :destroy]
+  before_action :set_stack, only: [:new, :edit]
 
   # GET /lessons
   # GET /lessons.json
@@ -86,6 +87,10 @@ class LessonsController < ApplicationController
   # Use callbacks to share common setup or constraints between actions.
   def set_lesson
     @lesson = Lesson.find(params[:id])
+  end
+
+  def set_stack
+    @stack = @lesson&.stack || Stack.find(params[:stack_id])
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.

@@ -1,3 +1,7 @@
+%p
+  = link_to library_path, class: 'btn btn-sm btn-link' do
+    %i.icon.ion-android-arrow-back
+    Back to Library
 .row
   .md-offset-6.col-md-6.order-md-2
     .stack-show-lesson
@@ -11,10 +15,9 @@
         %h3= @stack.title
         %p.stack-show-lesson_body_summary= @stack.summary
     - if current_user&.admin?
-      = link_to 'New lesson', new_lesson_path, class: 'btn btn-sm btn-link'
+      = link_to 'New lesson', new_lesson_path(@stack), class: 'btn btn-sm btn-link'
       %button{"data-path" => "#{link_to 'Delete stack',  stack_path(@stack), method: :delete, class: 'btn btn-danger'}", "data-target" => "#deleteModal", "data-toggle" => "modal", :type => "button", id: 'deleteModal', class: 'btn btn-sm btn-link'} Delete stack
       = link_to 'Edit Stack', edit_stack_path(@stack), class: 'btn btn-sm btn-link'
-      = link_to 'Back to library', library_path, class: 'btn btn-sm btn-link'
   .col-md-6
     - @stack.lessons.each do |lesson|
       .stack-show-lesson

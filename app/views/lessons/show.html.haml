@@ -1,3 +1,7 @@
+%p
+  = link_to @stack, class: 'btn btn-sm btn-link' do
+    %i.icon.ion-android-arrow-back
+    Back to #{@stack.title}
 .lesson-show-stack
   = link_to @stack do
     .card-body{style: "background-color: #{@stack.category.color}"}
