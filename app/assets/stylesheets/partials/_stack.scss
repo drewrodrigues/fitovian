@@ -174,3 +174,29 @@
     float: none;
   }
 }
+
+.stack-form {
+  border: 0;
+  padding: 0;
+
+  &:active,
+  &:focus {
+    border: 0;
+    outline: none;
+    -webkit-box-shadow: none;
+  }
+}
+
+input[type='text'].stack-form {
+  @extend h3;
+}
+
+textarea.stack-form {
+  @extend .stack-show-lesson_body_summary;
+  min-height: 250px;
+
+  &:active,
+  &:focus {
+    color: #adadad;
+  }
+}

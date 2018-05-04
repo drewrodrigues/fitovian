@@ -5,7 +5,7 @@
     = category.title
     - if current_user&.admin?
       .float-right
-        = link_to new_stack_path, class: 'btn btn-link btn-sm' do
+        = link_to new_stack_path(category), class: 'btn btn-link btn-sm' do
           %i.icon.ion-plus-round
           Add stack
         = link_to edit_category_path(category), class: 'btn btn-link btn-sm' do

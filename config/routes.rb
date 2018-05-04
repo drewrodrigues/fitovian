@@ -1,10 +1,11 @@
 Rails.application.routes.draw do
   resources :stack_tracks
   resources :tracks
+
   resources :categories, except: [:show, :index]
   get 'library', to: 'categories#index', as: :library
-
-  resources :stacks, except: :index
+  resources :stacks, except: [:index, :new]
+  get 'stacks/new/:category_id' => 'stacks#new', as: :new_stack
 
   resources :lessons, except: :index
   post '/tinymce_assets' => 'lessons#images'
