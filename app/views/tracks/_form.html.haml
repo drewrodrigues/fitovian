@@ -9,5 +9,10 @@
   .field
     = f.label :title
     = f.text_field :title
+    = f.file_field :icon
+
+    %ul.list-group
+      - @track.stacks.each do |stack|
+        %li.list-group-item= stack.title
   .actions
     = f.submit 'Save'

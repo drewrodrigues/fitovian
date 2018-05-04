@@ -8,6 +8,7 @@
       %ul.navbar-nav
         - if user_signed_in?
           %li.nav-item= link_to 'Dashboard', '#', class: 'nav-link'
+          %li.nav-item= link_to 'Tracks', tracks_path, class: 'nav-link'
           %li.nav-item= link_to 'Library', library_path, class: 'nav-link'
           %li.nav-item= link_to 'Settings', edit_user_registration_path, class: 'nav-link'
           %li.nav-item= link_to 'Sign out', destroy_user_session_path, class: 'nav-link', method: :delete
