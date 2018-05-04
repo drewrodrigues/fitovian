@@ -65,3 +65,18 @@ input[type='textarea'].lesson-form {
   @extend .card-text;
   @extend .lesson-text;
 }
+
+.library-intro {
+  margin-bottom: 20px;
+
+  p {
+    color: #adadad;
+    font-weight: 300;
+    font-size: 14px;
+  }
+
+  h2 {
+    font-size: 28px;
+    font-weight: bold;
+  }
+}

@@ -1,5 +1,8 @@
 = render 'categories/form' if current_user&.admin?
 
+-# TODO: render library-intro (if logged in, it's the journey) otherwise it's trying to get signup
+= render library_intro_path
+
 - @categories.each do |category|
   %h4.clearfix
     = category.title
@@ -16,7 +19,7 @@
           %i.icon.ion-close-round
         -#  method: :delete, class: 'btn btn-sm', confirm: 'Are you sure?' do
   .stack-index_columns
-    - category.stacks.order('title').each do |stack|
+    - category.stacks.where.not(title: 'The Journey').order('title').each do |stack|
       .stack-index
         = link_to stack do
           .stack-index_body{style: "background-color: #{category.color}"}
