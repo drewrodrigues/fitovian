@@ -28,7 +28,7 @@ class StackTracksController < ApplicationController
 
     respond_to do |format|
       if @stack_track.save
-        format.html { redirect_to @stack_track, notice: 'Stack track was successfully created.' }
+        format.html { redirect_to @stack_track.track, notice: 'Stack track was successfully created.' }
         format.json { render :show, status: :created, location: @stack_track }
       else
         format.html { render :new }

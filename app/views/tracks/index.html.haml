@@ -1,21 +1,18 @@
-%h1 Listing tracks
+%h1 Tracks
 
-%table
-  %thead
-    %tr
-      %th Title
-      %th
-      %th
-      %th
-
-  %tbody
+%tbody
+  .card-columns
     - @tracks.each do |track|
-      %tr
-        %td= track.title
-        %td= link_to 'Show', track
-        %td= link_to 'Edit', edit_track_path(track)
-        %td= link_to 'Destroy', track, method: :delete, data: { confirm: 'Are you sure?' }
-
-%br
+      .card
+        .card-body
+          %p
+            = image_tag track.icon
+          %h2= track.title
+          %ul.list-group
+            - track.stacks.each do |stack|
+              %li.list-group-item= stack.title
+          %td= link_to 'Show', track
+          %td= link_to 'Edit', edit_track_path(track)
+          %td= link_to 'Destroy', track, method: :delete, data: { confirm: 'Are you sure?' }
 
 = link_to 'New Track', new_track_path

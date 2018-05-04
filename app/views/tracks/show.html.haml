@@ -1,8 +1,10 @@
 %p#notice= notice
 
-%p
-  %b Title:
-  = @track.title
+= @track.title
+%ul.list-group
+  - @track.stacks.each do |stack|
+    %li.list-group-item= stack.title
+
 
 = link_to 'Edit', edit_track_path(@track)
 \|

@@ -1,5 +1,6 @@
 class TracksController < ApplicationController
   before_action :set_track, only: [:show, :edit, :update, :destroy]
+  before_action :set_stack_track, only: [:new, :edit]
 
   # GET /tracks
   # GET /tracks.json
@@ -65,6 +66,10 @@ class TracksController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_track
       @track = Track.find(params[:id])
+    end
+
+    def set_stack_track
+      @stack_track = StackTrack.new(track: @track)
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
