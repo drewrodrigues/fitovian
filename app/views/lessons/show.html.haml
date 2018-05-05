@@ -17,7 +17,7 @@
         %p.stack-show-lesson_body_summary.lesson-lesson Lesson
         %h2.lesson-title= @lesson.title
         .card-text.lesson-text= @lesson.body.html_safe
-        %a.lesson-complete.btn.btn-sm{style: "background-color: #{@stack.category.color}"} Mark complete
+        = link_to 'Mark Complete', complete_path(Lesson, @lesson), method: :post, class: 'btn btn-sm btn-success'
 
 - if current_user&.admin?
   = link_to 'Edit lesson', edit_lesson_path(@lesson), class: 'btn btn-sm btn-link'

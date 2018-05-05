@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  post '/complete/:resource_type/:resource_id' => 'completions#create', as: :complete
+
   resources :stack_tracks
 
   resources :tracks
