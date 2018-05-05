@@ -15,6 +15,7 @@
 class User < ApplicationRecord
   belongs_to :track, optional: true
 
+  has_many :completions, dependent: :destroy
   has_many :cards, dependent: :destroy
   has_one :plan, dependent: :destroy
   has_one :subscription, dependent: :destroy

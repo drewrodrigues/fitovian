@@ -12,6 +12,8 @@
 class Lesson < ApplicationRecord
   belongs_to :stack
 
+  has_many :completions, as: :completable
+
   validates :position,
             presence: true,
             numericality: { only_integer: true }

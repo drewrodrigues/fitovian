@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180504192912) do
+ActiveRecord::Schema.define(version: 20180505172632) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -28,6 +28,16 @@ ActiveRecord::Schema.define(version: 20180504192912) do
   create_table "categories", force: :cascade do |t|
     t.string "title"
     t.string "color"
+  end
+
+  create_table "completions", id: false, force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "completable_id"
+    t.string "completable_type"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["completable_type", "completable_id"], name: "index_completions_on_completable_type_and_completable_id"
+    t.index ["user_id"], name: "index_completions_on_user_id"
   end
 
   create_table "lessons", force: :cascade do |t|

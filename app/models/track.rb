@@ -7,6 +7,7 @@
 class Track < ApplicationRecord
   has_many :users
 
+  has_many :completions, as: :completable
   has_many :stack_tracks, dependent: :destroy
   has_many :stacks, through: :stack_tracks
 
