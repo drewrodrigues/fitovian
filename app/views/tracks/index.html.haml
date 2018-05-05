@@ -1,14 +1,20 @@
-%h1 Tracks
 
-%tbody
-  .card-columns
-    - @tracks.each do |track|
-      .card.track-card
-        .card-body
-          = image_tag track.icon
-          %h2= track.title
-          .btn-group
-            = link_to 'Select track', select_track_path(track), method: :post, class: 'btn btn-sm btn-success'
-            = link_to 'Check it out', track, class: 'btn btn-sm btn-light'
+.card.track-index-card
+  .card-body.text-center
+    .col-md-6.offset-md-3
+      = image_tag 'map.png'
+      %h1 Tracks
+      %span
+        TIt is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem.
+
+.card-columns
+  - @tracks.each do |track|
+    .card.track-card
+      .card-body
+        = image_tag track.icon
+        %h2= track.title
+        .btn-group
+          = link_to 'Select track', select_track_path(track), method: :post, class: 'btn btn-sm btn-success'
+          = link_to 'Check it out', track, class: 'btn btn-sm btn-light'
 
 = link_to 'New Track', new_track_path()

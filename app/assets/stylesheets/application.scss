@@ -37,11 +37,12 @@
 }
 
 body {
-  background-color: #edeff0
+  background-color: #f9f9f9;
 }
 
 .navbar-light {
   margin-bottom: 20px;
+  border-bottom: 1px solid rgb(232, 232, 232);
 }
 
 .lesson-form {
@@ -106,4 +107,18 @@ input[type='textarea'].lesson-form {
 
 .track-show-stacks {
   padding-bottom: 50px;
+}
+
+.track-index-card {
+  margin-bottom: 20px;
+  padding: 50px 0;
+
+  span {
+    color: #adadad;
+    font-weight: 300;
+  }
+
+  img {
+    margin-bottom: 20px;
+  }
 }
