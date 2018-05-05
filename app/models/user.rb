@@ -139,4 +139,18 @@ class User < ApplicationRecord
   rescue Stripe::StripeError
     false
   end
+  
+  def complete(resource)
+    return true if self.completed?(resource)
+    self.completions.build(completable: resource).save
+  end
+
+  def incomplete(resource)
+    return true unless self.completed?(resource)
+    self.completions.find(resource.id).destroy
+  end
+
+  def completed?(resource)
+    self.completions.find_by(completable: resource)
+  end
 end

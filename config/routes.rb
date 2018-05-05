@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   post '/complete/:resource_type/:resource_id' => 'completions#create', as: :complete
+  delete '/complete/:resource_type/:resource_id' => 'completions#destroy'
 
   resources :stack_tracks
 
