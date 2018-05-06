@@ -2,33 +2,21 @@
   = link_to library_path, class: 'btn btn-sm btn-link' do
     %i.icon.ion-android-arrow-back
     Back to Library
-.row
-  .md-offset-6.col-md-6.order-md-2
-    .stack-show-lesson
-      .stack-index_body{style: "background-color: #{@stack.category.color}"}
-        = image_tag @stack.icon.url
-        %li.stack-index_progressicon
-        %li.stack-index_progressicon
-        %li.stack-index_progressicon
-      .stack-index_body
-        %p.stack-show-lesson_body_summary Course
-        %h3= @stack.title
-        %p.stack-show-lesson_body_summary= @stack.summary
-    - if current_user&.admin?
-      = link_to 'New lesson', new_lesson_path(@stack), class: 'btn btn-sm btn-link'
-      %button{"data-path" => "#{link_to 'Delete stack',  stack_path(@stack), method: :delete, class: 'btn btn-danger'}", "data-target" => "#deleteModal", "data-toggle" => "modal", :type => "button", id: 'deleteModal', class: 'btn btn-sm btn-link'} Delete stack
-      = link_to 'Edit Stack', edit_stack_path(@stack), class: 'btn btn-sm btn-link'
-  .col-md-6
-    - @stack.lessons.each do |lesson|
-      .stack-show-lesson
-        = link_to lesson do
-          .stack-index_body
-            .stack-show-lesson_body_summary Lesson           
-            .stack-show-lesson_body_title= lesson.title
-            .stack-show-lesson_body_summary= truncate(raw(lesson.body), length: 220, escape: false)
-    .stack-show-lesson.course-complete-badge
-      .stack-index_body
-        .course-complete-badge
-          = image_tag 'complete.png'
-          .stack-show-lesson_body_title Course Complete
-    
+    = render 'show_admin_buttons'
+= render partial: 'stack_header', locals: {stack: @stack}
+.col-md-8.offset-md-2
+  .card.stack-header_card
+    .card-body
+      %p.stack-category{style: "color: #{@stack.category.color}"}
+        %i.icon.ion-edit
+        = @stack.category.title
+      %h2.stack-title= @stack.title
+      %p.stack-course-indicator Course
+      %p.stack-header-summary= @stack.summary
+
+      .text-center
+        = link_to 'Begin Course', @stack.lessons.first, class: 'btn btn-sm btn-white-text', style: "background-color: #{@stack.category.color}"
+
+      %p.stack-lesson-title Lessons
+      .lessons-list
+        = render @stack.lessons

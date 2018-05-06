@@ -1,0 +1,11 @@
+.card
+  .card-body
+    = link_to stack do
+      = image_tag stack.icon.url, class: 'img-fluid stack-image'
+    %p.stack-category{style: "color: #{stack.category.color}"}
+      %i.icon.ion-edit
+      = stack.category.title
+    %h4.stack-title= stack.title
+    %p.stack-summary= truncate(stack.summary, length: 240)
+    .text-center
+      = link_to 'LEARN MORE', stack, class: 'stack-button', style: "background-color: #{stack.category.color}"

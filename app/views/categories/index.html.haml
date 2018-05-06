@@ -1,34 +1,15 @@
 = render 'categories/form' if current_user&.admin?
 
--# TODO: render library-intro (if logged in, it's the journey) otherwise it's trying to get signup
-= render library_intro_path
+-# = render library_intro_path
 
 - @categories.each do |category|
-  %h4.clearfix
-    = category.title
-    - if current_user&.admin?
-      .float-right
-        = link_to new_stack_path(category), class: 'btn btn-link btn-sm' do
-          %i.icon.ion-plus-round
-          Add stack
-        = link_to edit_category_path(category), class: 'btn btn-link btn-sm' do
-          %i.icon.ion-edit
-          Edit category
-        -# = link_to category,
-        %button{"data-path" => "#{link_to 'Delete', category, method: :delete, class: 'btn btn-danger'}", "data-target" => "#deleteModal", "data-toggle" => "modal", :type => "button", id: 'deleteModal', class: 'btn btn-sm btn-link'}
-          %i.icon.ion-close-round
-        -#  method: :delete, class: 'btn btn-sm', confirm: 'Are you sure?' do
-  .stack-index_columns
-    - category.stacks.where.not(title: 'The Journey').order('title').each do |stack|
-      .stack-index
-        = link_to stack do
-          .stack-index_body{style: "background-color: #{category.color}"}
-            = image_tag stack.icon.url
-            %li.stack-index_progressicon
-            %li.stack-index_progressicon
-            %li.stack-index_progressicon
-          .stack-index_body
-            .stack-index_body_title= stack.title
-            .stack-index_body_summary= truncate(stack.summary, length: 120)
-
+  .clearfix
+    %h3.category-title{style: "color: #{category.color}"}= category.title
+    = admin_buttons_path(category)
+  .card-columns
+    = render category.stacks.order('title')
+  
+-# .card-columns
+-#   - @categories.each do |category|
+-#     = render category.stacks.order('title')
   

@@ -1,4 +1,4 @@
-%nav.navbar.navbar-expand-md.navbar-light.bg-white
+%nav.navbar.navbar-expand-md.navbar-dark
   .container
     .navbar-header
       %button.navbar-toggler{'type': 'button', 'data-toggle': 'collapse', 'data-target': '#navbarNav', 'aria-controls': 'navbarNav', 'aria-expanded': false, 'aria-label': 'Toggle navigation'}
@@ -7,7 +7,7 @@
     .collapse.navbar-collapse#navbarNav
       %ul.navbar-nav
         - if user_signed_in?
-          %li.nav-item= link_to 'Dashboard', '#', class: 'nav-link'
+          %li.nav-item= link_to 'Dashboard', dashboard_path, class: 'nav-link'
           %li.nav-item= link_to 'Tracks', tracks_path, class: 'nav-link'
           %li.nav-item= link_to 'Library', library_path, class: 'nav-link'
           %li.nav-item= link_to 'Settings', edit_user_registration_path, class: 'nav-link'

@@ -1,124 +1,43 @@
 @import "bootstrap";
 @import 'ionicons';
-@import 'partials/stack';
-
-.alert {
-  text-align: center;
-}
-
-.jumbotron-fluid {
-  background-image: image-url('landing.png');
-  background-repeat: repeat;
-}
-
-.landing_features {
-  padding: 20px 0;
-}
-
-.landing_feature {
-  margin-bottom: 25px;
-
-  img {
-    margin-bottom: 20px;
-  }
-}
-
-.landing_contact_message {
-  margin-bottom: 10px;
-  height: 100px;
-}
-
-.alert-notice {
-  @extend .alert-success;
-}
-
-.alert {
-  margin-bottom: 0;
-}
+@import 'partials/variables';
+@import 'partials/stacks';
+@import 'partials/lessons';
 
 body {
-  background-color: #f9f9f9;
+  font-family: 'Montserrat', sans-serif;
+
 }
 
-.navbar-light {
+* {
+  transition: all .2s ease-in-out;
+}
+
+.navbar-dark {
+  background-color: $blue;
   margin-bottom: 20px;
-  border-bottom: 1px solid rgb(232, 232, 232);
 }
 
-.lesson-form {
-  border: 0;
-  padding: 0;
-
-  &:active,
-  &:focus {
-    border: 0;
-    outline: none;
-    -webkit-box-shadow: none;
-  }
-}
-
-input[type='text'].lesson-form {
-  @extend .lesson-title;
-  @extend h2;
-}
-
-input[type='textarea'].lesson-form {
-  @extend .card-text;
-  @extend .lesson-text;
-}
-
-.library-intro {
-  margin-bottom: 20px;
-
-  p {
-    color: #adadad;
-    font-weight: 300;
-    font-size: 14px;
-  }
-
-  h2 {
-    font-size: 28px;
-    font-weight: bold;
-  }
-}
-
-.track-card {
-  text-decoration: none;
+.category-title {
+  font-size: 16px;
+  font-weight: bolder;
   text-align: center;
-  padding: 20px 0;
-
-  img {
-    max-width: 128px;
-    margin-bottom: 20px;
-  }
-
-  &:hover {
-    text-decoration: none;
-  }
 }
 
-.track-show {
-  padding: 50px 0;
-
-  img {
-    margin-bottom: 50px;
-  }
+.card {
+  border: none;
+  // box-shadow: 0 8px 17px 0 rgba(0,0,0,.2), 0 6px 20px 0 rgba(0,0,0,.19);
+  z-index: 0;
 }
 
-.track-show-stacks {
-  padding-bottom: 50px;
-}
-
-.track-index-card {
-  margin-bottom: 20px;
-  padding: 50px 0;
-
-  span {
-    color: #adadad;
-    font-weight: 300;
+.card-columns {
+  @include media-breakpoint-only(sm) {
+    column-count: 1;
   }
-
-  img {
-    margin-bottom: 20px;
+  @include media-breakpoint-only(md) {
+    column-count: 2;
+  }
+  @include media-breakpoint-only(lg) {
+    column-count: 3;
   }
 }

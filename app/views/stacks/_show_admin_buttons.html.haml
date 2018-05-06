@@ -1,0 +1,4 @@
+- if current_user&.admin?
+  = link_to 'New lesson', new_lesson_path(@stack), class: 'btn btn-sm btn-link'
+  %button{"data-path" => "#{link_to 'Delete stack',  stack_path(@stack), method: :delete, class: 'btn btn-danger'}", "data-target" => "#deleteModal", "data-toggle" => "modal", :type => "button", id: 'deleteModal', class: 'btn btn-sm btn-link'} Delete stack
+  = link_to 'Edit Stack', edit_stack_path(@stack), class: 'btn btn-sm btn-link'

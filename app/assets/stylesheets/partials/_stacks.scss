@@ -1,0 +1,130 @@
+.stack-image {
+  border-radius: 3px;
+  box-shadow: 0 8px 17px 0 rgba(0,0,0,.2), 0 6px 20px 0 rgba(0,0,0,.19);
+  margin-bottom: 20px;
+}
+
+.stack-category {
+  text-align: center;
+  margin: 0;
+  font-size: 16px;
+  font-weight: 300;
+  margin-bottom: 5px;
+}
+
+.stack-title {
+  font-size: 24px;
+  font-weight: bold;
+  color: #4f4f4f;
+  text-align: center;
+}
+
+.stack-summary {
+  text-align: center;
+  font-size: 16px;
+  color: #9e9e9e;
+  font-weight: 300;
+  margin-bottom: 20px;
+}
+
+.stack-button {
+  display: inline-block;
+  margin: 0 auto;
+  padding: 10px 15px;
+  font-size: 12px;
+  color: white;
+  border-radius: 3px;
+
+  &:hover {
+    text-decoration: none;
+    color: white;
+    box-shadow: 0 8px 17px 0 rgba(0,0,0,.2), 0 6px 20px 0 rgba(0,0,0,.19);
+  }
+}
+
+.stack-header-jumbo {
+  padding: 75px 0;
+  height: 350px;
+  background-size: cover;
+}
+
+.stack-header-category {
+  font-size: 16px;
+  font-weight: 300;
+  position: absolute;
+  top: -40px;
+  right: 0;
+}
+
+.stack-header-summary {
+  font-size: 16px;
+  color: #9e9e9e;
+  font-weight: 300;
+  margin-bottom: 0;
+  line-height: 1.8;
+}
+
+.stack-header-jumbo_title {
+  font-size: 36px;
+  font-weight: 800;
+  text-align: center;
+  color: white;
+  text-shadow: 0 0 10px rgba(0,0,0,.2);
+}
+
+.card-columns {
+  margin-bottom: 50px;
+}
+
+.stack-header_card {
+  z-index: 1;
+  margin-top: -250px;
+  margin-bottom: 20px;
+  padding: 40px;
+}
+
+.stack-lesson-title {
+  margin-top: 40px;
+  text-align: center;
+}
+
+.lesson-list {
+  color: #424242;
+  font-weight: 300;
+  position: relative;
+  margin-bottom: 10px;
+  margin-left: 20px;
+
+  .indicator {
+    width: 10px;
+    height: 10px;
+    content: '';
+    background-color: blue;
+    display: block;
+    border-radius: 50%;
+    position: absolute;
+    left: -25px;
+    top: 6px;
+  }
+}
+
+.stack-course-indicator {
+  text-align: center;
+  margin: 0;
+  font-size: 12px;
+}
+
+.lesson-text {
+  font-size: 18px;
+  line-height: 1.75;
+  color: #4d4d4d;
+  font-weight: 400;
+
+  img {
+    width: 100%;
+    display: block;
+    border-radius: 3px;
+    box-shadow: 0 8px 17px 0 rgba(0,0,0,.2), 0 6px 20px 0 rgba(0,0,0,.19);
+    margin: 0 auto;
+  }
+}

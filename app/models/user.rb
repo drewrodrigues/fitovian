@@ -146,7 +146,8 @@ class User < ApplicationRecord
   end
 
   def incomplete(resource)
-    self.completions.find_by(completable_id: resource.id)&.destroy
+    return true unless self.completed?(resource)
+    self.completions.find_by(completable: resource)&.destroy
   end
 
   def completed?(resource)

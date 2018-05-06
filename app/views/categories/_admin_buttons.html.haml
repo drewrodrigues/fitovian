@@ -1,0 +1,9 @@
+.float-right
+  = link_to new_stack_path(category), class: 'btn btn-link btn-sm' do
+    %i.icon.ion-plus-round
+    Add stack
+  = link_to edit_category_path(category), class: 'btn btn-link btn-sm' do
+    %i.icon.ion-edit
+    Edit category
+  %button{"data-path" => "#{link_to 'Delete', category, method: :delete, class: 'btn btn-danger'}", "data-target" => "#deleteModal", "data-toggle" => "modal", :type => "button", id: 'deleteModal', class: 'btn btn-sm btn-link'}
+    %i.icon.ion-close-round

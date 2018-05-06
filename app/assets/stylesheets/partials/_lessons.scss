@@ -1,0 +1,50 @@
+.completed-lesson {
+  height: 32px;
+  width: 32px;
+  content: '';
+  display: inline-block;
+  position: relative;
+}
+
+i.ion-checkmark {
+  position: absolute;
+  color: white;
+  font-weight: 800;
+  top: 8px;
+  left: 9px;
+}
+
+i.ion-arrow-up-c {
+  position: absolute;
+  font-weight: 800;
+  bottom: -22px;
+  left: 8px;
+  font-size: 24px;
+}
+
+.indicators {
+  margin-bottom: 50px;
+  text-align: center;
+
+  a:hover {
+    text-decoration: none;
+  }
+
+  .completed-lesson:hover,
+  .not-completed-lesson:hover {
+    box-shadow: 0 8px 17px 0 rgba(0,0,0,.2), 0 6px 20px 0 rgba(0,0,0,.19);
+  }
+}
+
+.btn-white-text {
+  color: white;
+}
+
+.not-completed-lesson {
+  height: 32px;
+  width: 32px;
+  content: '';
+  display: inline-block;
+  background-color: #ccc;
+  position: relative;
+}

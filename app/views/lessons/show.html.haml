@@ -1,26 +1,24 @@
 %p
   = link_to @stack, class: 'btn btn-sm btn-link' do
     %i.icon.ion-android-arrow-back
-    Back to #{@stack.title}
-.lesson-show-stack
-  = link_to @stack do
-    .card-body{style: "background-color: #{@stack.category.color}"}
-      = image_tag @stack.icon.url
-      %span= @stack.title
-      %li.stack-index_progressicon
-      %li.stack-index_progressicon
-      %li.stack-index_progressicon.stack-index-progressicon-done
-.stack-show-lesson
-  .card-body
-    .row
-      .col-md-8.offset-md-2
-        %p.stack-show-lesson_body_summary.lesson-lesson Lesson
-        %h2.lesson-title= @lesson.title
-        .card-text.lesson-text= @lesson.body.html_safe
-        - if current_user.completed?(@lesson)
-          = link_to 'Completed', complete_path(Lesson, @lesson), method: :delete, class: 'btn btn-sm btn-success'
-        - else
-          = link_to 'Mark Complete', complete_path(Lesson, @lesson), method: :post, class: 'btn btn-sm btn-light'
+    Back
+= render partial: 'stacks/stack_header', locals: {stack: @stack}
+.col-md-10.offset-md-1
+  .card.stack-header_card
+    .card-body
+      %p.stack-category{style: "color: #{@stack.category.color}"}
+        %i.icon.ion-edit
+        = @stack.category.title
+      %h2.stack-title= @stack.title
+
+      = render partial: 'course_indicator', locals: {stack: @stack, current: @lesson}
+
+      %h2.lesson-title= @lesson.title
+      .card-text.lesson-text= @lesson.body.html_safe
+      - if current_user.completed?(@lesson)
+        = link_to 'Completed', complete_path(Lesson, @lesson), method: :delete, class: 'btn btn-sm btn-white-text', style: "background-color: #{@stack.category.color}"
+      - else
+        = link_to 'Mark Complete', complete_path(Lesson, @lesson), method: :post, class: 'btn btn-sm btn-light'
 
 - if current_user&.admin?
   = link_to 'Edit lesson', edit_lesson_path(@lesson), class: 'btn btn-sm btn-link'
