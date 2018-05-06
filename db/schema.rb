@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180505172632) do
+ActiveRecord::Schema.define(version: 20180506225658) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -30,7 +30,7 @@ ActiveRecord::Schema.define(version: 20180505172632) do
     t.string "color"
   end
 
-  create_table "completions", id: false, force: :cascade do |t|
+  create_table "completions", force: :cascade do |t|
     t.integer "user_id"
     t.integer "completable_id"
     t.string "completable_type"
