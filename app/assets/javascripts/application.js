@@ -31,6 +31,11 @@ var deleteModal = function() {
   });
 }
 
+var enableTooltip = function() {
+  $('[data-toggle="tooltip"]').tooltip();
+}
+
 $(document).on('turbolinks:load', function() {
   deleteModal();
+  enableTooltip();
 });
