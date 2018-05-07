@@ -19,7 +19,10 @@ class Lesson < ApplicationRecord
             presence: true,
             numericality: { only_integer: true }
 
+  acts_as_list scope: :stack
   has_paper_trail
 
   delegate :color, :title, to: :category, prefix: true
+
+  default_scope { order(position: :asc )}
 end

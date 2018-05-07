@@ -15,9 +15,11 @@ gem 'stripe'
 # front-end
 gem 'turbolinks', '~> 5.0.0'
 gem 'ionicons-rails' # icons
+gem 'material_icons'
 gem 'bootstrap', '~> 4.1.0'
 gem 'haml-rails' # templating
 gem 'jquery-rails'
+gem 'acts_as_list'
 
 # error tracking
 gem 'sentry-raven'

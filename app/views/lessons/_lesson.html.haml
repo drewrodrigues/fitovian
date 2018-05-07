@@ -1,3 +1,12 @@
 %p.lesson-list
   %span.indicator{style: "background-color: #{lesson.category_color}"}
   = link_to lesson.title, lesson
+  - if current_user&.admin?
+    = link_to move_top_path(lesson.class, lesson), method: :post, class: 'btn btn-link btn-sm' do
+      %i.material-icons.md-18 &#xE5D8;
+    = link_to move_up_path(lesson.class, lesson), method: :post, class: 'btn btn-link btn-sm' do
+      %i.material-icons.md-18 &#xE316;
+    = link_to move_down_path(lesson.class, lesson), method: :post, class: 'btn btn-link btn-sm' do
+      %i.material-icons.md-18 &#xE313;
+    = link_to move_bottom_path(lesson.class, lesson), method: :post, class: 'btn btn-link btn-sm' do
+      %i.material-icons.md-18 &#xE5DB;

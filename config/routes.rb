@@ -17,6 +17,11 @@ Rails.application.routes.draw do
   get 'lessons/new/:stack_id' => 'lessons#new', as: :new_lesson
   post '/tinymce_assets' => 'lessons#images'
 
+  post 'lists/:type/:id/move-top' => 'lists#move_top', as: :move_top
+  post 'lists/:type/:id/move-up' => 'lists#move_up', as: :move_up
+  post 'lists/:type/:id/move-bottom' => 'lists#move_bottom', as: :move_bottom
+  post 'lists/:type/:id/move-down' => 'lists#move_down', as: :move_down
+  
   # dashboard
   get 'dashboard', to: 'pages#dashboard', as: :dashboard
 
