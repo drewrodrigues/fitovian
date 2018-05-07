@@ -1,7 +1,7 @@
 = form_for @lesson do |f|
   .lesson-show-stack
     = link_to @stack do
-      .card-body{style: "background-color: #{@stack.category.color}"}
+      .card-body{style: "background-color: #{@stack.category_color}"}
         = image_tag @stack.icon.url
         %span= @stack.title
   - if @lesson.errors.any?

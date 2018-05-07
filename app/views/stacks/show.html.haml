@@ -7,15 +7,15 @@
 .col-md-8.offset-md-2
   .card.stack-header_card
     .card-body
-      %p.stack-category{style: "color: #{@stack.category.color}"}
+      %p.stack-category{style: "color: #{@stack.category_color}"}
         %i.icon.ion-edit
-        = @stack.category.title
+        = @stack.category_title
       %h2.stack-title= @stack.title
       %p.stack-course-indicator Course
       %p.stack-header-summary= @stack.summary
 
       .text-center
-        = link_to 'Begin Course', @stack.lessons.first, class: 'btn btn-sm btn-white-text', style: "background-color: #{@stack.category.color}"
+        = link_to 'Begin Course', @stack.lessons.first, class: 'btn btn-sm btn-white-text', style: "background-color: #{@stack.category_color}"
 
       %p.stack-lesson-title Lessons
       .lessons-list

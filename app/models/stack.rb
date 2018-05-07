@@ -22,4 +22,6 @@ class Stack < ApplicationRecord
   validates_attachment_content_type :icon, content_type: /\Aimage\/.*\z/
   validates :category, presence: true
   validates :title, presence: true
+
+  delegate :color, :title, to: :category, prefix: true
 end

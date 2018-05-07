@@ -11,7 +11,8 @@
 # a Stack, also known as a course.
 class Lesson < ApplicationRecord
   belongs_to :stack
-
+  
+  has_one :category, through: :stack
   has_many :completions, as: :completable
 
   validates :position,
@@ -19,4 +20,6 @@ class Lesson < ApplicationRecord
             numericality: { only_integer: true }
 
   has_paper_trail
+
+  delegate :color, :title, to: :category, prefix: true
 end
