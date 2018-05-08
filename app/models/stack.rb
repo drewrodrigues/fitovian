@@ -14,8 +14,10 @@ class Stack < ApplicationRecord
   has_paper_trail
   has_many :completions, as: :completable
   has_many :lessons, dependent: :destroy
+  has_many :selections, dependent: :destroy
   has_many :stack_tracks, dependent: :destroy
   has_many :tracks, through: :stack_tracks
+  has_many :users, through: :selections
   has_attached_file :icon,
                     styles: { medium: '300x300', thumb: '100x100' }
 

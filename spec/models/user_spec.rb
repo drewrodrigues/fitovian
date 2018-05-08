@@ -11,6 +11,7 @@ RSpec.describe User, type: :model do
   describe 'associations' do
     it { is_expected.to have_many(:cards) }
     it { is_expected.to have_one(:plan) }
+    it { is_expected.to have_many(:stacks) }
     it { is_expected.to have_one(:subscription) }
   end
 

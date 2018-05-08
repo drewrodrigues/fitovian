@@ -18,6 +18,8 @@ class User < ApplicationRecord
   has_many :completions, dependent: :destroy
   has_many :cards, dependent: :destroy
   has_one :plan, dependent: :destroy
+  has_many :selections, dependent: :destroy
+  has_many :stacks, through: :selections
   has_one :subscription, dependent: :destroy
 
   validates :name, presence: true

@@ -11,6 +11,7 @@ RSpec.describe Stack, type: :model do
   describe 'assocations' do
     it { is_expected.to belong_to(:category) }
     it { is_expected.to have_many(:lessons) }
+    it { is_expected.to have_many(:users) }
     it { is_expected.to have_many(:tracks) }
   end
 

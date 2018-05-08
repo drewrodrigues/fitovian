@@ -28,7 +28,7 @@ RSpec.describe Completion, type: :model do
       first_record = create(:completion)
       duplicate_record = first_record.dup
       duplicate_record.user_id = first_record.user_id
-      expect{duplicate_record.save}.to_not change(Completion, :count)
+      expect{ duplicate_record.save }.to_not change(Completion, :count)
     end
   end
 end
