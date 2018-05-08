@@ -9,3 +9,7 @@
     %p.stack-summary= truncate(stack.summary, length: 240)
     .text-center
       = link_to 'LEARN MORE', stack, class: 'stack-button', style: "background-color: #{stack.category_color}"
+    - if current_user.selected?(stack)
+      = link_to 'Remove', selections_path(stack), method: :delete, class: 'btn btn-sm btn-link'
+    - else
+      = link_to 'Add', selections_path(stack), method: :post, class: 'btn btn-sm btn-link'

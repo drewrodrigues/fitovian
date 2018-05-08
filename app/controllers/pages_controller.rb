@@ -1,6 +1,6 @@
 class PagesController < ApplicationController
   layout 'pages'
-  before_action :require_plan!, only: :dashboard
+  before_action :onboard_user!, only: :dashboard
   before_action :require_payment_method!, only: :dashboard
 
   def landing; end
@@ -26,5 +26,7 @@ class PagesController < ApplicationController
     redirect_to landing_path, flash: message
   end
 
-  def dashboard; end
+  def dashboard
+    @stacks = current_user.stacks
+  end
 end
