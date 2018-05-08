@@ -55,7 +55,7 @@ RSpec.describe CompletionsController, type: :controller do
     context 'when the user has completed the lesson' do
       before do
         sign_in user
-        user.complete(lesson)        
+        user.complete(lesson)
         delete :destroy, params: {resource_id: lesson.id, resource_type: Lesson}
       end
     end

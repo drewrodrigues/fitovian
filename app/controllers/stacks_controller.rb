@@ -1,6 +1,6 @@
 class StacksController < ApplicationController
-  before_action :require_admin!, except: :show
-  before_action :set_stack, only: [:show, :edit, :update, :destroy]
+  before_action :require_admin!, except: [:show, :begin]
+  before_action :set_stack, only: [:show, :edit, :update, :destroy, :begin]
   before_action :set_category, only: [:new, :edit]
 
   # GET /stacks/1
@@ -55,6 +55,11 @@ class StacksController < ApplicationController
       format.html { redirect_to library_path, notice: "Stack was successfully destroyed. #{undo_link}" }
       format.json { head :no_content }
     end
+  end
+
+  def begin
+    SelectionHandler.new(current_user, params[:id]).create
+    redirect_to @stack.lessons&.first || @stack
   end
 
   private

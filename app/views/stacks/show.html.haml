@@ -15,7 +15,7 @@
       %p.stack-header-summary= @stack.summary
 
       .text-center
-        = link_to 'Begin Course', @stack.lessons.first, class: 'btn btn-sm btn-white-text', style: "background-color: #{@stack.category_color}"
+        = link_to 'Begin Course', begin_path(@stack), method: :post, class: 'btn btn-sm btn-white-text', style: "background-color: #{@stack.category_color}"
 
       %p.stack-lesson-title Lessons
       .lessons-list

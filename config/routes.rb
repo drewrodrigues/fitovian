@@ -12,6 +12,7 @@ Rails.application.routes.draw do
 
   resources :stacks, except: [:index, :new]
   get 'stacks/new/:category_id' => 'stacks#new', as: :new_stack
+  post 'stacks/:id' => 'stacks#begin', as: :begin
 
   resources :lessons, except: [:index, :new]
   get 'lessons/new/:stack_id' => 'lessons#new', as: :new_lesson
