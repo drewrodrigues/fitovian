@@ -21,6 +21,9 @@ Rails.application.routes.draw do
   post 'lists/:type/:id/move-up' => 'lists#move_up', as: :move_up
   post 'lists/:type/:id/move-bottom' => 'lists#move_bottom', as: :move_bottom
   post 'lists/:type/:id/move-down' => 'lists#move_down', as: :move_down
+
+  post 'selections/:stack_id' => 'selections#create', as: :selections
+  delete 'selections/:stack_id' => 'selections#destroy'
   
   # dashboard
   get 'dashboard', to: 'pages#dashboard', as: :dashboard

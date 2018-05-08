@@ -141,7 +141,7 @@ class User < ApplicationRecord
   rescue Stripe::StripeError
     false
   end
-  
+
   def complete(resource)
     return true if self.completed?(resource)
     self.completions.build(completable: resource).save
@@ -154,5 +154,9 @@ class User < ApplicationRecord
 
   def completed?(resource)
     self.completions.find_by(completable: resource)
+  end
+
+  def selected?(resource)
+    self.selections.find_by(stack: resource)
   end
 end
