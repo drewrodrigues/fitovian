@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180508010244) do
+ActiveRecord::Schema.define(version: 20180509190711) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -38,6 +38,11 @@ ActiveRecord::Schema.define(version: 20180508010244) do
     t.datetime "updated_at", null: false
     t.index ["completable_type", "completable_id"], name: "index_completions_on_completable_type_and_completable_id"
     t.index ["user_id"], name: "index_completions_on_user_id"
+  end
+
+  create_table "leads", force: :cascade do |t|
+    t.string "email"
+    t.string "context"
   end
 
   create_table "lessons", force: :cascade do |t|

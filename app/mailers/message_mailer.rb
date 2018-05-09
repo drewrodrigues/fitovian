@@ -5,17 +5,9 @@ class MessageMailer < ApplicationMailer
   #
   #   en.message_mailer.contact_us.subject
   #
-  def contact_us(body, email, name)
-    @email = email
-    @body = body
-    @name = name
-
-    mail to: 'ernie@wcwlc.com', subject: "Contact Us: From #{email}"
-  end
-
   def updates(email)
     @email = email
 
-    mail to: 'ernie@wcwlc.com', subject: "#{@email} wants to receive updates"
+    mail to: 'ernie@fitovian.com', subject: "#{@email} wants to receive updates"
   end
 end

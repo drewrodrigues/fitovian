@@ -23,6 +23,7 @@ class PagesController < ApplicationController
               else
                 { alert: 'Oh no, something wen\'t wrong! Contact us directly at contact@wcwlc.com' }
               end
+    Lead.create(email: params[:email], context: 'wants to receive updates')
     redirect_to landing_path, flash: message
   end
 

@@ -1,3 +1,3 @@
 class ApplicationMailer < ActionMailer::Base
-  default from: 'noreply@wcwlc.com'
+  default from: 'noreply@fitovian.com'
 end
