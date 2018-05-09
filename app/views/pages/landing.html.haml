@@ -1,8 +1,8 @@
-.jumbotron.jumbotron-fluid
+.jumbotron.jumbotron-fluid.jumbo-landing
   .container.text-center
     .row
       .offset-md-3.col-md-6
-        %h1 Reach your goals in record time
+        %h1 Reach your weight loss goals
         %p.lead Our application is currently under construction. Enter your email below to get updates on our progress.
         = form_tag updates_path do
           .form-group
@@ -11,62 +11,3 @@
                 = text_field_tag :email, '', placeholder: 'Enter email to receive updates', class: 'form-control'
               .col-md-2
                 %button.btn.btn-success Get updates
-.container
-  .stack-index_columns
-    .stack-index
-      .stack-index_body{style: "background-color: #1a906a"}
-        = image_tag 'checked.png'
-      .stack-index_body
-        .stack-index_body_title Take on challenges
-        .stack-index_body_summary           
-          All of our tracks have challenges to make lessons become action.
-    .stack-index
-      .stack-index_body{style: "background-color: #465f6c"}
-        = image_tag 'certificate.png'
-      .stack-index_body
-        .stack-index_body_title Earn badges
-        .stack-index_body_summary           
-          Show off your accomplishments through badges.
-    .stack-index
-      .stack-index_body{style: "background-color: #decc9e"}
-        = image_tag 'clipboard.png'
-      .stack-index_body
-        .stack-index_body_title Complete personalized plans
-        .stack-index_body_summary We have countless plans that'll guide you to your goal.
-    .stack-index
-      .stack-index_body{style: "background-color: lightblue"}
-        = image_tag 'target.png'
-      .stack-index_body
-        .stack-index_body_title Reach all of your goals
-        .stack-index_body_summary No matter what your goal, we are here to guide you to it.
-    .stack-index
-      .stack-index_body{style: "background-color: #3db39e"}
-        = image_tag 'calendar.png'
-      .stack-index_body
-        .stack-index_body_title Stay on track with pathways
-        .stack-index_body_summary A clear path will be created for you based on your goals.
-    .stack-index
-      .stack-index_body{style: "background-color: #e6c673"}
-        = image_tag 'chat.png'
-      .stack-index_body
-        .stack-index_body_title Get help from coaches
-        .stack-index_body_summary Easily communicate with life coaches and trainers.
-        
-.jumbotron.jumbotron-fluid
-  .container.text-center
-    .row
-      .offset-md-3.col-md-6
-        %h1 Contact us to learn more
-        %p.lead If you want to learn more, or have some great ideas for our program, shoot us a message! We would love to hear from you.
-        = form_tag contact_us_path do
-          .form-group
-            .row
-              .col-md-6
-                = text_field_tag :name, '', class: 'form-control', placeholder: 'Enter your name'
-              .col-md-6
-                = text_field_tag :email, '', class: 'form-control', placeholder: 'Enter your email'
-          .form-group
-            .col-md-12
-              .row
-                = text_area_tag :body, '', class: 'landing_contact_message form-control', placeholder: 'How can we help?'
-          %button.btn.btn-success Contact us

@@ -42,3 +42,13 @@ body {
     column-count: 3;
   }
 }
+
+.jumbo-landing {
+  padding-top: 250px;
+  margin-bottom: 0;
+  margin-top: -40px;
+  background-image: image-url('landing.jpg');
+  background-size: cover;
+  height: 100vh;
+  color: white;
+}
