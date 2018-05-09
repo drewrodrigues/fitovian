@@ -1,12 +1,11 @@
 class StacksController < ApplicationController
-  before_action :require_admin!, except: [:show, :begin]
-  before_action :set_stack, only: [:show, :edit, :update, :destroy, :begin]
-  before_action :set_category, only: [:new, :edit]
+  before_action :require_admin!, except: %i[show begin]
+  before_action :set_stack, only: %i[show edit update destroy begin]
+  before_action :set_category, only: %i[new edit]
 
   # GET /stacks/1
   # GET /stacks/1.json
-  def show
-  end
+  def show; end
 
   # GET /stacks/new
   def new
@@ -14,8 +13,7 @@ class StacksController < ApplicationController
   end
 
   # GET /stacks/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /stacks
   # POST /stacks.json
@@ -70,7 +68,7 @@ class StacksController < ApplicationController
   end
 
   def set_category
-    @category = @stack&.category || Category.find(params[:category_id]) 
+    @category = @stack&.category || Category.find(params[:category_id])
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.

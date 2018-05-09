@@ -1,1 +1,1 @@
-json.partial! "lessons/lesson", lesson: @lesson
+json.partial! 'lessons/lesson', lesson: @lesson

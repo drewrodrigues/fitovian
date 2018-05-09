@@ -1,7 +1,7 @@
 module FlowHelper
   # manually sign in user.
   # this should be performed while on the sign in page
-  def sign_in_user(user, button=nil)
+  def sign_in_user(user, _button)
     visit new_user_session_path
     fill_in 'Email', with: user.email
     fill_in 'Password', with: user.password

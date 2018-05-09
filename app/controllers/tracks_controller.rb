@@ -1,6 +1,6 @@
 class TracksController < ApplicationController
-  before_action :set_track, only: [:show, :edit, :update, :destroy, :select]
-  before_action :set_stack_track, only: [:new, :edit]
+  before_action :set_track, only: %i[show edit update destroy select]
+  before_action :set_stack_track, only: %i[new edit]
 
   # GET /tracks
   # GET /tracks.json
@@ -10,8 +10,7 @@ class TracksController < ApplicationController
 
   # GET /tracks/1
   # GET /tracks/1.json
-  def show
-  end
+  def show; end
 
   # GET /tracks/new
   def new
@@ -19,8 +18,7 @@ class TracksController < ApplicationController
   end
 
   # GET /tracks/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /tracks
   # POST /tracks.json
@@ -72,17 +70,18 @@ class TracksController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_track
-      @track = Track.find(params[:id])
-    end
 
-    def set_stack_track
-      @stack_track = StackTrack.new(track: @track)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_track
+    @track = Track.find(params[:id])
+  end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def track_params
-      params.require(:track).permit(:title, :icon)
-    end
+  def set_stack_track
+    @stack_track = StackTrack.new(track: @track)
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def track_params
+    params.require(:track).permit(:title, :icon)
+  end
 end

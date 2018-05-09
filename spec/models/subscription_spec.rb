@@ -1,9 +1,6 @@
 require 'rails_helper'
-require_relative '../helpers/cards_helper.rb'
 
 RSpec.describe Subscription, type: :model do
-  include CardsHelper
-
   describe 'validations' do
     it { is_expected.to validate_presence_of(:current_period_end) }
     it { is_expected.to validate_presence_of(:stripe_id) }
@@ -50,7 +47,8 @@ RSpec.describe Subscription, type: :model do
       end
 
       it 'has 1 stripe subscription' do
-        subscription_count = Stripe::Customer.retrieve(user.stripe_id).subscriptions.total_count
+        subscription_count = Stripe::Customer.retrieve(user.stripe_id)
+                                             .subscriptions.total_count
         expect(subscription_count).to eq(1)
       end
     end
@@ -65,7 +63,8 @@ RSpec.describe Subscription, type: :model do
       end
 
       it 'prevents duplicate subscriptions' do
-        subscription_count = Stripe::Customer.retrieve(user.stripe_id).subscriptions.total_count
+        subscription_count = Stripe::Customer.retrieve(user.stripe_id)
+                                             .subscriptions.total_count
         expect(subscription_count).to eq(1)
       end
     end
@@ -80,7 +79,8 @@ RSpec.describe Subscription, type: :model do
       end
 
       it 'prevents duplicate subscriptions' do
-        subscription_count = Stripe::Customer.retrieve(user.stripe_id).subscriptions.total_count
+        subscription_count = Stripe::Customer.retrieve(user.stripe_id)
+                                             .subscriptions.total_count
         expect(subscription_count).to eq(1)
       end
     end

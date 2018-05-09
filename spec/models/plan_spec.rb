@@ -17,11 +17,11 @@ RSpec.describe Plan, type: :model do
       expect(build_stubbed(:starter_plan)).to be_valid
     end
   end
-  
+
   describe 'validations' do
     context 'when name isn\'t correct' do
       it 'returns invalid' do
-        plans = [ Plan::STARTER, Plan::TEST ]
+        plans = [Plan::STARTER, Plan::TEST]
         new_plan = Plan.new(user: build_stubbed(:user))
 
         plans.each do |plan|
@@ -35,7 +35,7 @@ RSpec.describe Plan, type: :model do
 
     context 'when stripe_id isn\'t correct' do
       it 'returns invalid' do
-        plans = [ Plan::STARTER, Plan::TEST ]
+        plans = [Plan::STARTER, Plan::TEST]
         new_plan = Plan.new(user: build_stubbed(:user))
 
         plans.each do |plan|
@@ -49,7 +49,7 @@ RSpec.describe Plan, type: :model do
 
     context 'when price isn\'t correct' do
       it 'returns invalid' do
-        plans = [ Plan::STARTER, Plan::TEST ]
+        plans = [Plan::STARTER, Plan::TEST]
         new_plan = Plan.new(user: build(:user))
 
         plans.each do |plan|

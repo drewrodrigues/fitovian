@@ -5,17 +5,17 @@ module BillingHelper
     elsif current_user.membership_active? && !current_user.active
       content_tag('span', "Cancel (you have access through: #{current_user.current_period_end.to_date})")
     else
-      content_tag('span', "In-active")
+      content_tag('span', 'In-active')
     end
   end
 
   def subscription_status
-    unless current_user.active?
+    if current_user.active?
       content_tag('span', 'Standard ') +
-      button_to('Subscribe', subscribe_path, class: 'btn btn-success')
+        button_to('Unsubscribe', cancel_subscription_path, method: :delete, class: 'btn btn-danger')
     else
       content_tag('span', 'Standard ') +
-      button_to('Unsubscribe', cancel_subscription_path, method: :delete, class: 'btn btn-danger')
+        button_to('Subscribe', subscribe_path, class: 'btn btn-success')
     end
   end
 

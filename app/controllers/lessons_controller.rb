@@ -4,13 +4,13 @@ class LessonsController < ApplicationController
   before_action :authenticate_user!, only: :show
   before_action :require_plan!, only: :show
   before_action :require_payment_method!, only: :show
-  before_action :set_lesson, only: [:show, :edit, :update, :destroy]
-  before_action :set_stack, only: [:new, :edit]
+  before_action :set_lesson, only: %i[show edit update destroy]
+  before_action :set_stack, only: %i[new edit]
 
   # GET /lessons
   # GET /lessons.json
   def index
-    @lessons = Lesson.all.sort_by {|l| l.position}
+    @lessons = Lesson.all.sort_by(&:position)
   end
 
   # GET /lessons/1
@@ -25,8 +25,7 @@ class LessonsController < ApplicationController
   end
 
   # GET /lessons/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /lessons
   # POST /lessons.json
@@ -72,18 +71,16 @@ class LessonsController < ApplicationController
   def images
     file = params[:file]
     s3 = Aws::S3::Client.new
-    response = s3.put_object({body: file.tempfile, bucket: ENV['S3_BUCKET_NAME'], key: file.original_filename, acl: 'public-read'})
-    if s3.get_object({bucket: ENV['S3_BUCKET_NAME'], key: file.original_filename}) # ensure file persisted
+    response = s3.put_object(body: file.tempfile, bucket: ENV['S3_BUCKET_NAME'], key: file.original_filename, acl: 'public-read')
+    if s3.get_object(bucket: ENV['S3_BUCKET_NAME'], key: file.original_filename) # ensure file persisted
       render json: {
         image: { url: view_context.image_url("https://s3-us-west-1.amazonaws.com/#{ENV['S3_BUCKET_NAME']}/#{file.original_filename}") }
       }, content_type: 'text/html'
     end
-  rescue Aws::S3::Error => e
-    # TODO: log error  
   end
 
   private
-  
+
   # Use callbacks to share common setup or constraints between actions.
   def set_lesson
     @lesson = Lesson.find(params[:id])

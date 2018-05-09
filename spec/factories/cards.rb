@@ -1,4 +1,4 @@
-FactoryBot.define do  
+FactoryBot.define do
   factory :card do
     stripe_id 'fake_stripe_id'
     default false

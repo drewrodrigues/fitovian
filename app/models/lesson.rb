@@ -11,7 +11,7 @@
 # a Stack, also known as a course.
 class Lesson < ApplicationRecord
   belongs_to :stack
-  
+
   has_one :category, through: :stack
   has_many :completions, as: :completable
 
@@ -24,5 +24,5 @@ class Lesson < ApplicationRecord
 
   delegate :color, :title, to: :category, prefix: true
 
-  default_scope { order(position: :asc )}
+  default_scope { order(position: :asc) }
 end

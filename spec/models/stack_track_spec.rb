@@ -29,7 +29,9 @@ RSpec.describe StackTrack, type: :model do
       end
 
       it 'deletes the record' do
-        expect { stack_track.reload }.to raise_error ActiveRecord::RecordNotFound
+        expect {
+          stack_track.reload
+        }.to raise_error ActiveRecord::RecordNotFound
       end
 
       it 'doesn\'t delete track' do
@@ -43,7 +45,9 @@ RSpec.describe StackTrack, type: :model do
       end
 
       it 'deletes the record' do
-        expect { stack_track.reload }.to raise_error ActiveRecord::RecordNotFound
+        expect {
+          stack_track.reload
+        }.to raise_error ActiveRecord::RecordNotFound
       end
 
       it 'doesn\'t delete stack' do

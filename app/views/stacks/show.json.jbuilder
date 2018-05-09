@@ -1,1 +1,1 @@
-json.partial! "stacks/stack", stack: @stack
+json.partial! 'stacks/stack', stack: @stack

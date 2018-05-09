@@ -8,6 +8,6 @@ module CategoriesHelper
   end
 
   def admin_buttons_path(category)
-    render partial: 'admin_buttons', locals: {category: category} if current_user&.admin?
+    render partial: 'admin_buttons', locals: { category: category } if current_user&.admin?
   end
 end

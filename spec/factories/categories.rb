@@ -1,5 +1,5 @@
 FactoryBot.define do
   factory :category do
-    title "Nutrition"
+    title 'Nutrition'
   end
 end

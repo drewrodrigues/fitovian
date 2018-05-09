@@ -15,7 +15,9 @@ RSpec.describe SubscriptionsController, type: :controller do
       end
 
       it 'responds with a successful message' do
-        expect(flash[:success]).to eq("Successfully subscribed to #{@user.plan.name} plan")
+        expect(flash[:success]).to eq(
+          "Successfully subscribed to #{@user.plan.name} plan"
+        )
       end
 
       it 'redirects to billing' do
@@ -33,7 +35,9 @@ RSpec.describe SubscriptionsController, type: :controller do
       end
 
       it 'responds with a successful message' do
-        expect(flash[:success]).to eq("Successfully subscribed to #{@user.plan.name} plan")
+        expect(flash[:success]).to eq(
+          "Successfully subscribed to #{@user.plan.name} plan"
+        )
       end
 
       it 'redirects to billing' do

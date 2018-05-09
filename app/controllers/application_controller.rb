@@ -15,7 +15,7 @@ class ApplicationController < ActionController::Base
     return if current_user&.admin?
     redirect_to dashboard_path, flash: { info: 'You must be an admin.' }
   end
-   
+
   def onboard_user!
     authenticate_user!
     return if current_user&.admin?

@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe CompletionsController, type: :controller do
   it { is_expected.to use_before_filter(:onboard_user!) }
-  
+
   describe '#create' do
     let(:lesson) { create(:lesson) }
     let(:user) { create(:user, :onboarded) }
@@ -10,7 +10,7 @@ RSpec.describe CompletionsController, type: :controller do
     context 'when user hasn\'t completed lesson' do
       before do
         sign_in user
-        post :create, params: {resource_id: lesson.id, resource_type: Lesson}
+        post :create, params: { resource_id: lesson.id, resource_type: Lesson }
       end
 
       it { is_expected.to set_flash[:success] }
@@ -20,8 +20,8 @@ RSpec.describe CompletionsController, type: :controller do
     context 'when the user has completed the lesson' do
       before do
         sign_in user
-        user.complete(lesson)        
-        post :create, params: {resource_id: lesson.id, resource_type: Lesson}
+        user.complete(lesson)
+        post :create, params: { resource_id: lesson.id, resource_type: Lesson }
       end
 
       it { is_expected.to set_flash[:success] }
@@ -32,7 +32,7 @@ RSpec.describe CompletionsController, type: :controller do
       it 'raises an error' do
         sign_in user
         expect {
-          post :create, params: {resource_id: 222, resource_type: Lesson}
+          post :create, params: { resource_id: 222, resource_type: Lesson }
         }.to raise_error(ActiveRecord::RecordNotFound)
       end
     end
@@ -45,7 +45,9 @@ RSpec.describe CompletionsController, type: :controller do
     context 'when user hasn\'t completed lesson' do
       before do
         sign_in user
-        delete :destroy, params: {resource_id: lesson.id, resource_type: Lesson}
+        delete :destroy, params: {
+          resource_id: lesson.id, resource_type: Lesson
+        }
       end
 
       it { is_expected.to set_flash[:warning] }
@@ -56,7 +58,9 @@ RSpec.describe CompletionsController, type: :controller do
       before do
         sign_in user
         user.complete(lesson)
-        delete :destroy, params: {resource_id: lesson.id, resource_type: Lesson}
+        delete :destroy, params: {
+          resource_id: lesson.id, resource_type: Lesson
+        }
       end
     end
   end

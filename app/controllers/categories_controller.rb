@@ -1,5 +1,5 @@
 class CategoriesController < ApplicationController
-  before_action :set_category, only: [:show, :edit, :update, :destroy]
+  before_action :set_category, only: %i[show edit update destroy]
   before_action :require_admin!, except: :index
 
   # GET /categories
@@ -15,8 +15,7 @@ class CategoriesController < ApplicationController
   end
 
   # GET /categories/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /categories
   # POST /categories.json
@@ -40,7 +39,7 @@ class CategoriesController < ApplicationController
     respond_to do |format|
       if @category.update(category_params)
         # view_context gives up access to helper methods
-        format.html { 
+        format.html {
           redirect_to library_path, notice: "Category was successfully updated. #{undo_link}"
         }
         format.json { render :show, status: :ok, location: @category }

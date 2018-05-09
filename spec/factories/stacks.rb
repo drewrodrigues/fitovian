@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :stack do
-    title "MyString"
+    title 'MyString'
     category
   end
 end

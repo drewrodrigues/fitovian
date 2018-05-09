@@ -49,29 +49,33 @@ RSpec.describe CardsController, type: :controller do
       end
 
       it 'sets the Stripe subscription' do
-        subscription = Stripe::Subscription.retrieve(@user.subscription.stripe_id)
+        subscription = Stripe::Subscription.retrieve(
+          @user.subscription.stripe_id
+        )
         expect(subscription.status).to eq('active')
       end
 
       it 'adds the card as the Stripe default' do
-        stripe_default = Stripe::Customer.retrieve(@user.stripe_id).default_source
+        stripe_default = Stripe::Customer.retrieve(@user.stripe_id)
+                                         .default_source
         expect(stripe_default).to eq(@user.default_card.stripe_id)
       end
 
       it 'adds the Stripe payment method' do
-        stripe_cards = Stripe::Customer.retrieve(@user.stripe_id).sources.all(:object => "card")
+        stripe_cards = Stripe::Customer.retrieve(@user.stripe_id)
+                                       .sources.all(object: 'card')
         expect(stripe_cards.count).to eq(1)
       end
     end
 
     context 'when user already has a card' do
       before do
-        token = StripeMock.create_test_helper.generate_card_token(last4: '1111')
-        token2 = StripeMock.create_test_helper.generate_card_token(last4: '2222')
+        tkn = StripeMock.create_test_helper.generate_card_token(last4: '1111')
+        tkn2 = StripeMock.create_test_helper.generate_card_token(last4: '2222')
         @user = create(:starter_plan).user
         sign_in(@user)
-        post :create, params: { stripeToken: token }
-        post :update, params: { stripeToken: token2 }
+        post :create, params: { stripeToken: tkn }
+        post :update, params: { stripeToken: tkn2 }
       end
 
       it 'responds with a successful message' do
@@ -91,12 +95,14 @@ RSpec.describe CardsController, type: :controller do
       end
 
       it 'adds the card as the Stripe default' do
-        stripe_default = Stripe::Customer.retrieve(@user.stripe_id).default_source
+        stripe_default = Stripe::Customer.retrieve(@user.stripe_id)
+                                         .default_source
         expect(stripe_default).to eq(@user.default_card.stripe_id)
       end
 
       it 'deletes the Stripe payment method' do
-        stripe_cards = Stripe::Customer.retrieve(@user.stripe_id).sources.all(:object => "card")
+        stripe_cards = Stripe::Customer.retrieve(@user.stripe_id)
+                                       .sources.all(object: 'card')
         expect(stripe_cards.count).to eq(2)
       end
     end
@@ -130,7 +136,8 @@ RSpec.describe CardsController, type: :controller do
       end
 
       it 'updates Stripe customers default payment method' do
-        stripe_default = Stripe::Customer.retrieve(@user.stripe_id).default_source
+        stripe_default = Stripe::Customer.retrieve(@user.stripe_id)
+                                         .default_source
         expect(stripe_default).to eq(@user.default_card.stripe_id)
       end
     end
@@ -149,7 +156,8 @@ RSpec.describe CardsController, type: :controller do
       end
 
       it 'doesn\'t change Stripe default payment method' do
-        stripe_default = Stripe::Customer.retrieve(@user.stripe_id).default_source
+        stripe_default = Stripe::Customer.retrieve(@user.stripe_id)
+                                         .default_source
         expect(stripe_default).to eq(@user.default_card.stripe_id)
       end
     end
@@ -183,7 +191,8 @@ RSpec.describe CardsController, type: :controller do
       end
 
       it 'deletes the Stripe payment method' do
-        stripe_cards = Stripe::Customer.retrieve(@user.stripe_id).sources.all(:object => "card")
+        stripe_cards = Stripe::Customer.retrieve(@user.stripe_id)
+                                       .sources.all(object: 'card')
         expect(stripe_cards.count).to eq(1)
       end
     end
@@ -206,7 +215,8 @@ RSpec.describe CardsController, type: :controller do
       end
 
       it 'shouldn\'t delete the Stripe payment method' do
-        stripe_cards = Stripe::Customer.retrieve(@user.stripe_id).sources.all(:object => "card")
+        stripe_cards = Stripe::Customer.retrieve(@user.stripe_id)
+                                       .sources.all(object: 'card')
         expect(stripe_cards.count).to eq(2)
       end
     end

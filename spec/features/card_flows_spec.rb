@@ -11,7 +11,9 @@ RSpec.feature 'Card Flows', type: :feature do
     expect(current_path).to eq(new_cards_path)
     add_card2
     click_button 'Subscribe'
-    expect(page).to have_text('Successfully subscribed to starter plan', count: 1)
+    expect(page).to have_text(
+      'Successfully subscribed to starter plan', count: 1
+    )
     expect(current_path).to eq(library_path)
   end
 
@@ -22,7 +24,9 @@ RSpec.feature 'Card Flows', type: :feature do
     visit new_cards_path
     add_card
     click_button 'Subscribe'
-    expect(page).to have_text('Successfully subscribed to starter plan', count: 1)
+    expect(page).to have_text(
+      'Successfully subscribed to starter plan', count: 1
+    )
     expect(current_path).to eq(library_path)
 
     visit billing_path
@@ -42,7 +46,9 @@ RSpec.feature 'Card Flows', type: :feature do
     visit new_cards_path
     add_card
     click_button 'Subscribe'
-    expect(page).to have_text('Successfully subscribed to starter plan', count: 1)
+    expect(page).to have_text(
+      'Successfully subscribed to starter plan', count: 1
+    )
     user.default_card.update_attribute(:last4, '4444') # stripe mock changes it
     expect(current_path).to eq(library_path)
 
@@ -67,7 +73,9 @@ RSpec.feature 'Card Flows', type: :feature do
     visit new_cards_path
     add_card
     click_button 'Subscribe'
-    expect(page).to have_text('Successfully subscribed to starter plan', count: 1)
+    expect(page).to have_text(
+      'Successfully subscribed to starter plan', count: 1
+    )
     user.default_card.update_attribute(:last4, '4444') # stripe mock changes it
     expect(current_path).to eq(library_path)
     expect(user.default_card.last4).to eq('4444')

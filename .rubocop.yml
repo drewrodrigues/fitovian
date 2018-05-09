@@ -6,7 +6,13 @@ Metrics/ClassLength:
   Enabled: false
 Style/Documentation:
   Enabled: false
+Metrics/BlockLength:
+  Enabled: false
 Style/FrozenStringLiteralComment:
+  Enabled: false
+Style/BlockDelimiters:
+  Enabled: false
+Style/NumericLiterals:
   Enabled: false
 AllCops:
   TargetRubyVersion: 2.4.1
@@ -19,3 +25,4 @@ AllCops:
     - 'bin/**/*'
     - 'Gemfile*'
     - 'Rakefile'
+    - 'Guardfile'
