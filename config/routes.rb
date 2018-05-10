@@ -50,12 +50,14 @@ Rails.application.routes.draw do
     registrations: 'users/registrations'
   }
 
-  authenticated :user do
-    root 'pages#dashboard', as: :authenticated_root
+  unauthenticated do
+    root 'pages#landing'
+  end
+  
+  authenticated do
+    root 'pages#dashboard'
   end
 
-  root 'pages#landing'
-  get '' => 'pages#landing', as: :landing
 
   # landing page mailers
   post 'contact-us' => 'pages#contact_us', as: :contact_us
