@@ -1,9 +1,6 @@
 class LessonsController < ApplicationController
-  # before_action :check_subscription, only: [:index, :show]
   before_action :require_admin!, except: :show
   before_action :authenticate_user!, only: :show
-  before_action :require_plan!, only: :show
-  before_action :require_payment_method!, only: :show
   before_action :set_lesson, only: %i[show edit update destroy]
   before_action :set_stack, only: %i[new edit]
 

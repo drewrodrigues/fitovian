@@ -1,5 +1,4 @@
 class CompletionsController < ApplicationController
-  before_action :onboard_user!
   before_action :set_resource
 
   def create

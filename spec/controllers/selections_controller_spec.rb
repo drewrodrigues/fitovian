@@ -1,10 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe SelectionsController, type: :controller do
-  let(:user) { create(:user, :onboarded) }
+  let(:user) { create(:user) }
   let(:stack) { create(:stack) }
-
-  it { is_expected.to use_before_action(:onboard_user!) }
 
   describe '#create' do
     before do

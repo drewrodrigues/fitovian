@@ -1,8 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe CompletionsController, type: :controller do
-  it { is_expected.to use_before_filter(:onboard_user!) }
-
   describe '#create' do
     let(:lesson) { create(:lesson) }
     let(:user) { create(:user, :onboarded) }

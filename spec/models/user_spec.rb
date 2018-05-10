@@ -4,7 +4,6 @@ RSpec.describe User, type: :model do
   let(:user) { create(:user) }
 
   describe 'validations' do
-    it { is_expected.to validate_presence_of(:name) }
     it { is_expected.to validate_presence_of(:email) }
   end
 
@@ -31,77 +30,4 @@ RSpec.describe User, type: :model do
       expect(build_stubbed(:admin)).to be_valid
     end
   end
-
-  describe '#set_stripe_id' do
-    context 'when api call is successful' do
-      it 'adds a stripe_id upon creation' do
-        expect(user.stripe_id).to_not be_nil
-      end
-    end
-
-    # TODO: should I test this in controller spec?
-    # context 'when api call throws an error' do
-    #   before do
-    #     stripe_error = Stripe::StripeError.new('Pretend stripe error')
-    #     StripeMock.prepare_error(stripe_error, :new_customer)
-    #   end
-
-    #   it 'prevents user creation' do
-    #     expect(user.persisted?).to be false
-    #   end
-    # end
-  end
-
-  describe '#stripe_customer' do
-    context 'when api call is successful' do
-      it 'returns the stripe customer' do
-        expect(create(:user).stripe_customer.class).to eq(Stripe::Customer)
-      end
-    end
-
-    context 'when api call throws an error' do
-      before do
-        stripe_error = Stripe::StripeError.new('Pretend stripe error')
-        StripeMock.prepare_error(stripe_error, :get_customer)
-      end
-
-      it 'returns false' do
-        expect(user.stripe_customer).to be false
-      end
-    end
-  end
-
-  # TODO: text new implementation of subscribe and cancel
-
-  # describe '#select_starter_plan' do
-  #   context 'when user doesn\'t have a subscription yet' do
-  #     it 'sets the users plan'
-  #   end
-
-  #   context 'when user has an active subscription' do
-  #     it 'sets the users plan'
-  #     it 'sets the Stripe Subscription to the chosen plan'
-  #   end
-
-  #   context 'when user has an in-active subscription' do
-  #     it 'subscribes the user to the plan'
-  #     it 'sets the Stripe Subscription to the chosen plan'
-  #   end
-  # end
-
-  # describe '#select_premium_plan' do
-  #   context 'when user doesn\'t have a subscription yet' do
-  #     it 'sets the users plan'
-  #   end
-
-  #   context 'when user has an active subscription' do
-  #     it 'sets the users plan'
-  #     it 'sets the Stripe Subscription to the chosen plan'
-  #   end
-
-  #   context 'when user has an in-active subscription' do
-  #     it 'subscribes the user to the plan'
-  #     it 'changes the Stripe Subscription to the chosen plan'
-  #   end
-  # end
 end

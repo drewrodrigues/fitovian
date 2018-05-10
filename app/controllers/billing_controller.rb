@@ -1,7 +1,5 @@
 class BillingController < ApplicationController
   before_action :authenticate_user!, except: :receive
-  before_action :require_plan!, only: :dashboard
-  before_action :require_payment_method!, only: :dashboard
 
   def new; end
 

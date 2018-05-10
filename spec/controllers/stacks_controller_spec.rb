@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe StacksController, type: :controller do
-  let(:user) { create(:user, :onboarded) }
+  let(:user) { create(:user) }
   let(:stack) { create(:stack) }
   let(:lesson) { create(:lesson) }
 

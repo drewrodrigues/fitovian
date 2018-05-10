@@ -7,11 +7,6 @@
 #  name                   :string           not null
 #  stripe_id              :string
 
-# A User is the access point to the application. Guests can only access a small
-# part of the application, while Users and Users who are admins are allowed
-# to do much more. A User can have cards, a plan and a subscription. It's the
-# User class' responsiblity to watch over its resources and handle them
-# accordingly.
 class User < ApplicationRecord
   belongs_to :track, optional: true
 
@@ -22,16 +17,12 @@ class User < ApplicationRecord
   has_many :stacks, through: :selections
   has_one :subscription, dependent: :destroy
 
-  validates :name, presence: true
-  validate :set_stripe_id, on: :create
-
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
-  # Returns true if User's is active. Meaning the User's Subscription
-  # end date is either today or farther away. So the user should have access.
+  before_create :select_starter_plan
+
   def active?
-    # TODO: implement with time, to give access
     return false unless self.subscription
   end
 
@@ -47,32 +38,11 @@ class User < ApplicationRecord
     self.plan
   end
 
-  # Sets the User's stripe_id
-  def set_stripe_id
-    self.stripe_id = Stripe::Customer.create(
-      email: self.email
-    ).id
-  rescue Stripe::StripeError
-    errors.add(:stripe_id, 'cannot be set')
-  end
-
-  private :set_stripe_id
-
-  # add a card to user and sets it to default
-  # @param token [String] the Stripe card token generated from the view
-  # @return [Boolean] whether the card was saved as the default or not
   def add_card(token)
     card = Card.add(self, token)
     default_card(card)
   end
 
-  # @overload default_card(card)
-  #   Sets the card to default
-  #   @param card [Card] the card to set to default
-  #   @return [Boolean] whether it was set to default or not
-  # @overload default_card()
-  #   Gets the user's default card
-  #   @return [Card] the user's default card
   def default_card(card = nil)
     if card
       return true if card == self.default_card
@@ -85,15 +55,12 @@ class User < ApplicationRecord
     end
   end
 
-  # delete the card from stripe and the db
-  # don't allow if it's the default card
   def delete_card(card)
     return false if card.default
     self.stripe_customer.sources.retrieve(card.stripe_id).delete
     card.destroy
   end
 
-  # Set previous default card to non-default
   def remove_previous_default
     previous_default = self.cards.find_by(default: true)
     return true unless previous_default
@@ -101,9 +68,6 @@ class User < ApplicationRecord
     previous_default.save
   end
 
-  # Sets the Stripe::Customer's default card
-  # @param card [Card] the card to set to default
-  # @return [Boolean] whether it was successful
   def stripe_card_default(card)
     stripe_customer.default_source = card.stripe_id
     stripe_customer.save
@@ -111,31 +75,23 @@ class User < ApplicationRecord
 
   private :remove_previous_default, :stripe_card_default
 
-  # Subscribes the User to it's selected Plan
   def subscribe
     self.subscription&.subscribe || Subscription.subscribe(self)
   end
 
-  # Cancels the User's Subscription
   def cancel
     return false unless self.subscription
     self.subscription.cancel
   end
 
-  # Selects the starter plan for the User
   def select_starter_plan
-    # TODO: ensure if user is subscribed, it changed the plan
     self.plan = Plan.starter_plan
-    self.save
   end
 
-  # Selects the test plan for the User
   def select_test_plan
     self.plan = Plan.test_plan
-    self.save
   end
 
-  # Retrieves the Stripe Customer
   def stripe_customer
     @stripe_customer ||= Stripe::Customer.retrieve(self.stripe_id)
   rescue Stripe::StripeError

@@ -1,6 +1,4 @@
 class SelectionsController < ApplicationController
-  before_action :onboard_user!
-
   def create
     if SelectionHandler.new(current_user, selection_params[:stack_id]).create
       flash[:success] = 'Successfully added'
