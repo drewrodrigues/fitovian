@@ -5,6 +5,8 @@
 #  admin                  :boolean          default(false)
 #  email                  :string           not null
 #  name                   :string           not null
+#  period_end             :date             not null
+#  plan                   :string           not null, default('starter')
 #  stripe_id              :string
 
 class User < ApplicationRecord
@@ -12,15 +14,18 @@ class User < ApplicationRecord
 
   has_many :completions, dependent: :destroy
   has_many :cards, dependent: :destroy
-  has_one :plan, dependent: :destroy
   has_many :selections, dependent: :destroy
   has_many :stacks, through: :selections
-  has_one :subscription, dependent: :destroy
 
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
-  before_create :select_starter_plan
+  validates :period_end, presence: true
+  validate :set_stripe_id, on: :create
+
+  def set_stripe_id
+    StripeHandler.set_stripe_id(self)
+  end
 
   def active?
     return false unless self.subscription
@@ -74,15 +79,6 @@ class User < ApplicationRecord
   end
 
   private :remove_previous_default, :stripe_card_default
-
-  def subscribe
-    self.subscription&.subscribe || Subscription.subscribe(self)
-  end
-
-  def cancel
-    return false unless self.subscription
-    self.subscription.cancel
-  end
 
   def select_starter_plan
     self.plan = Plan.starter_plan

@@ -8,23 +8,11 @@ FactoryBot.define do
     name 'Drew'
     password 'password'
     stripe_id nil
+    plan 'starter'
 
-    trait :with_plan do
-      after(:create, &:select_starter_plan)
-    end
-
-    trait :with_plan_and_card do
+    trait :with_card do
       after(:create) do |u|
-        u.select_starter_plan
         add_fake_card(u)
-      end
-    end
-
-    trait :onboarded do
-      after(:create) do |u|
-        u.select_starter_plan
-        add_fake_card(u)
-        u.subscribe
       end
     end
 

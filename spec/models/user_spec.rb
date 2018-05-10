@@ -5,19 +5,20 @@ RSpec.describe User, type: :model do
 
   describe 'validations' do
     it { is_expected.to validate_presence_of(:email) }
+    it { is_expected.to validate_presence_of(:period_end) }
   end
 
   describe 'associations' do
     it { is_expected.to have_many(:cards) }
-    it { is_expected.to have_one(:plan) }
+    it { is_expected.to have_many(:selections) }
     it { is_expected.to have_many(:stacks) }
-    it { is_expected.to have_one(:subscription) }
   end
 
   describe 'database columns' do
     it { is_expected.to have_db_column(:admin) }
     it { is_expected.to have_db_column(:email) }
     it { is_expected.to have_db_column(:name) }
+    it { is_expected.to have_db_column(:period_end) }
     it { is_expected.to have_db_column(:stripe_id) }
   end
 

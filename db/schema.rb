@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180509190711) do
+ActiveRecord::Schema.define(version: 20180511030845) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -53,16 +53,6 @@ ActiveRecord::Schema.define(version: 20180509190711) do
     t.index ["stack_id"], name: "index_lessons_on_stack_id"
   end
 
-  create_table "plans", force: :cascade do |t|
-    t.bigint "user_id", null: false
-    t.string "name", null: false
-    t.float "price", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.string "stripe_id", null: false
-    t.index ["user_id"], name: "index_plans_on_user_id"
-  end
-
   create_table "selections", force: :cascade do |t|
     t.bigint "stack_id"
     t.bigint "user_id"
@@ -88,17 +78,6 @@ ActiveRecord::Schema.define(version: 20180509190711) do
     t.index ["category_id"], name: "index_stacks_on_category_id"
   end
 
-  create_table "subscriptions", force: :cascade do |t|
-    t.bigint "user_id", null: false
-    t.string "stripe_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.date "current_period_end", null: false
-    t.boolean "active", default: false, null: false
-    t.string "status"
-    t.index ["user_id"], name: "index_subscriptions_on_user_id"
-  end
-
   create_table "tracks", force: :cascade do |t|
     t.string "title", null: false
     t.string "icon_file_name"
@@ -120,8 +99,10 @@ ActiveRecord::Schema.define(version: 20180509190711) do
     t.inet "last_sign_in_ip"
     t.boolean "admin", default: false
     t.string "stripe_id"
-    t.string "name", null: false
+    t.string "name"
     t.bigint "track_id"
+    t.date "period_end", default: "2018-05-13", null: false
+    t.string "plan", default: "starter", null: false
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
     t.index ["track_id"], name: "index_users_on_track_id"
@@ -139,12 +120,10 @@ ActiveRecord::Schema.define(version: 20180509190711) do
 
   add_foreign_key "cards", "users"
   add_foreign_key "lessons", "stacks"
-  add_foreign_key "plans", "users"
   add_foreign_key "selections", "stacks"
   add_foreign_key "selections", "users"
   add_foreign_key "stack_tracks", "stacks"
   add_foreign_key "stack_tracks", "tracks"
   add_foreign_key "stacks", "categories"
-  add_foreign_key "subscriptions", "users"
   add_foreign_key "users", "tracks"
 end
