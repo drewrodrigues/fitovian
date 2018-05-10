@@ -51,6 +51,7 @@ group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   gem 'capybara', '~> 2.13'
   gem 'selenium-webdriver', '2.53.4'
+  gem 'chromedriver-helper'
   gem 'rspec-rails'
   gem 'factory_bot_rails'
   gem 'fuubar', require: false

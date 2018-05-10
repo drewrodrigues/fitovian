@@ -33,9 +33,6 @@ RSpec.configure do |config|
     # DB Cleaner
     DatabaseCleaner.strategy = :transaction
     DatabaseCleaner.clean_with(:truncation)
-
-    # Capybara
-    Capybara.default_max_wait_time = 5
   end
   
   config.before(:each) do
@@ -53,6 +50,18 @@ RSpec.configure do |config|
       example.run
     end
   end
+end
+
+# capybara
+Capybara.register_driver :chrome do |app|
+  Capybara::Selenium::Driver.new(app, browser: :chrome)
+end
+
+Capybara.javascript_driver = :chrome
+
+Capybara.configure do |config|
+  config.default_max_wait_time = 10 # seconds
+  config.default_driver        = :selenium
 end
 
 Shoulda::Matchers.configure do |config|

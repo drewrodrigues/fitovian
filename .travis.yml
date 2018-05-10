@@ -1,12 +1,19 @@
 language: ruby
+
+rvm:
+  - 2.4.1
+
+services:
+  - postgresql
+
+addons:
+  chrome: stable
+
 env:
   global:
     - CC_TEST_REPORTER_ID=2fd56a78ab0cb06e62e28471a1c9f501b484678ebff5eb588d3c19f328f07bfe
     - CF_RUN_PERM_SPECS=false
-rvm:
-  - 2.4.1
-services:
-  - postgresql
+
 before_script:
   - bundle exec rake db:setup
   - bundle exec rake db:migrate
@@ -14,12 +21,16 @@ before_script:
   - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
   - chmod +x ./cc-test-reporter
   - ./cc-test-reporter before-build
-script:
-  - bundle exec rspec spec/controllers/* spec/models/*
-  # TODO: figure out travis ci & feature tests
+
+script: 
+  # - bundle exec rspec spec/controllers/* spec/models/*
+  # - bundle exec rspec --format documentation
+  - xvfb-run rspec --format documentation
+
 after_script:
   # code climate
   - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
+
 test:
   adapter: postgresql
   database: travis_ci_test
