@@ -21,8 +21,9 @@ gem 'haml-rails' # templating
 gem 'jquery-rails'
 gem 'acts_as_list'
 
-# error tracking
+# ci
 gem 'sentry-raven'
+gem 'scout_apm'
 
 # cms
 gem 'tinymce-rails'

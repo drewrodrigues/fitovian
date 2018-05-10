@@ -6,9 +6,6 @@ rvm:
 services:
   - postgresql
 
-addons:
-  chrome: stable
-
 env:
   global:
     - CC_TEST_REPORTER_ID=2fd56a78ab0cb06e62e28471a1c9f501b484678ebff5eb588d3c19f328f07bfe
@@ -23,9 +20,7 @@ before_script:
   - ./cc-test-reporter before-build
 
 script: 
-  # - bundle exec rspec spec/controllers/* spec/models/*
-  # - bundle exec rspec --format documentation
-  - xvfb-run rspec --format documentation
+  - bundle exec rspec spec/controllers/* spec/models/* --format documentation
 
 after_script:
   # code climate
