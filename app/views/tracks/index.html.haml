@@ -10,7 +10,7 @@
   - @tracks.each do |track|
     .card.track-card
       .card-body
-        = image_tag track.icon
+        = image_tag track.icon if track.icon.exists?
         %h2= track.title
         .btn-group
           = link_to 'Select track', select_track_path(track), method: :post, class: 'btn btn-sm btn-success'

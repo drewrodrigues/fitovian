@@ -5,9 +5,10 @@
     = render 'show_admin_buttons'
 = render partial: 'stack_header', locals: {stack: @stack}
 .col-md-8.offset-md-2
-  .card.stack-header_card
+  .card
     .card-body
       %p.stack-category{style: "color: #{@stack.category_color}"}
+        = image_tag @stack.icon.url, class: 'img-fluid' if @stack.icon.exists?
         %i.icon.ion-edit
         = @stack.category_title
       %h2.stack-title= @stack.title

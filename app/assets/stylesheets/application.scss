@@ -2,16 +2,10 @@
 @import 'ionicons';
 @import 'material_icons';
 @import 'partials/variables';
-@import 'partials/stacks';
 @import 'partials/lessons';
 
 body {
   font-family: 'Montserrat', sans-serif;
-
-}
-
-* {
-  transition: all .2s ease-in-out;
 }
 
 .navbar-dark {
@@ -19,28 +13,9 @@ body {
   margin-bottom: 20px;
 }
 
-.category-title {
-  font-size: 16px;
-  font-weight: bolder;
-  text-align: center;
-}
-
 .card {
   border: none;
-  // box-shadow: 0 8px 17px 0 rgba(0,0,0,.2), 0 6px 20px 0 rgba(0,0,0,.19);
-  z-index: 0;
-}
-
-.card-columns {
-  @include media-breakpoint-only(sm) {
-    column-count: 1;
-  }
-  @include media-breakpoint-only(md) {
-    column-count: 2;
-  }
-  @include media-breakpoint-only(lg) {
-    column-count: 3;
-  }
+  box-shadow: 0 8px 17px 0 rgba(0,0,0,.2), 0 6px 20px 0 rgba(0,0,0,.19);
 }
 
 .jumbo-landing {
