@@ -1,13 +1,11 @@
 .jumbotron.jumbotron-fluid.jumbo-landing
-  .container.text-center
+  .container
     .row
-      .offset-md-3.col-md-6
-        %h1 Reach your weight loss goals
-        %p.lead Our application is currently under construction. Enter your email below to get updates on our progress.
-        = form_tag updates_path do
-          .form-group
-            .row
-              .col-md-10
-                = text_field_tag :email, '', placeholder: 'Enter email to receive updates', class: 'form-control'
-              .col-md-2
-                %button.btn.btn-success Get updates
+      .offset-md-2.col-md-8
+        .card
+          .card-body
+            %h1 Reach your weight loss goals
+            %p.lead Our application is currently under construction. Enter your email below to get updates on our progress.
+            = form_tag updates_path do
+              = text_field_tag :email, '', placeholder: 'Enter email to receive updates', class: 'form-control'
+              %button.btn.btn-success Get updates
