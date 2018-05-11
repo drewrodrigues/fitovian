@@ -28,7 +28,7 @@ module BillingHelper
   end
 
   def subscription_buttons_path
-    if current_user.subscription.active
+    if current_user.active
       'cancel_button'
     else
       'reactivate_button'

@@ -28,11 +28,15 @@ class User < ApplicationRecord
   end
 
   def active?
-    return false unless self.subscription
+    self.period_end >= Time.zone.today
   end
 
   def admin?
     self.admin
+  end
+
+  def default_card
+    self.cards.where(default: true).first
   end
 
   def payment_method?
@@ -42,43 +46,6 @@ class User < ApplicationRecord
   def plan?
     self.plan
   end
-
-  def add_card(token)
-    card = Card.add(self, token)
-    default_card(card)
-  end
-
-  def default_card(card = nil)
-    if card
-      return true if card == self.default_card
-      stripe_card_default(card)
-      remove_previous_default
-      card.default = true
-      card.save
-    else
-      self.cards.find_by(default: true)
-    end
-  end
-
-  def delete_card(card)
-    return false if card.default
-    self.stripe_customer.sources.retrieve(card.stripe_id).delete
-    card.destroy
-  end
-
-  def remove_previous_default
-    previous_default = self.cards.find_by(default: true)
-    return true unless previous_default
-    previous_default.default = false
-    previous_default.save
-  end
-
-  def stripe_card_default(card)
-    stripe_customer.default_source = card.stripe_id
-    stripe_customer.save
-  end
-
-  private :remove_previous_default, :stripe_card_default
 
   def select_starter_plan
     self.plan = Plan.starter_plan

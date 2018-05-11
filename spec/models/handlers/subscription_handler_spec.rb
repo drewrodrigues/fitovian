@@ -1,19 +1,15 @@
 require 'rails_helper'
 
 RSpec.describe SubscriptionHandler, type: :model do
-  describe '#errors' do
+  describe '#subscribe' do
     context 'when User doesn\'t have a stripe id' do
-      it 'raises an error' do
+      it 'returns false' do
         user = create(:user)
         user.stripe_id = nil
-        expect {
-          SubscriptionHandler.new(user)
-        }.to raise_error(RuntimeError)
+        expect(SubscriptionHandler.new(user).subscribe).to be false
       end
     end
-  end
 
-  describe '#subscribe' do
     context 'when user isn\'t subscribed' do
       it 'extends the users period_end to Stripe\'s end date' do
         user = create(:user, :with_card)

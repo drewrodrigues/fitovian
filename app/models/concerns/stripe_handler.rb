@@ -24,6 +24,15 @@ class StripeHandler
     customer.subscriptions.total_count
   end
 
+  def default_card
+    # TODO: test
+    customer.default_source
+  end
+
+  def card_count
+    customer.sources.total_count
+  end
+
   private
 
   def ensure_stripe_id

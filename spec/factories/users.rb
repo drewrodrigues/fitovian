@@ -12,7 +12,29 @@ FactoryBot.define do
 
     trait :with_card do
       after(:create) do |u|
+        add_fake_card(u, false)
+      end
+    end
+
+    trait :with_default_card do
+      after(:create) do |u|
+        add_fake_card(u, true)
+      end
+    end
+
+    trait :with_cards do
+      after(:create) do |u|
         add_fake_card(u)
+        add_fake_card(u)
+        add_fake_card(u)
+      end
+    end
+
+    trait :with_cards_one_default do
+      after(:create) do |u|
+        add_fake_card(u)
+        add_fake_card(u)
+        add_fake_card(u, true)
       end
     end
 

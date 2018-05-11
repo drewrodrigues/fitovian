@@ -3,8 +3,12 @@
 .card
   .card-body
     %h5.card-title Subscription information
-    %p Plan: #{current_user.plan.name.titleize}
-    %p Status: #{current_user.subscription.status.titleize if current_user.subscription}
+    %p Plan: #{current_user.plan.titleize}
+    - if current_user.active
+      %p Next payment: #{current_user.period_end} UTC
+    - else
+      %p Next payment: None, membership has been canceled.
+      %p You have access until: <b>#{current_user.period_end}</b> UTC
     = render subscription_buttons_path
     %hr
     %h5.card-title Billing method
