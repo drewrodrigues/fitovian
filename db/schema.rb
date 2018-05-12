@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180512052043) do
+ActiveRecord::Schema.define(version: 20180512060018) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -101,7 +101,7 @@ ActiveRecord::Schema.define(version: 20180512052043) do
     t.string "stripe_id"
     t.string "name"
     t.bigint "track_id"
-    t.date "period_end", default: "2018-05-13", null: false
+    t.date "period_end", null: false
     t.string "plan", default: "starter", null: false
     t.boolean "active"
     t.index ["email"], name: "index_users_on_email", unique: true

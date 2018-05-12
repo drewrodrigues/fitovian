@@ -20,6 +20,8 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
+  before_validation :set_trial_period, on: :create
+
   validates :period_end, presence: true
   validate :set_stripe_id, on: :create
 
@@ -77,5 +79,11 @@ class User < ApplicationRecord
 
   def selected?(resource)
     self.selections.find_by(stack: resource)
+  end
+
+  private
+
+  def set_trial_period
+    self.period_end = 3.days.from_now
   end
 end
