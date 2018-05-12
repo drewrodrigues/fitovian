@@ -1,5 +1,6 @@
 class Users::SessionsController < Devise::SessionsController
   # before_action :configure_sign_in_params, only: [:create]
+  skip_before_action :ensure_within_period_end!, except: :destroy
 
   # GET /resource/sign_in
   # def new

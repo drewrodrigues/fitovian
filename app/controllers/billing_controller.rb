@@ -1,5 +1,5 @@
 class BillingController < ApplicationController
-  before_action :authenticate_user!, except: :receive
+  skip_before_action :ensure_within_period_end!
 
   def new; end
 

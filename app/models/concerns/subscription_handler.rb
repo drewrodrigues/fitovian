@@ -45,6 +45,7 @@ class SubscriptionHandler
       plan: @user.plan
     }]
     set_active!
+    update_period_end
     @stripe.subscription.save
   end
 

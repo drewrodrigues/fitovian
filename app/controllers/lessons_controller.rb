@@ -1,6 +1,5 @@
 class LessonsController < ApplicationController
   before_action :require_admin!, except: :show
-  before_action :authenticate_user!, only: :show
   before_action :set_lesson, only: %i[show edit update destroy]
   before_action :set_stack, only: %i[new edit]
 

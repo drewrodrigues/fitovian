@@ -1,13 +1,13 @@
 class SubscriptionsController < ApplicationController
+  skip_before_action :ensure_within_period_end!
+
   def create
     message = if SubscriptionHandler.new(current_user).subscribe
-                { success: "Successfully subscribed" }
+                { success: 'Successfully subscribed' }
               else
                 { alert: 'Failed to subscribe' }
               end
     redirect_to billing_path, flash: message
-  rescue Stripe::StripeError => e
-    redirect_to billing_path, flash: { alert: e.message }
   end
 
   def cancel
@@ -17,7 +17,5 @@ class SubscriptionsController < ApplicationController
                 { alert: 'Failed to cancel membership' }
               end
     redirect_to billing_path, flash: message
-  rescue Stripe::StripeError => e
-    redirect_to billing_path, flash: { alert: e.message }
   end
 end

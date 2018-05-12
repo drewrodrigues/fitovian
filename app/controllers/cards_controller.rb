@@ -1,5 +1,5 @@
 class CardsController < ApplicationController
-  before_action :authenticate_user!
+  skip_before_action :ensure_within_period_end!
 
   def new; end
 

@@ -1,4 +1,5 @@
-class PagesController < ApplicationController
+class PagesController < ActionController::Base
+  protect_from_forgery with: :exception
   layout 'pages'
 
   def landing; end
