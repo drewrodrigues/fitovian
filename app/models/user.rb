@@ -22,7 +22,6 @@ class User < ApplicationRecord
 
   before_validation :set_trial_period, on: :create
 
-  validates :period_end, presence: true
   validate :set_stripe_id, on: :create
 
   def set_stripe_id

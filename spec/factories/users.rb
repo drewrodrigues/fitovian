@@ -9,6 +9,7 @@ FactoryBot.define do
     password 'password'
     stripe_id nil
     plan 'starter'
+    period_end 3.days.from_now
 
     trait :with_card do
       after(:create) do |u|
