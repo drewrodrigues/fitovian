@@ -31,7 +31,7 @@ module BillingHelper
     if current_user.active
       'cancel_button'
     else
-      'reactivate_button'
+      'subscribe_button'
     end
   end
 end

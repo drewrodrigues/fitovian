@@ -1,28 +1,8 @@
 class BillingController < ApplicationController
   skip_before_action :ensure_within_period_end!
 
-  def new; end
-
   def dashboard
     @cards = current_user.cards
-  end
-
-  def subscribe
-    if current_user.re_activate || current_user.subscribe
-      redirect_to billing_path, flash: { success: 'Successfully subscribed' }
-    end
-  rescue Stripe::StripeError => e
-    redirect_to billing_path, flash: { alert: e.message }
-  end
-
-  def cancel
-    current_user.cancel
-    redirect_to billing_path, flash: {
-      success: 'Successfully canceled subscription'
-    }
-  rescue Stripe::StripeError
-    flash.now[:alert] = e.message
-    redirect_to billing_path
   end
 
   def receive

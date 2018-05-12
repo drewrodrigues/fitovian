@@ -56,12 +56,6 @@ class User < ApplicationRecord
     self.plan = Plan.test_plan
   end
 
-  def stripe_customer
-    @stripe_customer ||= Stripe::Customer.retrieve(self.stripe_id)
-  rescue Stripe::StripeError
-    false
-  end
-
   def complete(resource)
     return true if self.completed?(resource)
     self.completions.build(completable: resource).save
