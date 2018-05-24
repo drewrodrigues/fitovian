@@ -1,7 +1,7 @@
 class LessonsController < ApplicationController
-  before_action :require_admin!, except: :show
-  before_action :set_lesson, only: %i[show edit update destroy]
-  before_action :set_stack, only: %i[new edit]
+  before_action :require_admin!, except: %i[show complete incomplete]
+  before_action :set_lesson, only: %i[show edit update destroy complete incomplete]
+  before_action :set_stack, only: %i[new edit complete]
 
   def index
     @lessons = Lesson.all.sort_by(&:position)
@@ -53,6 +53,26 @@ class LessonsController < ApplicationController
     end
   end
 
+  # TODO: upon complete, redirect to next lesson, or back to course show
+  # TODO: upon incomplete, just re-render the lesson#show page
+  def complete
+    message = if CompletionHandler.complete(current_user, @lesson)
+      { success: "Successfully completed <b>#{@lesson.title}</b>" }
+    else
+      { danger: 'Failed to complete' }
+    end
+    redirect_to @lesson.lower_item || @stack, flash: message
+  end
+
+  def incomplete
+    message = if CompletionHandler.incomplete(current_user, @lesson)
+                { success: "Successfully marked <b>#{@lesson.title}</b> as incomplete" }
+              else
+                { danger: 'Failed to mark incomplete' }
+              end
+    redirect_to @lesson, flash: message
+  end
+
   private
 
   def set_lesson
@@ -65,10 +85,6 @@ class LessonsController < ApplicationController
 
   def lesson_params
     params.require(:lesson).permit(:title, :body, :position, :user_id, :stack_id)
-  end
-
-  def authenticate_admin!
-    redirect_to root_path unless current_user&.admin?
   end
 
   def check_subscription
