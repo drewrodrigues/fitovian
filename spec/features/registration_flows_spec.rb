@@ -28,5 +28,7 @@ RSpec.feature 'Registration Flows', type: :feature do
 
     expect(current_path).to eq(new_user_session_path)
     expect(page).to have_text('Email registered, try signing in!')
+    expect(find_field('Email').value).to eq(user.email)
+    expect(find_field('Password')[:autofocus]).to be_present
   end
 end
