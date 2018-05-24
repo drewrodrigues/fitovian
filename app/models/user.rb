@@ -68,5 +68,6 @@ class User < ApplicationRecord
     self.period_end = 3.days.from_now
     self.plan ||= Plan.starter_plan
     self.active ||= false
+    self.stacks = Stack.all
   end
 end
