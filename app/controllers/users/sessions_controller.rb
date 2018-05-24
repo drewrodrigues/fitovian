@@ -3,9 +3,11 @@ class Users::SessionsController < Devise::SessionsController
   skip_before_action :ensure_within_period_end!, except: :destroy
 
   # GET /resource/sign_in
-  # def new
-  #   super
-  # end
+  def new
+    super
+    session[:registerable_email] = nil
+    session[:loginable_email] = nil
+  end
 
   # POST /resource/sign_in
   def create

@@ -2,13 +2,20 @@
   %h2 Sign in
   = form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
     .form-group
-      .field
-        = f.label :email
-        = f.email_field :email, autofocus: true, class: 'form-control'
-    .form-group
-      .field
-        = f.label :password
-        = f.password_field :password, autocomplete: "off", class: 'form-control'
+      - if session[:loginable_email]
+        .field
+          = f.label :email
+          = f.email_field :email, class: 'form-control', value: session[:loginable_email]
+        .field
+          = f.label :password
+          = f.password_field :password, autocomplete: "off", class: 'form-control', autofocus: true
+      - else
+        .field
+          = f.label :email
+          = f.email_field :email, class: 'form-control', autofocus: true
+        .field
+          = f.label :password
+          = f.password_field :password, autocomplete: "off", class: 'form-control'
     .actions
       = f.submit "Sign in", class: 'btn btn-success'
       = link_to "Sign up", new_user_registration_path, class: 'btn btn-sm'

@@ -8,12 +8,15 @@ class Users::RegistrationsController < Devise::RegistrationsController
   def new
     super
     session[:registerable_email] = nil
+    session[:loginable_email] = nil
   end
 
   # POST /resource
   def create
-    super
-    MessageMailer.welcome(params[:user][:email]).deliver_later
+    unless redirect_if_already_registered
+      super
+      MessageMailer.welcome(params[:user][:email]).deliver_later
+    end
   end
 
   # GET /resource/edit
@@ -60,4 +63,15 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # def after_inactive_sign_up_path_for(resource)
   #   super(resource)
   # end
+  private
+  
+  def redirect_if_already_registered
+    user = User.find_by(email: params[:user][:email])
+    if user
+      session[:loginable_email] = params[:user][:email]
+      redirect_to new_user_session_path, flash: {
+        info: 'Email registered, try signing in!'
+      }
+    end
+  end
 end
