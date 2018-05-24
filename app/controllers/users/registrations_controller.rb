@@ -11,9 +11,10 @@ class Users::RegistrationsController < Devise::RegistrationsController
   end
 
   # POST /resource
-  # def create
-  #   super
-  # end
+  def create
+    super
+    MessageMailer.welcome(params[:user][:email]).deliver_later
+  end
 
   # GET /resource/edit
   # def edit
