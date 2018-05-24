@@ -2,7 +2,7 @@ Rails.application.routes.draw do
   post 'lessons/complete/:id' => 'lessons#complete', as: :lesson_complete
   delete 'lessons/incomplete/:id' => 'lessons#incomplete', as: :lesson_incomplete
 
-  resources :stack_tracks
+  resources :course_tracks
 
   resources :tracks
   post 'tracks/:id/select' => 'tracks#select', as: :select_track
@@ -10,12 +10,12 @@ Rails.application.routes.draw do
   resources :categories, except: [:show, :index]
   get 'library', to: 'categories#index', as: :library
 
-  resources :stacks, except: [:index, :new]
-  get 'stacks/new/:category_id' => 'stacks#new', as: :new_stack
-  post 'stacks/:id' => 'stacks#begin', as: :begin
+  resources :courses, except: [:index, :new]
+  get 'courses/new/:category_id' => 'courses#new', as: :new_course
+  post 'courses/:id' => 'courses#begin', as: :begin
 
   resources :lessons, except: [:index, :new]
-  get 'lessons/new/:stack_id' => 'lessons#new', as: :new_lesson
+  get 'lessons/new/:course_id' => 'lessons#new', as: :new_lesson
   post '/tinymce_assets' => 'lessons#images'
 
   post 'lists/:type/:id/move-top' => 'lists#move_top', as: :move_top
@@ -23,8 +23,8 @@ Rails.application.routes.draw do
   post 'lists/:type/:id/move-bottom' => 'lists#move_bottom', as: :move_bottom
   post 'lists/:type/:id/move-down' => 'lists#move_down', as: :move_down
 
-  post 'selections/:stack_id' => 'selections#create', as: :selections
-  delete 'selections/:stack_id' => 'selections#destroy'
+  post 'selections/:course_id' => 'selections#create', as: :selections
+  delete 'selections/:course_id' => 'selections#destroy'
   
   # dashboard
   get 'dashboard', to: 'pages#dashboard', as: :dashboard

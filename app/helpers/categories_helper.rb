@@ -4,7 +4,7 @@ module CategoriesHelper
   end
 
   def the_journey_path
-    Stack.where(title: 'The Journey').first
+    Course.where(title: 'The Journey').first
   end
 
   def admin_buttons_path(category)

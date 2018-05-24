@@ -7,8 +7,8 @@
     %h3.category-title{style: "color: #{category.color}"}= category.title
     = admin_buttons_path(category)
   .card-columns
-    = render category.stacks.order('title')
+    = render category.courses.order('title')
   
 -# .card-columns
 -#   - @categories.each do |category|
--#     = render category.stacks.order('title')
+-#     = render category.courses.order('title')

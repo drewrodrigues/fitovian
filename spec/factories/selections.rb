@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :selection do
-    stack
     user
+    course
   end
 end

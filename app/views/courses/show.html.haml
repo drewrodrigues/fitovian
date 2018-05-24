@@ -1,0 +1,23 @@
+%p
+  = link_to library_path, class: 'btn btn-sm btn-link' do
+    %i.icon.ion-android-arrow-back
+    Back to Library
+    = render 'show_admin_buttons'
+= render partial: 'course_header', locals: {course: @course}
+.col-md-8.offset-md-2
+  .card
+    .card-body
+      %p.course-category{style: "color: #{@course.category_color}"}
+        = image_tag @course.icon.url, class: 'img-fluid' if @course.icon.exists?
+        %i.icon.ion-edit
+        = @course.category_title
+      %h2.course-title= @course.title
+      %p.course-course-indicator Course
+      %p.course-header-summary= @course.summary
+
+      .text-center
+        = link_to 'Begin Course', begin_path(@course), method: :post, class: 'btn btn-sm btn-white-text', style: "background-color: #{@course.category_color}"
+
+      %p.course-lesson-title Lessons
+      .lessons-list
+        = render @course.lessons

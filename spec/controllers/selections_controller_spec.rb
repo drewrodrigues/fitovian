@@ -2,33 +2,33 @@ require 'rails_helper'
 
 RSpec.describe SelectionsController, type: :controller do
   let(:user) { create(:user) }
-  let(:stack) { create(:stack) }
+  let(:course) { create(:course) }
 
   describe '#create' do
     before do
       sign_in user
     end
 
-    context 'when stack doesn\'t exist' do
+    context 'when course doesn\'t exist' do
       before do
-        post :create, params: { stack_id: 12381923719832 }
+        post :create, params: { course_id: 12381923719832 }
       end
 
       it { is_expected.to set_flash[:danger] }
     end
 
-    context 'when user hasn\'t selected the stack' do
+    context 'when user hasn\'t selected the course' do
       before do
-        post :create, params: { stack_id: stack }
+        post :create, params: { course_id: course }
       end
 
       it { is_expected.to set_flash[:success] }
     end
 
-    context 'when user has selected the stack' do
+    context 'when user has selected the course' do
       before do
-        user.selections.create(stack: stack)
-        post :create, params: { stack_id: stack }
+        user.selections.create(course: course)
+        post :create, params: { course_id: course }
       end
 
       it { is_expected.to set_flash[:success] }
@@ -40,26 +40,26 @@ RSpec.describe SelectionsController, type: :controller do
       sign_in user
     end
 
-    context 'when stack doesn\'t exist' do
+    context 'when course doesn\'t exist' do
       before do
-        delete :destroy, params: { stack_id: 2139018239817987 }
+        delete :destroy, params: { course_id: 2139018239817987 }
       end
 
       it { is_expected.to set_flash[:danger] }
     end
 
-    context 'when user hasn\'t selected the stack' do
+    context 'when user hasn\'t selected the course' do
       before do
-        delete :destroy, params: { stack_id: stack }
+        delete :destroy, params: { course_id: course }
       end
 
-      it { is_expected.to set_flash[:danger] }
+      it { is_expected.to set_flash[:success] }
     end
 
-    context 'when user has selected the stack' do
+    context 'when user has selected the course' do
       before do
-        user.selections.create(stack: stack)
-        delete :destroy, params: { stack_id: stack }
+        user.selections.create(course: course)
+        delete :destroy, params: { course_id: course }
       end
 
       it { is_expected.to set_flash[:success] }

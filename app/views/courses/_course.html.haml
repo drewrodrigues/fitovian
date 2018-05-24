@@ -1,0 +1,15 @@
+.card
+  .card-body
+    = link_to course do
+      = image_tag course.icon.url, class: 'img-fluid' if course.icon.exists?
+    %p.course-category{style: "color: #{course.category_color}"}
+      %i.icon.ion-edit
+      = course.category_title
+    %h4.course-title= course.title
+    %p.course-summary= truncate(course.summary, length: 240)
+    .text-center
+      = link_to 'LEARN MORE', course, class: 'btn btn-sm text-white', style: "background-color: #{course.category_color}"
+    - if current_user.selected?(course)
+      = link_to 'Remove', selections_path(course), method: :delete, class: 'btn btn-sm btn-link'
+    - else
+      = link_to 'Add', selections_path(course), method: :post, class: 'btn btn-sm btn-link'

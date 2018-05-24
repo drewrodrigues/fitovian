@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :lesson do
     title 'Some title'
-    stack
+    course
     position 1
   end
 end

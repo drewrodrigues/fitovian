@@ -14,7 +14,7 @@ class User < ApplicationRecord
   has_many :completions, dependent: :destroy
   has_many :cards, dependent: :destroy
   has_many :selections, dependent: :destroy
-  has_many :stacks, through: :selections
+  has_many :courses, through: :selections
 
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
@@ -59,7 +59,7 @@ class User < ApplicationRecord
   end
 
   def selected?(resource)
-    self.selections.find_by(stack: resource)
+    self.selections.find_by(course: resource)
   end
 
   private
@@ -68,6 +68,6 @@ class User < ApplicationRecord
     self.period_end = 3.days.from_now
     self.plan ||= Plan.starter_plan
     self.active ||= false
-    self.stacks = Stack.all
+    self.courses = Course.all
   end
 end

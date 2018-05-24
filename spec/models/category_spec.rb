@@ -6,7 +6,7 @@ RSpec.describe Category, type: :model do
   end
 
   describe 'associations' do
-    it { is_expected.to have_many(:stacks) }
+    it { is_expected.to have_many(:courses) }
   end
 
   describe 'database columns' do

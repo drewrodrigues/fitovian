@@ -8,7 +8,7 @@ RSpec.describe User, type: :model do
   describe 'associations' do
     it { is_expected.to have_many(:cards) }
     it { is_expected.to have_many(:selections) }
-    it { is_expected.to have_many(:stacks) }
+    it { is_expected.to have_many(:courses) }
   end
 
   describe 'database columns' do

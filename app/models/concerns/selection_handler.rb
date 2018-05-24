@@ -1,16 +1,16 @@
 class SelectionHandler
-  def initialize(user, stack_id)
+  def initialize(user, course_id)
     @user = user
-    @stack = Stack.find_by(id: stack_id)
+    @course = Course.find_by(id: course_id)
   end
 
   def create
-    return false unless @stack
-    Selection.create(stack: @stack, user: @user)
+    return false unless @course
+    Selection.create(course: @course, user: @user)
   end
 
   def destroy
-    return false unless @stack
-    Selection.find_by(stack: @stack)&.destroy
+    return false unless @course
+    Selection.find_by(course: @course)&.destroy
   end
 end

@@ -1,16 +1,16 @@
-= form_for @stack_track do |f|
-  - if @stack_track.errors.any?
+= form_for @course_track do |f|
+  - if @course_track.errors.any?
     #error_explanation
-      %h2= "#{pluralize(@stack_track.errors.count, "error")} prohibited this stack_track from being saved:"
+      %h2= "#{pluralize(@course_track.errors.count, "error")} prohibited this course_track from being saved:"
       %ul
-        - @stack_track.errors.full_messages.each do |message|
+        - @course_track.errors.full_messages.each do |message|
           %li= message
 
   .field
     = f.label :track
     = f.text_field :track
   .field
-    = f.label :stack
-    = f.text_field :stack
+    = f.label :course
+    = f.text_field :course
   .actions
     = f.submit 'Save'

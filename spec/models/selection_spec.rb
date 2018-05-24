@@ -2,20 +2,20 @@ require 'rails_helper'
 
 RSpec.describe Selection, type: :model do
   describe 'associations' do
-    it { is_expected.to belong_to(:stack) }
+    it { is_expected.to belong_to(:course) }
     it { is_expected.to belong_to(:user) }
 
-    context 'when stack is deleted' do
+    context 'when course is deleted' do
       it 'deletes the Selection' do
         selection = create(:selection)
         expect {
-          selection.stack.destroy
+          selection.course.destroy
         }.to change(Selection, :count).by(-1)
       end
 
       it 'doesn\'t delete the User' do
         selection = create(:selection)
-        selection.stack.destroy
+        selection.course.destroy
         expect {
           selection.user.reload
         }.to_not change(User, :count)
@@ -30,17 +30,17 @@ RSpec.describe Selection, type: :model do
         }.to change(Selection, :count).by(-1)
       end
 
-      it 'doesn\'t delete the Stack' do
+      it 'doesn\'t delete the Course' do
         selection = create(:selection)
         expect {
           selection.user.destroy
-        }.to_not change(Stack, :count)
+        }.to_not change(Course, :count)
       end
     end
   end
 
   describe 'database columns' do
-    it { is_expected.to have_db_column(:stack_id) }
+    it { is_expected.to have_db_column(:course_id) }
     it { is_expected.to have_db_column(:user_id) }
   end
 
@@ -52,23 +52,23 @@ RSpec.describe Selection, type: :model do
 
   describe 'validations' do
     let(:user) { create(:user) }
-    let(:stack) { create(:stack) }
+    let(:course) { create(:course) }
 
-    it { is_expected.to validate_presence_of(:stack) }
+    it { is_expected.to validate_presence_of(:course) }
     it { is_expected.to validate_presence_of(:user) }
 
-    it 'doesn\'t allow user to have a duplicate stack' do
-      user.selections.create(stack: stack)
+    it 'doesn\'t allow user to have a duplicate course' do
+      user.selections.create(course: course)
       expect {
-        user.selections.create(stack: stack)
+        user.selections.create(course: course)
       }.to_not change(Selection, :count)
     end
 
-    it 'allows different users to have the same stack' do
+    it 'allows different users to have the same course' do
       admin = create(:admin)
-      user.selections.create(stack: stack)
+      user.selections.create(course: course)
       expect {
-        admin.selections.create(stack: stack)
+        admin.selections.create(course: course)
       }.to change(Selection, :count).by(1)
     end
   end

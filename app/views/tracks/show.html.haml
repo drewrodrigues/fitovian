@@ -20,15 +20,15 @@
         %p
           -# TODO: change text based on which track is selected
           = link_to 'Select Track', select_track_path(@track), method: :post, class: 'btn btn-success'
-  .card-body.track-show-stacks
-    -# TODO: render stack collection
+  .card-body.track-show-courses
+    -# TODO: render course collection
     .col-md-6.offset-md-3
       %h2 Included Courses
       %ul.list-group
-        - @track.stacks.each do |stack|
+        - @track.courses.each do |course|
           %li.list-group-item
-            = image_tag stack.icon
-            = stack.title
+            = image_tag course.icon
+            = course.title
 
 
 = link_to 'Edit', edit_track_path(@track)

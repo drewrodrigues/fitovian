@@ -1,22 +1,20 @@
 # == Schema Information
-# Table name: stacks
+# Table name: courses
 #
 #  id                     :integer          not null, primary key
 #  category_id            :id               not null, foreign key
 #  icon                   :file
 #  title                  :string
 
-# Stacks can be thought of as courses. They belong to a category and have
-# lessons. Each stack has a icon to uniquely identify it visually.
-class Stack < ApplicationRecord
+class Course < ApplicationRecord
   belongs_to :category
 
   has_paper_trail
   has_many :completions, as: :completable
   has_many :lessons, dependent: :destroy
   has_many :selections, dependent: :destroy
-  has_many :stack_tracks, dependent: :destroy
-  has_many :tracks, through: :stack_tracks
+  has_many :course_tracks, dependent: :destroy
+  has_many :tracks, through: :course_tracks
   has_many :users, through: :selections
   has_attached_file :icon,
                     styles: { medium: '300x300', thumb: '100x100' }

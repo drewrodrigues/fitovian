@@ -1,6 +1,6 @@
 FactoryBot.define do
-  factory :stack_track do
-    stack
+  factory :course_track do
+    course
     track
   end
 end

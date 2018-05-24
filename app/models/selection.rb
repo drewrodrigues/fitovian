@@ -1,8 +1,8 @@
 class Selection < ApplicationRecord
-  belongs_to :stack
+  belongs_to :course
   belongs_to :user
 
-  validates :stack, presence: true
+  validates :course, presence: true
   validates :user, presence: true
-  validates :user, uniqueness: { scope: :stack }
+  validates :user, uniqueness: { scope: :course }
 end

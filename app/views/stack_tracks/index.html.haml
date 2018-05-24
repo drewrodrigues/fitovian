@@ -1,4 +1,4 @@
-%h1 Listing stack_tracks
+%h1 Listing course_tracks
 
 %table
   %thead
@@ -10,14 +10,14 @@
       %th
 
   %tbody
-    - @stack_tracks.each do |stack_track|
+    - @course_tracks.each do |course_track|
       %tr
-        %td= stack_track.track
-        %td= stack_track.stack
-        %td= link_to 'Show', stack_track
-        %td= link_to 'Edit', edit_stack_track_path(stack_track)
-        %td= link_to 'Destroy', stack_track, method: :delete, data: { confirm: 'Are you sure?' }
+        %td= course_track.track
+        %td= course_track.course
+        %td= link_to 'Show', course_track
+        %td= link_to 'Edit', edit_course_track_path(course_track)
+        %td= link_to 'Destroy', course_track, method: :delete, data: { confirm: 'Are you sure?' }
 
 %br
 
-= link_to 'New Stack track', new_stack_track_path
+= link_to 'New Stack track', new_course_track_path

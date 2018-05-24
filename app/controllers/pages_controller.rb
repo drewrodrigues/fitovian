@@ -27,6 +27,6 @@ class PagesController < ActionController::Base
   end
 
   def dashboard
-    @stacks = current_user.stacks
+    @courses = current_user.courses
   end
 end

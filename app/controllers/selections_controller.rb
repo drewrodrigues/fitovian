@@ -1,6 +1,6 @@
 class SelectionsController < ApplicationController
   def create
-    if SelectionHandler.new(current_user, selection_params[:stack_id]).create
+    if SelectionHandler.new(current_user, selection_params[:course_id]).create
       flash[:success] = 'Successfully added'
     else
       flash[:danger] = 'Failed to add'
@@ -9,7 +9,7 @@ class SelectionsController < ApplicationController
   end
 
   def destroy
-    if SelectionHandler.new(current_user, selection_params[:stack_id]).destroy
+    if SelectionHandler.new(current_user, selection_params[:course_id]).destroy
       flash[:success] = 'Successfully removed'
     else
       flash[:danger] = 'Failed to remove'
@@ -20,6 +20,6 @@ class SelectionsController < ApplicationController
   private
 
   def selection_params
-    params.permit(:stack_id)
+    params.permit(:course_id)
   end
 end

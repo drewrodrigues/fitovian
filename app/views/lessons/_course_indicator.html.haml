@@ -1,16 +1,16 @@
 .indicators
-  - @stack.lessons.each do |lesson|
+  - @course.lessons.each do |lesson|
     - if CompletionHandler.complete?(current_user, lesson)
       = link_to lesson do
-        %span.completed-lesson{style: "background-color: #{@stack.category_color}", 'data-toggle': 'tooltip', 'title': lesson.title}
+        %span.completed-lesson{style: "background-color: #{@course.category_color}", 'data-toggle': 'tooltip', 'title': lesson.title}
           %i.icon.ion-checkmark
           - if lesson == current
-            %i.icon.ion-arrow-up-c{style: "color: #{@stack.category_color}"}
+            %i.icon.ion-arrow-up-c{style: "color: #{@course.category_color}"}
           - else
     - else
       = link_to lesson do
         - if lesson == current
           %span.not-completed-lesson{'data-toggle': 'tooltip', 'title': 'Current lesson'}
-            %i.icon.ion-arrow-up-c{style: "color: #{@stack.category_color}"}
+            %i.icon.ion-arrow-up-c{style: "color: #{@course.category_color}"}
         - else
           %span.not-completed-lesson{'data-toggle': 'tooltip', 'title': lesson.title}

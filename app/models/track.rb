@@ -1,5 +1,5 @@
 # == Schema Information
-# Table name: stacks
+# Table name: courses
 #
 #  id                     :integer          not null, primary key
 #  title                  :string
@@ -8,8 +8,8 @@ class Track < ApplicationRecord
   has_many :users
 
   has_many :completions, as: :completable
-  has_many :stack_tracks, dependent: :destroy
-  has_many :stacks, through: :stack_tracks
+  has_many :course_tracks, dependent: :destroy
+  has_many :courses, through: :course_tracks
 
   has_attached_file :icon,
                     styles: { medium: '300x300', thumb: '100x100' }

@@ -4,7 +4,7 @@ RSpec.describe Track, type: :model do
   let(:track) { create(:track) }
 
   describe 'assocations' do
-    it { is_expected.to have_many(:stacks) }
+    it { is_expected.to have_many(:courses) }
   end
 
   describe 'database columns' do

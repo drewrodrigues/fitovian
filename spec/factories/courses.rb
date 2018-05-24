@@ -1,5 +1,5 @@
 FactoryBot.define do
-  factory :stack do
+  factory :course do
     title 'MyString'
     category
   end

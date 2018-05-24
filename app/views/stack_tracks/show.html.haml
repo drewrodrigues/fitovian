@@ -2,11 +2,11 @@
 
 %p
   %b Track:
-  = @stack_track.track
+  = @course_track.track
 %p
   %b Stack:
-  = @stack_track.stack
+  = @course_track.course
 
-= link_to 'Edit', edit_stack_track_path(@stack_track)
+= link_to 'Edit', edit_course_track_path(@course_track)
 \|
-= link_to 'Back', stack_tracks_path
+= link_to 'Back', course_tracks_path

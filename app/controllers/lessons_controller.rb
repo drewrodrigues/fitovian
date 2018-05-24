@@ -1,14 +1,14 @@
 class LessonsController < ApplicationController
   before_action :require_admin!, except: %i[show complete incomplete]
   before_action :set_lesson, only: %i[show edit update destroy complete incomplete]
-  before_action :set_stack, only: %i[new edit complete]
+  before_action :set_course, only: %i[new edit complete]
 
   def index
     @lessons = Lesson.all.sort_by(&:position)
   end
 
   def show
-    @stack = @lesson.stack
+    @course = @lesson.course
   end
 
   def new
@@ -37,7 +37,7 @@ class LessonsController < ApplicationController
 
   def destroy
     @lesson.destroy
-    redirect_to @lesson.stack, notice: "Lesson was successfully destroyed. #{undo_link}"
+    redirect_to @lesson.course, notice: "Lesson was successfully destroyed. #{undo_link}"
   end
 
   # handle image posts to s3
@@ -61,7 +61,7 @@ class LessonsController < ApplicationController
     else
       { danger: 'Failed to complete' }
     end
-    redirect_to @lesson.lower_item || @stack, flash: message
+    redirect_to @lesson.lower_item || @course, flash: message
   end
 
   def incomplete
@@ -79,12 +79,12 @@ class LessonsController < ApplicationController
     @lesson = Lesson.find(params[:id])
   end
 
-  def set_stack
-    @stack = @lesson&.stack || Stack.find(params[:stack_id])
+  def set_course
+    @course = @lesson&.course || course.find(params[:course_id])
   end
 
   def lesson_params
-    params.require(:lesson).permit(:title, :body, :position, :user_id, :stack_id)
+    params.require(:lesson).permit(:title, :body, :position, :user_id, :course_id)
   end
 
   def check_subscription

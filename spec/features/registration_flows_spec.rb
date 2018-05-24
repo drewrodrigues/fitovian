@@ -26,6 +26,7 @@ RSpec.feature 'Registration Flows', type: :feature do
     fill_in 'Email', with: user.email
     click_button 'Sign up'
 
-    expect(page).to have_text('Email has already been taken')
+    expect(current_path).to eq(new_user_session_path)
+    expect(page).to have_text('Email registered, try signing in!')
   end
 end

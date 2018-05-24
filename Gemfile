@@ -25,7 +25,7 @@ gem 'aws-sdk-s3'
 gem 'paper_trail'
 gem 'faker'
 
-# stack images
+# course images
 gem 'paperclip', '~> 6.0.0'
 
 group :test do

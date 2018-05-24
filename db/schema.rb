@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180512060018) do
+ActiveRecord::Schema.define(version: 2018_05_24_205910) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -40,6 +40,24 @@ ActiveRecord::Schema.define(version: 20180512060018) do
     t.index ["user_id"], name: "index_completions_on_user_id"
   end
 
+  create_table "course_tracks", force: :cascade do |t|
+    t.bigint "track_id", null: false
+    t.bigint "course_id", null: false
+    t.index ["course_id"], name: "index_course_tracks_on_course_id"
+    t.index ["track_id"], name: "index_course_tracks_on_track_id"
+  end
+
+  create_table "courses", force: :cascade do |t|
+    t.string "title"
+    t.bigint "category_id"
+    t.string "icon_file_name"
+    t.string "icon_content_type"
+    t.integer "icon_file_size"
+    t.datetime "icon_updated_at"
+    t.string "summary"
+    t.index ["category_id"], name: "index_courses_on_category_id"
+  end
+
   create_table "leads", force: :cascade do |t|
     t.string "email"
     t.string "context"
@@ -49,33 +67,15 @@ ActiveRecord::Schema.define(version: 20180512060018) do
     t.string "title"
     t.text "body"
     t.integer "position"
-    t.bigint "stack_id"
-    t.index ["stack_id"], name: "index_lessons_on_stack_id"
+    t.bigint "course_id"
+    t.index ["course_id"], name: "index_lessons_on_course_id"
   end
 
   create_table "selections", force: :cascade do |t|
-    t.bigint "stack_id"
+    t.bigint "course_id"
     t.bigint "user_id"
-    t.index ["stack_id"], name: "index_selections_on_stack_id"
+    t.index ["course_id"], name: "index_selections_on_course_id"
     t.index ["user_id"], name: "index_selections_on_user_id"
-  end
-
-  create_table "stack_tracks", force: :cascade do |t|
-    t.bigint "track_id", null: false
-    t.bigint "stack_id", null: false
-    t.index ["stack_id"], name: "index_stack_tracks_on_stack_id"
-    t.index ["track_id"], name: "index_stack_tracks_on_track_id"
-  end
-
-  create_table "stacks", force: :cascade do |t|
-    t.string "title"
-    t.bigint "category_id"
-    t.string "icon_file_name"
-    t.string "icon_content_type"
-    t.integer "icon_file_size"
-    t.datetime "icon_updated_at"
-    t.string "summary"
-    t.index ["category_id"], name: "index_stacks_on_category_id"
   end
 
   create_table "tracks", force: :cascade do |t|
@@ -120,11 +120,11 @@ ActiveRecord::Schema.define(version: 20180512060018) do
   end
 
   add_foreign_key "cards", "users"
-  add_foreign_key "lessons", "stacks"
-  add_foreign_key "selections", "stacks"
+  add_foreign_key "course_tracks", "courses"
+  add_foreign_key "course_tracks", "tracks"
+  add_foreign_key "courses", "categories"
+  add_foreign_key "lessons", "courses"
+  add_foreign_key "selections", "courses"
   add_foreign_key "selections", "users"
-  add_foreign_key "stack_tracks", "stacks"
-  add_foreign_key "stack_tracks", "tracks"
-  add_foreign_key "stacks", "categories"
   add_foreign_key "users", "tracks"
 end
