@@ -11,7 +11,6 @@
 
 class User < ApplicationRecord
   belongs_to :track, optional: true
-
   has_many :completions, dependent: :destroy
   has_many :cards, dependent: :destroy
   has_many :selections, dependent: :destroy
@@ -20,9 +19,12 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
-  before_validation :set_trial_period, on: :create
+  after_initialize :set_defaults
 
   validate :set_stripe_id, on: :create
+  validates :plan, inclusion: { 
+    in: ['starter', 'test', message: 'is not a valid plan']
+  }
 
   def set_stripe_id
     StripeHandler.set_stripe_id(self)
@@ -62,7 +64,9 @@ class User < ApplicationRecord
 
   private
 
-  def set_trial_period
+  def set_defaults 
     self.period_end = 3.days.from_now
+    self.plan ||= Plan.starter_plan
+    self.active ||= false
   end
 end
