@@ -56,20 +56,6 @@ class User < ApplicationRecord
     self.plan = Plan.test_plan
   end
 
-  def complete(resource)
-    return true if self.completed?(resource)
-    self.completions.build(completable: resource).save
-  end
-
-  def incomplete(resource)
-    return true unless self.completed?(resource)
-    self.completions.find_by(completable: resource)&.destroy
-  end
-
-  def completed?(resource)
-    self.completions.find_by(completable: resource)
-  end
-
   def selected?(resource)
     self.selections.find_by(stack: resource)
   end

@@ -15,7 +15,7 @@
 
       %h2.lesson-title= @lesson.title
       .card-text.lesson-text= @lesson.body.html_safe
-      - if current_user.completed?(@lesson)
+      - if CompletionHandler.complete?(current_user, @lesson)
         = link_to 'Completed', complete_path(Lesson, @lesson), method: :delete, class: 'btn btn-sm btn-white-text', style: "background-color: #{@stack.category_color}"
       - else
         = link_to 'Mark Complete', complete_path(Lesson, @lesson), method: :post, class: 'btn btn-sm btn-light'

@@ -2,7 +2,7 @@ class CompletionsController < ApplicationController
   before_action :set_resource
 
   def create
-    message = if current_user.complete(@resource)
+    message = if CompletionHandler.complete(current_user, @resource)
                 { success: "Successfully completed <b>#{@resource.title}</b>" }
               else
                 { danger: 'Failed to complete' }
@@ -11,7 +11,7 @@ class CompletionsController < ApplicationController
   end
 
   def destroy
-    message = if current_user.incomplete(@resource)
+    message = if CompletionHandler.incomplete(current_user, @resource)
                 { warning: "Successfully marked <b>#{@resource.title}</b> as incomplete" }
               else
                 { danger: 'Failed to mark incomplete' }
