@@ -30,9 +30,15 @@ class CardHandler
     return false unless @card
     return true if @card == @user.default_card
 
-    remove_previous_default
-    set_default(@card)
-    set_stripe_default(@card)
+    Card.transaction do
+      begin
+        remove_previous_default
+        set_default(@card)
+        set_stripe_default(@card)
+      rescue Stripe::StripeError
+        raise ActiveRecord::Rollback
+      end
+    end
   end
 
   private

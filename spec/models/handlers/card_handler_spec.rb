@@ -4,7 +4,7 @@ RSpec.describe CardHandler, type: :model do
   let(:stripe_helper) { StripeMock.create_test_helper }
 
   describe '#add' do
-    context 'when Stripe successful' do
+    context 'when User has no Cards' do
       it 'sets the card as the default' do
         user = create(:user)
 
@@ -27,17 +27,6 @@ RSpec.describe CardHandler, type: :model do
         CardHandler.new(user).add(stripe_helper.generate_card_token)
 
         expect(StripeHandler.new(user).default_card).to eq(user.default_card.stripe_id)
-      end
-    end
-
-    context 'when Stripe errors' do
-      it 'doesn\'t increment the User\'s cards' do
-        user = create(:user)
-        StripeMock.prepare_card_error(:card_declined, :create_source)
-
-        expect {
-          CardHandler.new(user).add(stripe_helper.generate_card_token)
-        }.to_not change(user.cards, :count)
       end
     end
 
@@ -76,10 +65,21 @@ RSpec.describe CardHandler, type: :model do
         ).to eq(user.default_card.stripe_id)
       end
     end
+
+    context 'when Stripe errors' do
+      it 'doesn\'t increment the User\'s cards' do
+        user = create(:user)
+        StripeMock.prepare_card_error(:card_declined, :create_source)
+
+        expect {
+          CardHandler.new(user).add(stripe_helper.generate_card_token)
+        }.to_not change(user.cards, :count)
+      end
+    end
   end
 
   describe '#delete' do
-    context 'Card is default' do
+    context 'when Card is default' do
       it 'returns false' do
         user = create(:user, :with_default_card)
 
@@ -103,7 +103,7 @@ RSpec.describe CardHandler, type: :model do
       end
     end
 
-    context 'Card isn\'t default' do
+    context 'when Card isn\'t default' do
       it 'returns true' do
         user = create(:user, :with_card)
 
@@ -127,7 +127,7 @@ RSpec.describe CardHandler, type: :model do
       end
     end
 
-    context 'Stripe errors' do
+    context 'when Stripe errors' do
       it 'returns false' do
         user = create(:user, :with_cards_one_default)
         StripeMock.prepare_card_error(:card_declined, :delete_source)
@@ -156,7 +156,7 @@ RSpec.describe CardHandler, type: :model do
   end
 
   describe '#default' do
-    context 'User has 1 card' do
+    context 'when User has 1 card' do
       it 'returns true' do
         user = create(:user, :with_card)
 
@@ -185,7 +185,7 @@ RSpec.describe CardHandler, type: :model do
       end
     end
 
-    context 'User has multiple cards' do
+    context 'when User has multiple cards' do
       it 'doesn\'t increment the User\'s default cards' do
         user = create(:user, :with_cards)
 
@@ -214,7 +214,7 @@ RSpec.describe CardHandler, type: :model do
       end
     end
 
-    context 'User has multiple cards, where one is default' do
+    context 'when User has multiple cards, where one is default' do
       it 'returns true' do
         user = create(:user, :with_cards_one_default)
 
@@ -237,6 +237,33 @@ RSpec.describe CardHandler, type: :model do
         expect(
           StripeHandler.new(user).default_card
         ).to eq(user.default_card.stripe_id)
+      end
+    end
+
+    context 'when Stripe errors' do
+      it 'returns false' do
+        user = create(:user, :with_cards_one_default)
+        StripeMock.prepare_card_error(:card_declined, :update_customer)
+
+        expect(CardHandler.new(user).default(user.cards.first)).to be_falsey
+      end
+
+      it 'doesn\'t change the User\'s default Stripe card' do
+        user = create(:user, :with_cards_one_default)
+        StripeMock.prepare_card_error(:card_declined, :update_customer)
+
+        expect {
+          CardHandler.new(user).default(user.cards.first)
+        }.to_not change(StripeHandler.new(user), :default_card)
+      end
+
+      it 'doesn\'t change the User\'s default card' do
+        user = create(:user, :with_cards_one_default)
+        StripeMock.prepare_card_error(:card_declined, :update_customer)
+
+        expect {
+          CardHandler.new(user).default(user.cards.first)
+        }.to_not change(user, :default_card)
       end
     end
   end
