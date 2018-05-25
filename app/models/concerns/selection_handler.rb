@@ -11,6 +11,6 @@ class SelectionHandler
 
   def destroy
     return false unless @course
-    Selection.find_by(course: @course)&.destroy
+    Selection.find_by(course: @course, user: @user)&.destroy
   end
 end

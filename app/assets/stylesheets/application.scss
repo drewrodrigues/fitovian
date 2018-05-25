@@ -1,6 +1,4 @@
 @import 'bootstrap';
-@import 'partials/variables';
-@import 'partials/lessons';
 
 body {
   font-family: 'Montserrat', sans-serif;
@@ -9,11 +7,6 @@ body {
 .navbar-dark {
   background-color: $blue;
   margin-bottom: 20px;
-}
-
-.card {
-  border: none;
-  box-shadow: 0 8px 17px 0 rgba(0,0,0,.2), 0 6px 20px 0 rgba(0,0,0,.19);
 }
 
 .jumbo-landing {

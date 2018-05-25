@@ -1,19 +1,16 @@
-= form_for @stack do |f|
+= form_for @course do |f|
   = @category.title
-  .stack-show-lesson
-    .stack-index_body{style: "background-color: #{@category.color}"}
-      = image_tag @stack.icon.url
-    .stack-index_body
-      %p.stack-show-lesson_body_summary Course
-      = f.text_field :title, class: 'form-control stack-form', placeholder: 'Title'
+      = image_tag @course.icon.url
+      %p.course-show-lesson_body_summary Course
+      = f.text_field :title, class: 'form-control', placeholder: 'Title'
       = f.hidden_field :category_id, value: @category.id
-      = f.text_area :summary, class: 'form-control stack-form', placeholder: 'Summary'
+      = f.text_area :summary, class: 'form-control', placeholder: 'Summary'
       = f.file_field :icon
       .actions
         = f.submit 'Save', class: 'btn btn-sm btn-success'
-  - if @stack.errors.any?
+  - if @course.errors.any?
     #error_explanation
-      %h2= "#{pluralize(@stack.errors.count, "error")} prohibited this stack from being saved:"
+      %h2= "#{pluralize(@course.errors.count, "error")} prohibited this course from being saved:"
       %ul
-        - @stack.errors.full_messages.each do |message|
+        - @course.errors.full_messages.each do |message|
           %li= message
