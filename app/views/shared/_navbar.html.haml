@@ -15,6 +15,7 @@
         - else
           %li.nav-item= link_to 'Home', root_path, class: 'nav-link'
           -# %li.nav-item= link_to 'Library', library_path, class: 'nav-link'
-          -# %li= link_to "Sign in", new_user_session_path, class: "#{'nav-active' if params[:action] == 'new' && params[:controller] == 'users/sessions'}"
-          -# %li= link_to "Sign up", new_user_registration_path, class: "#{'nav-active' if params[:action] == 'new' && params[:controller] == 'devise/registrations'}"
+          - if Rails.env.development?
+            %li= link_to "Log In", new_user_session_path, class: "nav-link #{'nav-active' if params[:action] == 'new' && params[:controller] == 'users/sessions'}"
+            %li= link_to "Sign up", new_user_registration_path, class: "nav-link #{'nav-active' if params[:action] == 'new' && params[:controller] == 'devise/registrations'}"
 
