@@ -19,7 +19,7 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
-  after_initialize :set_defaults
+  # after_initialize :set_defaults
 
   validate :set_stripe_id, on: :create
   validates :plan, inclusion: { 
@@ -59,15 +59,15 @@ class User < ApplicationRecord
   end
 
   def selected?(resource)
-    self.selections.find_by(course: resource)
+    self.courses.find_by(id: resource)
   end
 
   private
 
-  def set_defaults 
-    self.period_end = 3.days.from_now
+  def set_defaults
+    self.period_end ||= 3.days.from_now
     self.plan ||= Plan.starter_plan
     self.active ||= false
-    self.courses = Course.all
+    self.courses ||= Course.all
   end
 end
