@@ -27,6 +27,7 @@ class PagesController < ActionController::Base
   end
 
   def dashboard
-    @courses = current_user.courses
+    @courses = current_user.courses.includes(:category)
+    @selections = current_user.selections.pluck(:course_id)
   end
 end

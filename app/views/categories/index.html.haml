@@ -6,9 +6,5 @@
   .clearfix
     %h3.category-title{style: "color: #{category.color}"}= category.title
     = admin_buttons_path(category)
-  .card-columns
-    = render category.courses.order('title')
-  
--# .card-columns
--#   - @categories.each do |category|
--#     = render category.courses.order('title')
+  .row
+    = render partial: category.courses, locals: { selections: @selections }

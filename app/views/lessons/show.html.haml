@@ -11,7 +11,7 @@
         = @course.category_title
       %h2.course-title= @course.title
 
-      = render partial: 'course_indicator', locals: {course: @course, current: @lesson}
+      = render partial: 'course_indicator', locals: {course: @course, current: @lesson, completions: @completions}
 
       %h2.lesson-title= @lesson.title
       .card-text.lesson-text= @lesson.body.html_safe

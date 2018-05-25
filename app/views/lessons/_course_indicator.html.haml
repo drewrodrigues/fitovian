@@ -1,6 +1,6 @@
 .indicators
   - @course.lessons.each do |lesson|
-    - if CompletionHandler.complete?(current_user, lesson)
+    - if completions.include?(lesson.id)
       = link_to lesson do
         %span.completed-lesson{style: "background-color: #{@course.category_color}", 'data-toggle': 'tooltip', 'title': lesson.title}
           %i.icon.ion-checkmark

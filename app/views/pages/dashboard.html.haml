@@ -1,3 +1,4 @@
 .container
   = render 'the_journey'
-  = render @courses
+  .row
+    = render partial: @courses, locals: { selections: @selections }

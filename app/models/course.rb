@@ -7,6 +7,8 @@
 #  title                  :string
 
 class Course < ApplicationRecord
+  default_scope { order(title: :asc) }
+
   belongs_to :category
 
   has_paper_trail

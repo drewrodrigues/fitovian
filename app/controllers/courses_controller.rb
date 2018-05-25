@@ -42,7 +42,7 @@ class CoursesController < ApplicationController
   private
 
   def set_course
-    @course = Course.find(params[:id])
+    @course = Course.includes(:category).find(params[:id])
   end
 
   def set_category

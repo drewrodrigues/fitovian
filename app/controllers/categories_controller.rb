@@ -3,7 +3,8 @@ class CategoriesController < ApplicationController
   before_action :require_admin!, except: :index
 
   def index
-    @categories = Category.includes(courses: [:selections]).order('title').all
+    @categories = Category.includes(:courses).all
+    @selections = current_user.selections.pluck(:course_id)
     @category = Category.new
   end
 

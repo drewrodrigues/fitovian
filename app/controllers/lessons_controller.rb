@@ -8,6 +8,7 @@ class LessonsController < ApplicationController
   end
 
   def show
+    @completions = current_user.completions.pluck(:completable_id)
     @course = @lesson.course
   end
 

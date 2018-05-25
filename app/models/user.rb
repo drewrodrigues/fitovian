@@ -59,7 +59,8 @@ class User < ApplicationRecord
   end
 
   def selected?(resource)
-    self.courses.find_by(id: resource)
+    # TODO: implement this better to not allow N+1 queries
+    self.selections.find_by(course: resource)
   end
 
   private
