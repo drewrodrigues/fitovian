@@ -8,7 +8,7 @@
   .card
     .card-body
       %p.course-category{style: "color: #{@course.category_color}"}
-        = image_tag @course.icon.url, class: 'img-fluid' if @course.icon.exists?
+        = image_tag @course.icon, class: 'img-fluid' if @course.icon.attached?
         %i.icon.ion-edit
         = @course.category_title
       %h2.course-title= @course.title

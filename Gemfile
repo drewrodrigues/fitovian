@@ -21,12 +21,9 @@ gem 'acts_as_list'
 # cms
 gem 'tinymce-rails'
 gem 'tinymce-rails-imageupload', '~> 4.0.0.beta'
-gem 'aws-sdk-s3'
+gem 'aws-sdk-s3', require: false
 gem 'paper_trail'
 gem 'faker'
-
-# course images
-gem 'paperclip', '~> 6.0.0'
 
 group :test do
   gem 'minitest', '5.10.0'

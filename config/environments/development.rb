@@ -81,4 +81,7 @@ Rails.application.configure do
     url: ":s3_domain_url",
     path: "/:class/:id/:style/:filename"
   }
+
+  # Store files locally.
+  config.active_storage.service = :local
 end

@@ -1,6 +1,6 @@
 = form_for @course do |f|
   = @category.title
-  = image_tag @course.icon.url
+  = image_tag @course.icon if @course.icon.attached?
   = f.text_field :title, class: 'form-control', placeholder: 'Title'
   = f.hidden_field :category_id, value: @category.id
   = f.text_area :summary, class: 'form-control', placeholder: 'Summary'

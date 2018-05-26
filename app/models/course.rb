@@ -12,16 +12,14 @@ class Course < ApplicationRecord
   belongs_to :category
 
   has_paper_trail
+  has_one_attached :icon
   has_many :completions, as: :completable
   has_many :lessons, dependent: :destroy
   has_many :selections, dependent: :destroy
   has_many :course_tracks, dependent: :destroy
   has_many :tracks, through: :course_tracks
   has_many :users, through: :selections
-  has_attached_file :icon,
-                    styles: { medium: '300x300', thumb: '100x100' }
 
-  validates_attachment_content_type :icon, content_type: /\Aimage\/.*\z/
   validates :category, presence: true
   validates :title, presence: true
 

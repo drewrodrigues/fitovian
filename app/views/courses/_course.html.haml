@@ -2,7 +2,7 @@
   .card-body
     .row
       .col-md-2
-        = image_tag course.icon.url, class: 'img-fluid' if course.icon.exists?
+        = image_tag course.icon, class: 'img-fluid' if course.icon.attached?
       .col-md-10
         %p.text-black-50= course.category_title
         %h4= course.title
