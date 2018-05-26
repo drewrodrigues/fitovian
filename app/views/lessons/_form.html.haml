@@ -1,24 +1,13 @@
 = form_for @lesson do |f|
-  .lesson-show-course
-    = link_to @course do
-      .card-body{style: "background-color: #{@course.category_color}"}
-        = image_tag @course.icon.url
-        %span= @course.title
+  = link_to @course.title, @course
   - if @lesson.errors.any?
     #error_explanations
       %h2= "#{pluralize(@lesson.errors.count, "error")} prohibited this lesson from being saved:"
       %ul
         - @lesson.errors.full_messages.each do |message|
           %li= message
-  .course-show-lesson
-    .card-body
-      .row
-        .col-md-8.offset-md-2
-          %p.course-show-lesson_body_summary.lesson-lesson Lesson
-          = f.text_field :title, class: 'form-control lesson-form', placeholder: 'Title'
-          = f.text_area :body, :class => "tinymce lesson-form", placeholder: 'Body'
-          = tinymce
-          = f.hidden_field :course_id, value: @course.id
-          = f.number_field :position, class: 'lesson-form', placeholder: 'Position'
-          .actions
-            = f.submit 'Save', class: 'btn btn-success'
+  = f.text_field :title, class: 'form-control lesson-form', placeholder: 'Title'
+  = f.text_area :body, :class => "tinymce lesson-form", placeholder: 'Body'
+  = tinymce
+  = f.hidden_field :course_id, value: @course.id
+  = f.submit 'Save', class: 'btn btn-success'

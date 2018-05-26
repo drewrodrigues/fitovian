@@ -20,11 +20,10 @@ class LessonsController < ApplicationController
 
   def create
     @lesson = Lesson.new(lesson_params)
-
     if @lesson.save
       redirect_to @lesson, notice: 'Lesson was successfully created.'
     else
-      render :new
+      redirect_to @lesson
     end
   end
 
@@ -32,7 +31,7 @@ class LessonsController < ApplicationController
     if @lesson.update(lesson_params)
       redirect_to @lesson, notice: "Lesson was successfully updated. #{undo_link}"
     else
-      render :edit
+      redirect_to @lesson
     end
   end
 
@@ -81,7 +80,7 @@ class LessonsController < ApplicationController
   end
 
   def set_course
-    @course = @lesson&.course || course.find(params[:course_id])
+    @course = @lesson&.course || Course.find(params[:course_id])
   end
 
   def lesson_params

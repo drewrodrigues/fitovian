@@ -13,10 +13,6 @@ class Lesson < ApplicationRecord
   has_one :category, through: :course
   has_many :completions, as: :completable
 
-  validates :position,
-            presence: true,
-            numericality: { only_integer: true }
-
   acts_as_list scope: :course
   has_paper_trail
 

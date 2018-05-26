@@ -53,7 +53,7 @@ RSpec.describe SelectionsController, type: :controller do
         delete :destroy, params: { course_id: course }
       end
 
-      it { is_expected.to set_flash[:success] }
+      it { is_expected.to set_flash[:danger] }
     end
 
     context 'when user has selected the course' do

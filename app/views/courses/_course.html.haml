@@ -1,15 +1,14 @@
-.col-lg-4.col-md-6.col-sm-12
-  .card
-    .card-body
-      = link_to course do
+.card.course-card
+  .card-body
+    .row
+      .col-md-2
         = image_tag course.icon.url, class: 'img-fluid' if course.icon.exists?
-      %p{style: "color: #{course.category_color}"}
-        %i.icon.ion-edit
-        = course.category_title
-      %h4= course.title
-      %p= truncate(course.summary, length: 240)
-      = link_to 'LEARN MORE', course, class: 'btn btn-sm text-white', style: "background-color: #{course.category_color}"
-      - if selections.include?(course.id)
-        = link_to 'Remove', selections_path(course), method: :delete, class: 'btn btn-sm btn-danger'
-      - else
-        = link_to 'Add', selections_path(course), method: :post, class: 'btn btn-sm btn-success'
+      .col-md-10
+        %p.text-black-50= course.category_title
+        %h4= course.title
+        %p= truncate(course.summary, length: 240)
+        = link_to 'Start', course, class: 'btn btn-sm btn-primary'
+        - if selections.include?(course.id)
+          = link_to 'Remove', selections_path(course), method: :delete, class: 'btn btn-sm btn-danger'
+        - else
+          = link_to 'Add', selections_path(course), method: :post, class: 'btn btn-sm btn-success'

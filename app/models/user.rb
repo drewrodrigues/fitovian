@@ -19,11 +19,13 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
-  # after_initialize :set_defaults
+  before_create :give_courses
+
+  after_initialize :set_defaults, :set_trial_period
 
   validate :set_stripe_id, on: :create
-  validates :plan, inclusion: { 
-    in: ['starter', 'test', message: 'is not a valid plan']
+  validates :plan, inclusion: {
+    in: %w[starter test], message: 'is not a valid plan'
   }
 
   def set_stripe_id
@@ -65,10 +67,16 @@ class User < ApplicationRecord
 
   private
 
-  def set_defaults
+  def set_trial_period
     self.period_end ||= 3.days.from_now
+  end
+
+  def set_defaults
     self.plan ||= Plan.starter_plan
     self.active ||= false
-    self.courses ||= Course.all
+  end
+
+  def give_courses
+    self.courses = Course.all
   end
 end

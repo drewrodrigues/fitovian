@@ -6,5 +6,4 @@
   .clearfix
     %h3.category-title{style: "color: #{category.color}"}= category.title
     = admin_buttons_path(category)
-  .row
-    = render partial: category.courses, locals: { selections: @selections }
+  = render partial: category.courses, locals: { selections: @selections }

@@ -3,5 +3,6 @@ FactoryBot.define do
     title 'Some title'
     course
     position 1
+    body 'Something goes here'
   end
 end

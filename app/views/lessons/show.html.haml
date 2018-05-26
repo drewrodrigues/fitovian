@@ -19,7 +19,5 @@
         = link_to 'Completed', lesson_incomplete_path(@lesson), method: :delete, class: 'btn btn-sm btn-white-text', style: "background-color: #{@course.category_color}"
       - else
         = link_to 'Mark Complete', lesson_complete_path(@lesson), method: :post, class: 'btn btn-sm btn-light'
-
 - if current_user&.admin?
-  = link_to 'Edit lesson', edit_lesson_path(@lesson), class: 'btn btn-sm btn-link'
-  %button{"data-path" => "#{link_to 'Delete course', lesson_path(@lesson), method: :delete, class: 'btn btn-danger'}", "data-target" => "#deleteModal", "data-toggle" => "modal", :type => "button", id: 'deleteModal', class: 'btn btn-sm btn-link'} Delete lesson
+  = link_to 'Edit lesson', edit_lesson_path(@lesson), class: 'btn btn-sm btn-primary'

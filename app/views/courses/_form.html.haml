@@ -1,13 +1,11 @@
 = form_for @course do |f|
   = @category.title
-      = image_tag @course.icon.url
-      %p.course-show-lesson_body_summary Course
-      = f.text_field :title, class: 'form-control', placeholder: 'Title'
-      = f.hidden_field :category_id, value: @category.id
-      = f.text_area :summary, class: 'form-control', placeholder: 'Summary'
-      = f.file_field :icon
-      .actions
-        = f.submit 'Save', class: 'btn btn-sm btn-success'
+  = image_tag @course.icon.url
+  = f.text_field :title, class: 'form-control', placeholder: 'Title'
+  = f.hidden_field :category_id, value: @category.id
+  = f.text_area :summary, class: 'form-control', placeholder: 'Summary'
+  = f.file_field :icon
+  = f.submit 'Save', class: 'btn btn-sm btn-success'
   - if @course.errors.any?
     #error_explanation
       %h2= "#{pluralize(@course.errors.count, "error")} prohibited this course from being saved:"

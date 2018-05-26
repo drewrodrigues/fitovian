@@ -1,4 +1,7 @@
-%h1 Editing lesson
+= link_to 'Back', @course
+%h1 Edit lesson
 
 = render 'form'
-= link_to 'Back', @lesson
+
+- if current_user&.admin?
+  = link_to 'Delete lesson', lesson_path(@lesson), class: 'btn btn-sm btn-danger float-right', method: :delete
